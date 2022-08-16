@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ImmigrationApp.Models
@@ -18,7 +19,15 @@ namespace ImmigrationApp.Models
         public DateTime Created { get; set; }
         public DateTime? LastModified { get; set; }
         public bool IsResetPasswordRequired { get; set; }
-
+        [Required(ErrorMessage = "Required")]
+        [MaxLength(255)]
+        public string Country { get; set; }
+        [Required(ErrorMessage = "Required")]
+        [MaxLength(455)]
+        public string Company { get; set; }
+        [Required(ErrorMessage = "Required")]
+        [MaxLength(255)]
+        public string Type { get; set; }
         #region Not Mapped Properties
         [NotMapped]
         public string Password { get; set; }
