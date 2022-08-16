@@ -1,4 +1,5 @@
 using ImmigrationApp.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ImmigrationApp.Permission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImmigrationApp.Currentuser;
 
 namespace ImmigrationApp
 {
@@ -27,13 +30,52 @@ namespace ImmigrationApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            //services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            //services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+                .AddDefaultUI()
+                .AddRoles<IdentityRole<int>>()
+                .AddRoleManager<RoleManager<IdentityRole<int>>>()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication().AddCookie(o =>
+            {
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            });
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/account/login";
+                //options.LogoutPath = $"/account/logout";
+                //options.AccessDeniedPath = $"/account/access-denied";
+            });
+            services.AddMvc();
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        options.ClientId = "713982660465-tfh2h2ag2m0tt9e66onm686mbe913l8q.apps.googleusercontent.com";
+            //        options.ClientSecret = "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";
+            //    })
+            //    .AddFacebook(options => {
+            //        options.ClientId = "656864578732428";
+            //        options.ClientSecret = "c16fede59476077ace3d5ce6ccbae201";
+            //    });
             services.AddControllersWithViews();
         }
 
