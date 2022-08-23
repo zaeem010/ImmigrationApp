@@ -1,49 +1,162 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ImmigrationApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Job Portal">
+    <meta name="keyword" content="Job, freelancer, employee, marketplace">
+    <meta name="author" content="N">
+    <!-- Title -->
+    <title>@ViewData["Title"] | Job Portal </title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/Front/assets/img/favicon/favicon-32x32.png">
+    <!--Bootstrap css-->
+    <link rel="stylesheet" href="/Front/assets/css/bootstrap.css">
+    <!--Font Awesome css-->
+    <link rel="stylesheet" href="/Front/assets/css/font-awesome.min.css">
+    <!--Magnific css-->
+    <link rel="stylesheet" href="/Front/assets/css/magnific-popup.css">
+    <!--Owl-Carousel css-->
+    <link rel="stylesheet" href="/Front/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Front/assets/css/owl.theme.default.min.css">
+    <!--Animate css-->
+    <link rel="stylesheet" href="/Front/assets/css/animate.min.css">
+    <!--Select2 css-->
+    <link rel="stylesheet" href="/Front/assets/css/select2.min.css">
+    <!--Slicknav css-->
+    <link rel="stylesheet" href="/Front/assets/css/slicknav.min.css">
+    <!--Bootstrap-Datepicker css-->
+    <link rel="stylesheet" href="/Front/assets/css/bootstrap-datepicker.min.css">
+    <!--Jquery UI css-->
+    <link rel="stylesheet" href="/Front/assets/css/jquery-ui.min.css">
+    <!--Perfect-Scrollbar css-->
+    <link rel="stylesheet" href="/Front/assets/css/perfect-scrollbar.min.css">
+    <!--Site Main Style css-->
+    <link rel="stylesheet" href="/Front/assets/css/style.css">
+    <!--Responsive css-->
+    <link rel="stylesheet" href="/Front/assets/css/responsive.css">
+    <!--Jquery Add-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" asp-append-version="true"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+
+    
+    @RenderBody()
+    <!-- Footer Area Start -->
+    <footer class="jobguru-footer-area">
+        <div class="footer-top section_50">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ImmigrationApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <div class="footer-logo">
+                                <a href="index.html">
+                                    <img src="/Front/assets/img/logo.png" alt="jobguru logo" />
+                                </a>
+                            </div>
+                            <p>Aliquip exa consequat dui aut repahend vouptate elit cilum fugiat pariatur lorem dolor cit amet consecter adipisic elit sea vena eiusmod nulla</p>
+                            <ul class="footer-social">
+                                <li><a href="#" class="fb"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#" class="gp"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#" class="skype"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <h3>recent post</h3>
+                            <div class="latest-post-footer clearfix">
+                                <div class="latest-post-footer-left">
+                                    <img src="/Front/assets/img/footer-post-2.jpg" alt="post" />
+                                </div>
+                                <div class="latest-post-footer-right">
+                                    <h4><a href="#">Website design trends for 2018</a></h4>
+                                    <p>January 14 - 2018</p>
+                                </div>
+                            </div>
+                            <div class="latest-post-footer clearfix">
+                                <div class="latest-post-footer-left">
+                                    <img src="/Front/assets/img/footer-post-3.jpg" alt="post" />
+                                </div>
+                                <div class="latest-post-footer-right">
+                                    <h4><a href="#">UI experts and modern designs</a></h4>
+                                    <p>January 12 - 2018</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <h3>main links</h3>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> About jobguru</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> Delivery Information</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> Terms & Conditions</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> Customer support</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> Contact with an expert</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> community updates</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right "></i> upcoming updates</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget footer-contact">
+                            <h3>Contact Info</h3>
+                            <p><i class="fa fa-map-marker"></i> 4257 Street, SunnyVale, USA </p>
+                            <p><i class="fa fa-phone"></i> 012-3456-789</p>
+                            <p><i class="fa fa-envelope-o"></i> info@jobguru.com</p>
+                            <p><i class="fa fa-envelope-o"></i> info@jobguru.com</p>
+                            <p><i class="fa fa-fax"></i> 112-3456-7898</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - ImmigrationApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-left">
+                            <p>Copyright &copy; 2018 Themescare. All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer Area End -->
+    <!--Jquery js-->
+    <script src="/Front/assets/js/jquery-3.6.0.min.js"></script>
+    <!--Bootstrap js-->
+    <script src="/Front/assets/js/bootstrap.bundle.min.js"></script>
+    <!--Bootstrap Datepicker js-->
+    <script src="/Front/assets/js/bootstrap-datepicker.min.js"></script>
+    <!--Perfect Scrollbar js-->
+    <script src="/Front/assets/js/jquery-perfect-scrollbar.min.js"></script>
+    <!--Owl-Carousel js-->
+    <script src="/Front/assets/js/owl.carousel.min.js"></script>
+    <!--SlickNav js-->
+    <script src="/Front/assets/js/jquery.slicknav.min.js"></script>
+    <!--Magnific js-->
+    <script src="/Front/assets/js/jquery.magnific-popup.min.js"></script>
+    <!--Select2 js-->
+    <script src="/Front/assets/js/select2.min.js"></script>
+    <!--jquery-ui js-->
+    <script src="/Front/assets/js/jquery-ui.min.js"></script>
+    <!--Jarallax js-->
+    <script src="/Front/assets/js/jarallax.min.js"></script>
+    <script src="/Front/assets/js/jarallax-video.min.js"></script>
+    <!--Main js-->
+    <script src="/Front/assets/js/main.js"></script>
+    <!--Site js-->
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

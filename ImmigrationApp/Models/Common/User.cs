@@ -8,6 +8,8 @@ namespace ImmigrationApp.Models
 {
     public class User : IdentityUser<int>
     {
+        [Required(ErrorMessage = "Required")]
+        [MaxLength(455)]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CreatedBy { get; set; }
@@ -28,6 +30,9 @@ namespace ImmigrationApp.Models
         [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string Type { get; set; }
+        [MaxLength(255)]
+        public string NumberOfEmployee { get; set; }
+
         #region Not Mapped Properties
         [NotMapped]
         public string Password { get; set; }

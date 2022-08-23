@@ -134,13 +134,16 @@ JS INDEX
 		*/
 
 
-		$('.banner-select').select2()
+		$('.banner-select').select2();
 
 		$('.sidebar-category-select').select2({
 			placeholder: 'e.g. job title'
 		});
 		$('.sidebar-category-select-2').select2({
 			placeholder: 'Choose Category'
+		});
+		$('.country-select').select2({
+			placeholder: 'Choose Country'
 		});
 
 

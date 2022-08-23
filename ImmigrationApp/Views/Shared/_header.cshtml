@@ -1,0 +1,46 @@
+﻿<header class="jobguru-header-area stick-top forsticky">
+    <div class="menu-animation">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="site-logo">
+                        <a asp-action="Index" asp-controller="Home">
+                            <img src="/Front/assets/img/logo.png" alt="jobguru" class="non-stick-logo" />
+                            <img src="/Front/assets/img/logo-2.png" alt="jobguru" class="stick-logo" />
+                        </a>
+                    </div>
+                    <!-- Responsive Menu Start -->
+                    <div class="jobguru-responsive-menu"></div>
+                    <!-- Responsive Menu Start -->
+                </div>
+                <div class="col-lg-6">
+                    <div class="header-menu">
+                        <nav id="navigation">
+                            <ul id="jobguru_navigation">
+                                @*<li class="active has-children">
+                                    <a href="#">home</a>
+                                    <ul>
+                                        <li><a href="index.html">Home 1</a></li>
+                                        <li><a href="index-2.html">Home 2</a></li>
+                                    </ul>
+                                </li>*@
+                                <li><a asp-action="Index" asp-controller="Home">Find Jobs</a></li>
+                                <li><a href="#">Company Reviews</a></li>
+                                <li><a href="#">Salary Guide</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="header-right-menu">
+                        <ul>
+                            <li><a href="post-job.html" class="post-jobs">Post jobs</a></li>
+                            <li><a asp-action="EmployeeSignUp"asp-controller="Account"><i class="fa fa-user"></i>sign up</a></li>
+                            <li><a href="login.html"><i class="fa fa-lock"></i>login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
