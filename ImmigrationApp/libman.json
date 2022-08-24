@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-toaster@5.1.0",
+      "destination": "wwwroot/lib/bootstrap-toaster/",
+      "files": [
+        "css/bootstrap-toaster.css",
+        "js/bootstrap-toaster.js",
+        "js/bootstrap-toaster.min.js",
+        "css/bootstrap-toaster.min.css"
+      ]
+    }
+  ]
+}

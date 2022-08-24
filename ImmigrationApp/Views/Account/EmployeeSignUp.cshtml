@@ -1,7 +1,14 @@
-﻿@model User
+﻿@model UserDto
 @{
     ViewData["Title"] = "Employers";
 }
+<style>
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        text-transform: capitalize !important;
+        border: 2px solid #e8ecec;
+        color: #777 !important
+    }
+</style>
 <!-- Header Area Start -->
 <partial name="_headerwhite" />
 <!-- Header Area End -->
@@ -55,7 +62,7 @@
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
                                             <label>Country <i class="fa fa-star text-danger"></i></label>
-                                            <select class="country-select" asp-for="Country" asp-items="ViewBag.Country">
+                                            <select class="country-select select2" asp-for="Country" asp-items="ViewBag.Country">
                                                 <option value="">select an option</option>
                                             </select>
                                             <span asp-validation-for="Country" class="text-danger"></span>

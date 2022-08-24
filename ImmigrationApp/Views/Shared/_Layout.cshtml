@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var viewResult = TempData["ToasterResult"] != null ? JsonSerializer.Deserialize<ToasterResult>(TempData["ToasterResult"].ToString()) : null;
+}
+<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
@@ -37,13 +40,16 @@
     <link rel="stylesheet" href="/Front/assets/css/style.css">
     <!--Responsive css-->
     <link rel="stylesheet" href="/Front/assets/css/responsive.css">
+    <!--Toater css-->
+    <link href="/lib/Toaster/css/toasting.css" rel="stylesheet">
+
     <!--Jquery Add-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" asp-append-version="true"></script>
 </head>
 <body>
 
 
-    
+
     @RenderBody()
     <!-- Footer Area Start -->
     <footer class="jobguru-footer-area">
@@ -154,8 +160,20 @@
     <script src="/Front/assets/js/jarallax-video.min.js"></script>
     <!--Main js-->
     <script src="/Front/assets/js/main.js"></script>
+    <!--Toaster js-->
+    <script src="/lib/Toaster/js/toasting.js"></script>
     <!--Site js-->
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+    @if (viewResult != null)
+    {
+        <script>
+            let type = @(viewResult.Success ? 1 :0);
+            let message = '@viewResult.Message';
+            let delay = @viewResult.Delay;
+            ShowToaster(type, message);
+        </script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

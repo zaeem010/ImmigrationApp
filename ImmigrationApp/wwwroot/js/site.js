@@ -1,4 +1,20 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function ShowToaster(type, text) {
+    let toasterType;
+    let title;
+    switch (type) {
+        case 1:
+        default:
+            toasterType = "success";
+            title = "Success";
+            break;
+        case 0:
+            toasterType = "error";
+            title = "Error!";
+            break;
+    }
+    toasting.create({
+        "title": "" + title + "",
+        "text": "" + text + "",
+        "type": "" + toasterType + "",
+    });
+}
