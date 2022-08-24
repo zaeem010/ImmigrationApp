@@ -32,7 +32,7 @@ namespace ImmigrationApp
         {
             //services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             //services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-            //services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
+            services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

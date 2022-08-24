@@ -1,4 +1,5 @@
 ﻿using ImmigrationApp.Constant;
+using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +19,8 @@ namespace ImmigrationApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly SignInManager<IdentityUser<int>> _signInManager;
         private readonly ILogger<AccountController> _logger;
-        public AccountController(ApplicationDbContext db,
+
+        public AccountController( ApplicationDbContext db,
             ILogger<AccountController> logger,
            SignInManager<IdentityUser<int>> signInManager,
            UserManager<IdentityUser<int>> userManager)
@@ -45,6 +47,11 @@ namespace ImmigrationApp.Controllers
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
+                IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+                {
+                    Value = c.CountryName,
+                    Text = c.CountryName,
+                });
                 var check = await _userManager.FindByEmailAsync(UserDto.Email);
                 if (check == null)
                 {
@@ -54,13 +61,9 @@ namespace ImmigrationApp.Controllers
                         LastName = UserDto.LastName,
                         UserName = UserDto.Email,
                         Email = UserDto.Email,
-                        Created = DateTime.Now,
-                        Contact = UserDto.Contact,
-                        IsActive = UserDto.IsActive,
-                        Country = UserDto.Country,
-                        Company = UserDto.Company,
                         Type = UserDto.Type,
-                        NumberOfEmployee = UserDto.NumberOfEmployee,
+                        Created = DateTime.Now,
+                        IsActive = UserDto.IsActive,
                     };
                     var result = await _userManager.CreateAsync(user, UserDto.Password);
                     await _userManager.AddToRoleAsync(user, Roles.Employeer.ToString());
@@ -68,18 +71,31 @@ namespace ImmigrationApp.Controllers
                     {
                         _logger.LogInformation("User created a new account with password.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
+                        var CompanyInfo = new CompanyInfo
+                        {
+                            Country =UserDto.Country,
+                            Company =UserDto.Company,
+                            Contact =UserDto.Contact,
+                            NumberOfEmployee = UserDto.NumberOfEmployee,
+                            UserId = GetId.Id,
+                        };
+                        await _db.CompanyInfo.AddAsync(CompanyInfo);
+                        await _db.SaveChangesAsync();
                         return LocalRedirect(returnUrl);
                     }
                     else
                     {
+                        ViewBag.Country = Country;
                         AddNotificationToView("An Error Occured While Creating The Account", false);
-                        return View(UserDto);
+                        return View("EmployeeSignUp", UserDto);
                     }
                 }
                 else
                 {
+                    ViewBag.Country = Country;
                     AddNotificationToView("The User With This Email Already Exists.", false);
-                    return View(UserDto);
+                    return View("EmployeeSignUp", UserDto);
                 }
             }
             return View();

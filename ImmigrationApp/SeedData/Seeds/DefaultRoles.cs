@@ -10,6 +10,8 @@ namespace ImmigrationApp.Seeds
         {
             await roleManager.CreateAsync(new IdentityRole<int>(Roles.SuperAdmin.ToString()));
             await roleManager.CreateAsync(new IdentityRole<int>(Roles.Admin.ToString()));
+            await roleManager.CreateAsync(new IdentityRole<int>(Roles.Employeer.ToString()));
+            await roleManager.CreateAsync(new IdentityRole<int>(Roles.Canidate.ToString()));
         }
     }
 }

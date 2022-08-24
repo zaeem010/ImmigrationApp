@@ -1,4 +1,5 @@
 ﻿function ShowToaster(type, text) {
+    debugger;
     let toasterType;
     let title;
     switch (type) {

@@ -57,7 +57,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active">
                         <div class="new-job-submission">
-                            <form>
+                            <form asp-action="Register">
                                 <div class="resume-box">
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
@@ -91,12 +91,12 @@
                                             <label>Your company's number of employees </label>
                                             <select asp-for="NumberOfEmployee">
                                                 <option value="">select an option</option>
-                                                <option value="1to49">1 to 49</option>
-                                                <option value="50to149">50 to 149</option>
-                                                <option value="150to249">150 to 249</option>
-                                                <option value="250to449">250 to 499</option>
-                                                <option value="500to749">500 to 749</option>
-                                                <option value="750to999">750 to 999</option>
+                                                <option value="1/49">1 to 49</option>
+                                                <option value="50/149">50 to 149</option>
+                                                <option value="150/249">150 to 249</option>
+                                                <option value="250/449">250 to 499</option>
+                                                <option value="500/749">500 to 749</option>
+                                                <option value="750/999">750 to 999</option>
                                                 <option value="1000">1000+</option>
                                             </select>
                                         </div>
@@ -117,6 +117,11 @@
                                             <input asp-for="Password">
                                             <span asp-validation-for="Password" class="text-danger"></span>
                                         </div>
+                                        <div class="single-input ">
+                                            <label>Confirm Password <i class="fa fa-star text-danger"></i></label>
+                                            <input asp-for="ConfirmPassword" class="col-md-6">
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
                                     </div>
                              
                                 </div>
@@ -133,5 +138,8 @@
         </div>
     </div>
 </section>
+<script>
+    
+</script>
 <!-- Login Area End -->
 <partial name="_ValidationScriptsPartial" />

@@ -168,10 +168,12 @@
     @if (viewResult != null)
     {
         <script>
-            let type = @(viewResult.Success ? 1 :0);
-            let message = '@viewResult.Message';
-            let delay = @viewResult.Delay;
-            ShowToaster(type, message);
+            $(document).ready(function () {
+                let type = @(viewResult.Success ? 1 :0);
+                let message = '@viewResult.Message';
+                let delay = @viewResult.Delay;
+                ShowToaster(type, message);
+            });
         </script>
     }
     @await RenderSectionAsync("Scripts", required: false)
