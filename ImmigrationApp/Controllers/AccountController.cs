@@ -2,6 +2,7 @@
 using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,6 +30,40 @@ namespace ImmigrationApp.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await _signInManager.SignOutAsync();
+            ViewBag.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewBag.ReturnUrl = returnUrl;
+            return View(new LoginDTO());
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDTO LoginDTO, string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+
+            ViewBag.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewBag.ReturnUrl = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(LoginDTO.Email, LoginDTO.Password, LoginDTO.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    AddNotificationToView("Invalid login attempt.", false);
+                    return View("Login", LoginDTO);
+                }
+            }
+            return View("Login", LoginDTO);
         }
         [Route("/Account/Employer-SignUp")]
         public IActionResult EmployeeSignUp()
@@ -99,6 +134,13 @@ namespace ImmigrationApp.Controllers
                 }
             }
             return View();
+        }
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            returnUrl ??= Url.Content("~/");
+            return LocalRedirect(returnUrl);
         }
     }
 }

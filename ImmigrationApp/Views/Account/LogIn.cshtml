@@ -1,0 +1,68 @@
+﻿@model LoginDTO
+@{
+    ViewData["Title"] = "LogIn";
+}
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
+<!-- Breadcromb Area Start -->
+<section class="jobguru-breadcromb-area">
+    <div class="breadcromb-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcromb-box-pagin">
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">Account</a></li>
+                            <li class="active-breadcromb"><a href="#">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcromb Area End -->
+<!-- Login Area Start -->
+<section class="jobguru-login-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+                <div class="login-box">
+                    <div class="login-title">
+                        <h3>Sign in</h3>
+                    </div>
+                    <form asp-action="Login" method="post">
+                        <div class="single-login-field">
+                            <input asp-for="Email" placeholder="Email Address">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="single-login-field">
+                            <input asp-for="Password" placeholder="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="remember-row single-login-field clearfix">
+                            <p class="checkbox remember">
+                                <input class="checkbox-spin" asp-for="RememberMe" type="checkbox" id="Freelance">
+                                <label for="Freelance"><span></span>Keep Me Signed In</label>
+                            </p>
+                            <p class="lost-pass">
+                                <a href="#">forgot password?</a>
+                            </p>
+                        </div>
+                        <div class="single-login-field">
+                            <button type="submit">Sign in</button>
+                        </div>
+                        <input type="hidden" value="@ViewBag.ReturnUrl" name="returnUrl" />
+                    </form>
+                    <div class="dont_have">
+                        <a asp-action="EmployeeSignUp" asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account">Don't have an account?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Login Area End -->
+<partial name="_ValidationScriptsPartial" />

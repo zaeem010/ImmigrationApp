@@ -1,4 +1,13 @@
 ﻿@using ImmigrationApp
 @using ImmigrationApp.Models
 @using System.Text.Json;
+@using ImmigrationApp.Currentuser;;
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization;
+@inject IAuthorizationService _authorizationService
+@inject SignInManager<IdentityUser<int>> SignInManager
+@inject UserManager<IdentityUser<int>> UserManager
+@inject ImmigrationApp.Data.ApplicationDbContext _db
+@inject ImmigrationApp.Currentuser.ICurrentuser _currentuser
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

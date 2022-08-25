@@ -1,4 +1,17 @@
-﻿<header class="jobguru-header-area stick-top forsticky">
+﻿@{
+    //Sign In Check
+    var userName = "";
+    var user = new User();
+    var isSignedIn = SignInManager.IsSignedIn(User);
+    if (isSignedIn)
+    {
+        var userId = _currentuser.GetUserId();
+        user = await _db.User.SingleOrDefaultAsync(c => c.Id.Equals(userId));
+        //
+        userName = "" + user.FirstName.Substring(0, 1) + "" + user.LastName.Substring(0, 1) + "";
+    }
+ }
+<header class="jobguru-header-area stick-top forsticky">
     <div class="menu-animation">
         <div class="container-fluid">
             <div class="row">
@@ -17,26 +30,48 @@
                     <div class="header-menu">
                         <nav id="navigation">
                             <ul id="jobguru_navigation">
-                                @*<li class="active has-children">
-                                    <a href="#">home</a>
-                                    <ul>
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                    </ul>
-                                </li>*@
+
                                 <li><a asp-action="Index" asp-controller="Home">Find Jobs</a></li>
                                 <li><a href="#">Company Reviews</a></li>
                                 <li><a href="#">Salary Guide</a></li>
+                                @{
+                                    if (isSignedIn)
+                                    {
+                                        if (user.Type == "Employee")
+                                        {
+                                            <li class="active has-children">
+                                                <a href="#">Employee</a>
+                                                <ul>
+                                                    <li><a asp-action="Dashboard" asp-controller="Employer">Dashboard</a></li>
+                                                    <li><a asp-action="Profile" asp-controller="Employer">Profile</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                }
                             </ul>
                         </nav>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="header-right-menu">
+
                         <ul>
-                            <li><a href="post-job.html" class="post-jobs">Post jobs</a></li>
-                            <li><a asp-action="EmployeeSignUp"asp-controller="Account"><i class="fa fa-user"></i>sign up</a></li>
-                            <li><a href="login.html"><i class="fa fa-lock"></i>login</a></li>
+                            <li><a href="#" class="post-jobs">Post jobs</a></li>
+                            @{
+                                if (isSignedIn)
+                                {
+                                    if (user.Type == "Employee")
+                                    {
+                                        <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user"></i>Welcome @userName</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a asp-action="EmployeeSignUp" asp-controller="Account"><i class="fa fa-user"></i>sign up</a></li>
+                                    <li><a asp-action="Login" asp-controller="Account"><i class="fa fa-lock"></i>login</a></li>
+                                }
+                            }
                         </ul>
                     </div>
                 </div>
