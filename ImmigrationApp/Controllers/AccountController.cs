@@ -3,6 +3,7 @@ using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : BaseController
     {
         public ApplicationDbContext _db;
@@ -107,12 +109,15 @@ namespace ImmigrationApp.Controllers
                         _logger.LogInformation("User created a new account with password.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
+                        string Slugname = UserDto.Company;
                         var CompanyInfo = new CompanyInfo
                         {
                             Country =UserDto.Country,
                             Company =UserDto.Company,
                             Contact =UserDto.Contact,
                             NumberOfEmployee = UserDto.NumberOfEmployee,
+                            Email = UserDto.Email,
+                            SlugName = Slugname.Replace(" ","-"),
                             UserId = GetId.Id,
                         };
                         await _db.CompanyInfo.AddAsync(CompanyInfo);

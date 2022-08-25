@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomeVM
+@{
     ViewData["Title"] = "Home Page";
 }
 <!-- Header Area Start -->
@@ -209,82 +210,35 @@
                     <div class="tab-pane fade show active" id="pills-companies" role="tabpanel" aria-labelledby="pills-companies-tab">
                         <div class="top-company-tab">
                             <ul>
-                                <li>
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a href="#">
-                                                <img src="/Front/assets/img/company-logo-4.png" alt="company list 1" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a href="#">jamulai - consulting & finance Co.</a></h3>
-                                            <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
-                                            <p class="open-icon"><i class="fa fa-briefcase"></i>32 open position</p>
-                                            <p class="varify"><i class="fa fa-check"></i>Verified</p>
-                                            <p class="rating-company">4.9</p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">view profile</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a href="#">
-                                                <img src="/Front/assets/img/company-logo-2.png" alt="company list 1" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a href="#">Buildo - construction Co.</a></h3>
-                                            <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
-                                            <p class="open-icon"><i class="fa fa-briefcase"></i>32 open position</p>
-                                            <p class="varify"><i class="fa fa-check"></i>Verified</p>
-                                            <p class="rating-company">4.2</p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">view profile</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a href="#">
-                                                <img src="/Front/assets/img/company-logo-3.png" alt="company list 1" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a href="#">palms - school & college.</a></h3>
-                                            <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
-                                            <p class="open-icon"><i class="fa fa-briefcase"></i>32 open position</p>
-                                            <p class="varify"><i class="fa fa-check"></i>Verified</p>
-                                            <p class="rating-company">4.6</p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">view profile</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a href="#">
-                                                <img src="/Front/assets/img/company-logo-1.png" alt="company list 1" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a href="#">finance - consulting & business Co.</a></h3>
-                                            <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
-                                            <p class="open-icon"><i class="fa fa-briefcase"></i>32 open position</p>
-                                            <p class="varify"><i class="fa fa-check"></i>Verified</p>
-                                            <p class="rating-company">4.9</p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">view profile</a>
-                                        </div>
-                                    </div>
-                                </li>
+                                @{
+                                    foreach (var C in Model.CompanyInfoList)
+                                    {
+                                        string imgpath = "/Front/no-image.png";
+                                        if (!string.IsNullOrEmpty(C.LogoPath))
+                                        {
+                                            imgpath = "/Upload/" + C.LogoPath;
+                                        }
+                                        <li>
+                                            <div class="top-company-list">
+                                                <div class="company-list-logo">
+                                                    <a href="#">
+                                                        <img src="@imgpath" alt="company" />
+                                                    </a>
+                                                </div>
+                                                <div class="company-list-details">
+                                                    <h3><a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName">@C.Company</a></h3>
+                                                    <p class="company-state"><i class="fa fa-map-marker"></i> @C.Address</p>
+                                                    <p class="open-icon"><i class="fa fa-briefcase"></i>0 open position</p>
+                                                    <p class="varify"><i class="fa fa-check"></i>Verified</p>
+                                                    @*<p class="rating-company">4.9</p>*@
+                                                </div>
+                                                <div class="company-list-btn">
+                                                    <a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName" class="jobguru-btn">view profile</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                }
                             </ul>
                         </div>
                     </div>
