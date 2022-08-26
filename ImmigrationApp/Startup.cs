@@ -2,19 +2,16 @@ using ImmigrationApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ImmigrationApp.Permission;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ImmigrationApp.Currentuser;
+using ImmigrationApp.Services.CommonRepo;
+using ImmigrationApp.Services;
 
 namespace ImmigrationApp
 {
@@ -32,7 +29,10 @@ namespace ImmigrationApp
         {
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            //Custom Services
             services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
+            services.AddTransient<ICommonRepo, CommonRepo>();
+            services.AddTransient<ICompanyInfoRepo, CompanyInfoRepo>();
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

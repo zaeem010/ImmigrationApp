@@ -1,6 +1,8 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using ImmigrationApp.Services;
+using ImmigrationApp.Services.CommonRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +19,15 @@ namespace ImmigrationApp.Controllers
     public class EmployerController : BaseController
     {
         public ApplicationDbContext _db { get; set; }
+        public ICompanyInfoRepo _companyInfo { get; set; }
+        public ICommonRepo _CommonRepo { get; set; }
         public ICurrentuser _Currentuser { get; set; }
         private readonly IWebHostEnvironment host;
-        public EmployerController(ICurrentuser Currentuser, ApplicationDbContext db, IWebHostEnvironment host)
+        public EmployerController(ApplicationDbContext db, ICommonRepo CommonRepo, ICurrentuser Currentuser, ICompanyInfoRepo companyInfo, IWebHostEnvironment host)
         {
             _db = db;
+            _companyInfo = companyInfo;
+            _CommonRepo = CommonRepo;
             _Currentuser = Currentuser;
             this.host = host;
         }
@@ -29,21 +35,15 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Dashboard()
         {
-            var CompanyInfo = await _db.CompanyInfo.SingleOrDefaultAsync(c=>c.UserId.Equals(_Currentuser.GetUserId()));
+            var CompanyInfo = await _companyInfo.GetSingleCompanyInfo(_Currentuser.GetUserId());
             return View(CompanyInfo);
         }
         [Route("/Employer/Profile")]
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            int UserId = _Currentuser.GetUserId();
-            var CompanyInfo = await _db.CompanyInfo.SingleOrDefaultAsync(c=>c.UserId.Equals(UserId));
-            IEnumerable<SelectListItem> Country = _db.Country.Select(c=>new SelectListItem
-            {
-                Value= c.CountryName,
-                Text= c.CountryName,
-                Selected=CompanyInfo.Country == c.CountryName
-            });
+            var CompanyInfo = await _companyInfo.GetSingleCompanyInfo(_Currentuser.GetUserId());
+            var Country =  _CommonRepo.GetCountryList(CompanyInfo.Country);
             var VM = new CompanyInfoVM
             {
                 CompanyInfo=CompanyInfo,
@@ -56,7 +56,7 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewProfile(string Slugname)
         {
-            var CompanyInfo = await _db.CompanyInfo.SingleOrDefaultAsync(c => c.SlugName.Equals(Slugname));
+            var CompanyInfo = await _companyInfo.GetCompanyInfoByslugName(Slugname);
             return View(CompanyInfo);
         }
         [HttpPost]
@@ -83,6 +83,12 @@ namespace ImmigrationApp.Controllers
             await _db.SaveChangesAsync();
             AddNotificationToView("Company Profile Updated Successfully", true);
             return RedirectToAction("Profile");
+        }
+        //Post A Job//
+        public async Task<IActionResult> JobPost()
+        {
+
+            return View();
         }
     }
 }
