@@ -16,4 +16,13 @@ namespace ImmigrationApp.Models
         public List<CompanyInfo> CompanyInfoList { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
     }
+    public class JobVM
+    {
+        public Job Job { get; set; }
+        public List<JobType> JobTypeList { get; set; }
+        public List<JobSchedule> JobScheduleList { get; set; }
+        public List<SupplementalPay> SupplementalPayList { get; set; }
+        public List<BenefitOffered> BenefitOfferedList { get; set; }
+        public IEnumerable<SelectListItem> CountryList { get; set; }
+    }
 }

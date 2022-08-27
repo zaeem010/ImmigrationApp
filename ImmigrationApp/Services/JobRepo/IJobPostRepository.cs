@@ -8,10 +8,14 @@ namespace ImmigrationApp.Services
 {
     public interface IJobPostRepository
     {
-        void SaveJob(Job Job);
         IEnumerable<Job> GetAllJob();
         Job GetJob(long id);
-        void DeleteJob(long id);
-        void UpdateJob(Job Job);
+        Task<List<JobType>> GetJobType();
+        Task<List<JobSchedule>> GetJobSchedule();
+        Task<List<SupplementalPay>> GetSupplementalPay();
+        Task<List<BenefitOffered>> GetBenefitOffered();
+        //void DeleteJob(long id);
+        //void UpdateJob(Job Job);
+        //void SaveJob(Job Job);
     }
 }

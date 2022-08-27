@@ -1,5 +1,6 @@
 ﻿using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,15 @@ namespace ImmigrationApp.Services
         {
             _db = db;
         }
-        public void DeleteJob(long id)
+        public async Task<List<JobType>>  GetJobType()
         {
-            throw new NotImplementedException();
+            var Type = await _db.JobType.ToListAsync();
+            return Type;
+        }
+        public async Task<List<JobSchedule>> GetJobSchedule()
+        {
+            var List = await _db.JobSchedule.ToListAsync();
+            return List;
         }
 
         public IEnumerable<Job> GetAllJob()
@@ -29,14 +36,16 @@ namespace ImmigrationApp.Services
             throw new NotImplementedException();
         }
 
-        public void SaveJob(Job Job)
+        public async Task<List<SupplementalPay>> GetSupplementalPay()
         {
-            throw new NotImplementedException();
+            var List = await _db.SupplementalPay.ToListAsync();
+            return List;
         }
 
-        public void UpdateJob(Job Job)
+        public async Task<List<BenefitOffered>> GetBenefitOffered()
         {
-            throw new NotImplementedException();
+            var List = await _db.BenefitOffered.ToListAsync();
+            return List;
         }
     }
 }

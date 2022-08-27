@@ -13,7 +13,9 @@ namespace ImmigrationApp.Models
         [Required(ErrorMessage = "Required")]
         [MaxLength(555)]
         public string Title { get; set; }
+
         public bool SpecificAddress { get; set; }
+        
         [MaxLength(255)]
         public string Street { get; set; }
         [MaxLength(255)]
@@ -22,6 +24,10 @@ namespace ImmigrationApp.Models
         public string Province { get; set; }
         [MaxLength(255)]
         public string PostalCode { get; set; }
+        //
+        [MaxLength(255)]
+        public string AddressToAdvertise { get; set; }
+
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool PlanedstartDate { get; set; }
@@ -30,10 +36,12 @@ namespace ImmigrationApp.Models
         public string Numberofvaccant { get; set; }
         [MaxLength(255)]
         public string HireSpeed { get; set; }
+
         [MaxLength(255)]
         public string ShowPayby { get; set; }
         public double MinPay { get; set; }
         public double MaxPay { get; set; }
+        public double Amount { get; set; }
         [MaxLength(155)]
         public string Rate { get; set; }
         [Required(ErrorMessage = "Required")]

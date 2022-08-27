@@ -33,6 +33,7 @@ namespace ImmigrationApp
             services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
             services.AddTransient<ICommonRepo, CommonRepo>();
             services.AddTransient<ICompanyInfoRepo, CompanyInfoRepo>();
+            services.AddTransient<IJobPostRepository, JobPostRepository>();
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
