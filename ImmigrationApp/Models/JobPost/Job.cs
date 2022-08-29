@@ -13,38 +13,49 @@ namespace ImmigrationApp.Models
         [Required(ErrorMessage = "Required")]
         [MaxLength(555)]
         public string Title { get; set; }
-
+        [Required(ErrorMessage = "Required")]
         public bool SpecificAddress { get; set; }
-        
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string Street { get; set; }
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string City { get; set; }
+        [Required(ErrorMessage = "Required")]
         [MaxLength(55)]
         public string Province { get; set; }
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string PostalCode { get; set; }
         //
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string AddressToAdvertise { get; set; }
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        [Required(ErrorMessage = "Required")]
         public bool PlanedstartDate { get; set; }
         public DateTime? StartDate { get; set; }
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string Numberofvaccant { get; set; }
+        [Required(ErrorMessage = "Required")]
         [MaxLength(255)]
         public string HireSpeed { get; set; }
 
         [MaxLength(255)]
         public string ShowPayby { get; set; }
+        [Required(ErrorMessage = "Required")]
         public double MinPay { get; set; }
+        [Required(ErrorMessage = "Required")]
         public double MaxPay { get; set; }
+        [Required(ErrorMessage = "Required")]
         public double Amount { get; set; }
         [MaxLength(155)]
         public string Rate { get; set; }
         [Required(ErrorMessage = "Required")]
+        [MinLength(30),MaxLength(10000)]
         public string Description { get; set; }
         [Required(ErrorMessage = "Required")]
         [MaxLength(55)]
@@ -54,6 +65,7 @@ namespace ImmigrationApp.Models
         //
         public long JobSubCategoryId { get; set; }
         public int UserId { get; set; }
+        public bool Verify { get; set; } = false;
         //
         public virtual JobSubCategory JobSubCategory { get; set; }
         public virtual User User { get; set; }

@@ -47,7 +47,7 @@
                         <li><a asp-action="Dashboard" asp-controller="Employer"><i class="fa fa-tachometer"></i>Dashboard</a></li>
                         <li><a asp-action="Profile" asp-controller="Employer"><i class="fa fa-users"></i>Company Profile</a></li>
                         <li><a asp-action="Messages"><i class="fa fa-envelope-open"></i>messages</a></li>
-                        <li><a class="active" asp-action="JobPost" asp-controller="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
+                        <li class="active"><a asp-action="JobPost" asp-controller="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
                         <li><a asp-action="Manage"><i class="fa fa-briefcase"></i>manage candidates</a></li>
                         <li><a href="#"><i class="fa fa-rocket"></i>transaction</a></li>
                         <li><a asp-action="Password"><i class="fa fa-lock"></i>change password</a></li>
@@ -58,7 +58,7 @@
             <!--Sidebar For Employer End-->
             <div class="col-md-8 col-lg-9">
                 <div class="dashboard-right">
-                    <form asp-action="#" enctype="multipart/form-data">
+                    <form action="Javascript:SaveJob();" enctype="multipart/form-data">
                         <div class="candidate-profile">
                             <div class="candidate-single-profile-info">
                                 <div class="resume-box">
@@ -72,7 +72,7 @@
                                         <div class="single-input">
                                             <label>Where will an employee report to work?</label>
                                             <select asp-for="Job.SpecificAddress">
-                                                <option hidden>Choose</option>
+                                                <option hidden value="">Choose</option>
                                                 <option value="true">Employee Will Report to a specific Address</option>
                                                 <option value="false">Employee Will Not Report to a specific Address</option>
                                             </select>
@@ -85,23 +85,24 @@
                                                 <label>Street Address</label>
                                                 <p>We'll include this information in your job post.</p>
                                                 <input asp-for="Job.Street" />
+                                                <span class="text-danger" asp-validation-for="Job.Street"></span>
                                             </div>
                                         </div>
                                         <div class="single-resume-feild feild-flex-2">
                                             <div class="single-input">
                                                 <label for="name">City</label>
                                                 <input asp-for="Job.City">
-                                                <span class="text-danger"></span>
+                                                <span class="text-danger" asp-validation-for="Job.City"></span>
                                             </div>
                                             <div class="single-input">
                                                 <label for="name">Province</label>
                                                 <input asp-for="Job.Province">
-                                                <span class="text-danger"></span>
+                                                <span class="text-danger" asp-validation-for="Job.Province"></span>
                                             </div>
                                             <div class="single-input">
                                                 <label for="name">Postal Code</label>
                                                 <input asp-for="Job.PostalCode">
-                                                <span class="text-danger"></span>
+                                                <span class="text-danger" asp-validation-for="Job.PostalCode"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -111,6 +112,7 @@
                                                 <label>Where would you like to advertise this job?</label>
                                                 <p>Enter a city or province</p>
                                                 <input asp-for="Job.AddressToAdvertise" />
+                                                <span class="text-danger" asp-validation-for="Job.AddressToAdvertise"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -118,12 +120,12 @@
                                         <div class="all-sub-category clearfix">
                                             <div class="search-category-box">
                                                 <h3>What is the job type?</h3>
-                                                <ul class="list_category">
+                                                <ul class="list_category" id="Jobtype">
                                                     @{
                                                         foreach (var item in Model.JobTypeList)
                                                         {
-                                                            <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" id="Type_@item.Id">
+                                                            <li class="in checkbox" @item.Id>
+                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Type_@item.Id">
                                                                 <label for="Type_@item.Id"><span></span>@item.Name</label>
                                                             </li>
                                                         }
@@ -132,12 +134,12 @@
                                             </div>
                                             <div class="search-category-box">
                                                 <h3>What is the schedule for this job?</h3>
-                                                <ul class="list_category">
+                                                <ul class="list_category" id="JobSchedule">
                                                     @{
                                                         foreach (var item in Model.JobScheduleList)
                                                         {
                                                             <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" id="Sche_@item.Id">
+                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Sche_@item.Id">
                                                                 <label for="Sche_@item.Id"><span></span>@item.Name</label>
                                                             </li>
                                                         }
@@ -151,15 +153,15 @@
                                         <div class="single-input">
                                             <label>Is there a planned start date for this job?</label>
                                             <select asp-for="Job.PlanedstartDate">
-                                                <option hidden>Choose</option>
-                                                <option value="true">Yes</option>
                                                 <option value="false">No</option>
+                                                <option value="true">Yes</option>
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.PlanedstartDate"></span>
                                         </div>
                                         <div class="single-input">
                                             <label>Date</label>
                                             <input type="date" asp-for="Job.StartDate">
-                                            <span class="text-danger"></span>
+                                            <span class="text-danger" asp-validation-for="Job.StartDate"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild feild-flex-2">
@@ -180,6 +182,7 @@
                                                 <option value="10">10</option>
                                                 <option value="10+">10+</option>
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.Numberofvaccant"></span>
                                         </div>
                                         <div class="single-input">
                                             <label>How quickly do you need to hire?</label>
@@ -191,8 +194,8 @@
                                                 <option value="1w/2w">1 To 2 weeks</option>
                                                 <option value="2w/4w">2 To 4 weeks</option>
                                                 <option value="4+">More than 4 weeks</option>
-
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.HireSpeed"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild ">
@@ -205,22 +208,25 @@
                                                 <option value="Maximun Amount">Maximun Amount</option>
                                                 <option value="Excat Amount">Excat Amount</option>
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.ShowPayby"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input" id="PayRange">
                                             <label for="name">Minimum</label>
                                             <input asp-for="Job.MinPay">
+                                            <span class="text-danger" asp-validation-for="Job.MinPay"></span>
                                         </div>
                                         <div class="single-input" id="PayRange1">
                                             <label for="name">Maximum</label>
                                             <input asp-for="Job.MaxPay">
-                                            <span class="text-danger"></span>
+                                            <span class="text-danger" asp-validation-for="Job.MaxPay"></span>
                                         </div>
                                         <div id="excatpay">
                                             <div class="single-input">
                                                 <label for="name">Amount</label>
                                                 <input asp-for="Job.Amount">
+                                                <span class="text-danger" asp-validation-for="Job.Amount"></span>
                                             </div>
                                         </div>
                                         <div class="single-input">
@@ -232,18 +238,19 @@
                                                 <option value="Per month">Per month</option>
                                                 <option value="Per year">Per year</option>
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.Rate"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild ">
                                         <div class="all-sub-category clearfix">
                                             <div class="search-category-box">
                                                 <h3 style="font-size:small">Do you offer any of the following supplemental pay?</h3>
-                                                <ul class="list_category">
+                                                <ul class="list_category" id="JobSupp">
                                                     @{
                                                         foreach (var item in Model.SupplementalPayList)
                                                         {
                                                             <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" id="Supp_@item.Id">
+                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Supp_@item.Id">
                                                                 <label for="Supp_@item.Id"><span></span>@item.Name</label>
                                                             </li>
                                                         }
@@ -252,12 +259,12 @@
                                             </div>
                                             <div class="search-category-box">
                                                 <h3 style="font-size:small">Are any of the following benefits offered?</h3>
-                                                <ul class="list_category">
+                                                <ul class="list_category" id="JobBenefit">
                                                     @{
                                                         foreach (var item in Model.BenefitOfferedList)
                                                         {
                                                             <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" id="Benefit_@item.Id">
+                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Benefit_@item.Id">
                                                                 <label for="Benefit_@item.Id"><span></span>@item.Name</label>
                                                             </li>
                                                         }
@@ -271,6 +278,7 @@
                                         <div class="single-input">
                                             <label for="Bio">Description</label>
                                             <textarea asp-for="Job.Description"></textarea>
+                                            <span class="text-danger" asp-validation-for="Job.Description"></span>
                                         </div>
                                     </div>
 
@@ -278,17 +286,18 @@
                                         <div class="single-input">
                                             <label for="name">Would you like people to submit a resume?</label>
                                             <select asp-for="Job.ResumeSubmit">
-                                                <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
                                                 <option value="optional">Optional</option>
                                             </select>
                                         </div>
                                         <div class="single-input">
                                             <label for="name">Is there an application deadline?</label>
                                             <select asp-for="Job.Deadline">
-                                                <option value="true">Yes</option>
                                                 <option value="false">No</option>
+                                                <option value="true">Yes</option>
                                             </select>
+                                            <span class="text-danger" asp-validation-for="Job.Description"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild ">
@@ -308,7 +317,10 @@
 
                                 </div>
                         </div>
-                        <input type="hidden" />
+                        <input type="hidden" asp-for="Job.Id"/>
+                        <input type="hidden" asp-for="Job.Verify"/>
+                        <input type="hidden" asp-for="Job.Latitude"/>
+                        <input type="hidden" asp-for="Job.Longitude"/>
                     </form>
                 </div>
             </div>
@@ -317,5 +329,6 @@
 </section>
 <!-- Candidate Dashboard Area End -->
 @section scripts{
+    <partial name="_ValidationScriptsPartial" />
     <script src="/js/JobPost.js" asp-append-version="true"></script>
  }

@@ -14,7 +14,7 @@
     justify-content: flex-end;
     position: fixed;
     width: auto;
-    z-index: 1202
+    z-index: 999999
 }
 
     #tg-container * {

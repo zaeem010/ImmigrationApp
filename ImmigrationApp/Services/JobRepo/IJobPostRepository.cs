@@ -14,8 +14,9 @@ namespace ImmigrationApp.Services
         Task<List<JobSchedule>> GetJobSchedule();
         Task<List<SupplementalPay>> GetSupplementalPay();
         Task<List<BenefitOffered>> GetBenefitOffered();
+        Task<string> SaveJob(Job Job);
         //void DeleteJob(long id);
         //void UpdateJob(Job Job);
-        //void SaveJob(Job Job);
+
     }
 }

@@ -28,5 +28,12 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
+        [Route("/Job/Save")]
+        public async Task<JsonResult> Save(Job Job)
+        {
+            var result = await _job.SaveJob(Job);
+            return Json(result);
+        }
+
     }
 }
