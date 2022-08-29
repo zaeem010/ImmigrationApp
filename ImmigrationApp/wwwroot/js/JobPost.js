@@ -4,7 +4,7 @@
     $('#excatpay').hide();
     $('#Job_StartDate').prop('disabled', true);
     $('#Job_DeadlineDate').prop('disabled', true);
-
+    $('#Job_Description').richText();
     //Speicfy Address
     $('#Job_SpecificAddress').change(function (e) {
         if (this.value == "")
