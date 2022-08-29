@@ -219,7 +219,6 @@
                                         {
                                             imgpath = "/Upload/" + C.LogoPath;
                                         }
-                                        int jobcount = Model.CompanyInfoList.Where(c => c.UserId == Model.UserId).Count();
                                         <li>
                                             <div class="top-company-list">
                                                 <div class="company-list-logo">
@@ -230,7 +229,7 @@
                                                 <div class="company-list-details">
                                                     <h3><a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName">@C.Company</a></h3>
                                                     <p class="company-state"><i class="fa fa-map-marker"></i> @C.Address</p>
-                                                    <p class="open-icon"><i class="fa fa-briefcase"></i>@jobcount open position</p>
+                                                    <p class="open-icon"><i class="fa fa-briefcase"></i>@C.JobAgainst open position</p>
                                                     <p class="varify"><i class="fa fa-check"></i>Verified</p>
                                                     @*<p class="rating-company">4.9</p>*@
                                                 </div>
@@ -239,7 +238,6 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        jobcount = 0;
                                     }
                                 }
                             </ul>

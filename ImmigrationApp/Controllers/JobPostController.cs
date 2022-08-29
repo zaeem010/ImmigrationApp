@@ -38,6 +38,27 @@ namespace ImmigrationApp.Controllers
             var result = await _job.SaveJob(Job);
             return Json(result);
         }
+        [Route("/Job/Manage-Jobs")]
+        public async Task<IActionResult> ManageJobs()
+        {
+            var result = await _job.GetAllJob();
+            return View(result);
+        }
+        [Route("/Job/Update-Job")]
+        public async Task<IActionResult> UpdateJob(long Id)
+        {
+            var VM = new JobVM
+            {
+                Job = await _job.GetJob(Id),
+                JobTypeList = await _job.GetJobType(),
+                JobScheduleList = await _job.GetJobSchedule(),
+                SupplementalPayList = await _job.GetSupplementalPay(),
+                BenefitOfferedList = await _job.GetBenefitOffered(),
+                UserId = _Cur.GetUserId(),
+                CompanyId = await _job.GetCompanyId(_Cur.GetUserId()),
+            };
+            return View("JobPost", VM);
+        }
 
     }
 }

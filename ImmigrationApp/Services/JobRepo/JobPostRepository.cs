@@ -10,7 +10,7 @@ namespace ImmigrationApp.Services
 {
     public class JobPostRepository : IJobPostRepository
     {
-        private ApplicationDbContext _db;
+        public ApplicationDbContext _db;
         public JobPostRepository(ApplicationDbContext db)
         {
             _db = db;
@@ -26,14 +26,29 @@ namespace ImmigrationApp.Services
             return List;
         }
 
-        public IEnumerable<Job> GetAllJob()
+        public async Task<List<Job>> GetAllJob()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var List = await _db.Job.ToListAsync();
+                return List;
+            }
+            catch (Exception e)
+            {
+                var error= e.Message;
+                throw;
+            }
         }
 
-        public Job GetJob(long id)
+        public async Task<Job> GetJob(long id)
         {
-            throw new NotImplementedException();
+            var result = await _db.Job
+                .Include(x => x.SupplementalPayChildList)
+                .Include(x => x.BenefitOfferedChildList)
+                .Include(x => x.JobTypeChildList)
+                .Include(x => x.JobScheduleChildList)
+                .SingleOrDefaultAsync(x => x.Id.Equals(id));
+                return result;
         }
 
         public async Task<List<SupplementalPay>> GetSupplementalPay()
@@ -51,7 +66,18 @@ namespace ImmigrationApp.Services
         public async Task<string> SaveJob(Job Job)
         {
             string message;
-            if (Job.Id == 0)
+            if (Job.SpecificAddress == true)
+            {
+                Job.AddressToAdvertise = " ";
+            }
+            if (Job.SpecificAddress == false)
+            {
+                Job.Street = " ";
+                Job.City = " ";
+                Job.PostalCode = " ";
+                Job.Province = " ";
+            }
+                if (Job.Id == 0)
             {
                 await _db.Job.AddAsync(Job);
                 message = "Registerd Successfully";

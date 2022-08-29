@@ -47,7 +47,8 @@
                         <li><a asp-action="Dashboard"><i class="fa fa-tachometer"></i>Dashboard</a></li>
                         <li class="active"><a asp-action="Profile"><i class="fa fa-users"></i>Company Profile</a></li>
                         <li><a asp-action="Messages"><i class="fa fa-envelope-open"></i>messages</a></li>
-                        <li><a asp-action="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
+                        <li><a asp-action="JobPost" asp-controller="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
+                        <li><a asp-action="ManageJobs" asp-controller="JobPost"><i class="fa fa-briefcase"></i>manage job</a></li>
                         <li><a asp-action="Manage"><i class="fa fa-briefcase"></i>manage candidates</a></li>
                         <li><a href="#"><i class="fa fa-rocket"></i>transaction</a></li>
                         <li><a asp-action="Password"><i class="fa fa-lock"></i>change password</a></li>

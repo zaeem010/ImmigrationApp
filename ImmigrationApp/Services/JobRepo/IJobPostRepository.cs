@@ -8,8 +8,8 @@ namespace ImmigrationApp.Services
 {
     public interface IJobPostRepository
     {
-        IEnumerable<Job> GetAllJob();
-        Job GetJob(long id);
+        Task<List<Job>> GetAllJob();
+        Task<Job> GetJob(long id);
         Task<long> GetCompanyId(int id);
         Task<List<JobType>> GetJobType();
         Task<List<JobSchedule>> GetJobSchedule();

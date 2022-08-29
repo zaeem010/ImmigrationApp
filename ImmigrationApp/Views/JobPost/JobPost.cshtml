@@ -48,6 +48,7 @@
                         <li><a asp-action="Profile" asp-controller="Employer"><i class="fa fa-users"></i>Company Profile</a></li>
                         <li><a asp-action="Messages"><i class="fa fa-envelope-open"></i>messages</a></li>
                         <li class="active"><a asp-action="JobPost" asp-controller="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
+                        <li><a asp-action="ManageJobs" asp-controller="JobPost"><i class="fa fa-briefcase"></i>manage Job</a></li>
                         <li><a asp-action="Manage"><i class="fa fa-briefcase"></i>manage candidates</a></li>
                         <li><a href="#"><i class="fa fa-rocket"></i>transaction</a></li>
                         <li><a asp-action="Password"><i class="fa fa-lock"></i>change password</a></li>
@@ -122,13 +123,28 @@
                                                 <h3>What is the job type?</h3>
                                                 <ul class="list_category" id="Jobtype">
                                                     @{
-                                                        foreach (var item in Model.JobTypeList)
+                                                        if (Model.Job == null)
                                                         {
-                                                            <li class="in checkbox" @item.Id>
-                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Type_@item.Id">
-                                                                <label for="Type_@item.Id"><span></span>@item.Name</label>
-                                                            </li>
+                                                            foreach (var item in Model.JobTypeList)
+                                                            {
+                                                                <li class="in checkbox" @item.Id>
+                                                                    <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Type_@item.Id">
+                                                                    <label for="Type_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
                                                         }
+                                                        else
+                                                        {
+                                                            foreach (var item in Model.JobTypeList)
+                                                            {
+                                                                var isSelected = Model.Job.JobTypeChildList.Any(x => x.JobTypeId == item.Id);
+                                                                <li class="in checkbox" @item.Id>
+                                                                    <input class="checkbox-spin" type="checkbox" checked="@isSelected" value="@item.Id" id="Type_@item.Id">
+                                                                    <label for="Type_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
+                                                        }
+
                                                     }
                                                 </ul>
                                             </div>
@@ -136,13 +152,29 @@
                                                 <h3>What is the schedule for this job?</h3>
                                                 <ul class="list_category" id="JobSchedule">
                                                     @{
-                                                        foreach (var item in Model.JobScheduleList)
+                                                        if (Model.Job == null)
                                                         {
-                                                            <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Sche_@item.Id">
-                                                                <label for="Sche_@item.Id"><span></span>@item.Name</label>
-                                                            </li>
+                                                            foreach (var item in Model.JobScheduleList)
+                                                            {
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Sche_@item.Id">
+                                                                    <label for="Sche_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
                                                         }
+                                                        else
+                                                        {
+                                                            foreach (var item in Model.JobScheduleList)
+                                                            {
+                                                                var isSelected = Model.Job.JobScheduleChildList.Any(x => x.JobScheduleId == item.Id);
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" checked="@isSelected" value="@item.Id" id="Sche_@item.Id">
+                                                                    <label for="Sche_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
+
+                                                        }
+
                                                     }
                                                 </ul>
                                             </div>
@@ -247,13 +279,28 @@
                                                 <h3 style="font-size:small">Do you offer any of the following supplemental pay?</h3>
                                                 <ul class="list_category" id="JobSupp">
                                                     @{
-                                                        foreach (var item in Model.SupplementalPayList)
+                                                        if (Model.Job == null)
                                                         {
-                                                            <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Supp_@item.Id">
-                                                                <label for="Supp_@item.Id"><span></span>@item.Name</label>
-                                                            </li>
+                                                            foreach (var item in Model.SupplementalPayList)
+                                                            {
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Supp_@item.Id">
+                                                                    <label for="Supp_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
                                                         }
+                                                        else
+                                                        {
+                                                            foreach (var item in Model.SupplementalPayList)
+                                                            {
+                                                                var isSelected = Model.Job.SupplementalPayChildList.Any(x => x.SupplementalPayId == item.Id);
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" checked="@isSelected" value="@item.Id" id="Supp_@item.Id">
+                                                                    <label for="Supp_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
+                                                        }
+
                                                     }
                                                 </ul>
                                             </div>
@@ -261,13 +308,28 @@
                                                 <h3 style="font-size:small">Are any of the following benefits offered?</h3>
                                                 <ul class="list_category" id="JobBenefit">
                                                     @{
-                                                        foreach (var item in Model.BenefitOfferedList)
+                                                        if (Model.Job == null)
                                                         {
-                                                            <li class="in checkbox">
-                                                                <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Benefit_@item.Id">
-                                                                <label for="Benefit_@item.Id"><span></span>@item.Name</label>
-                                                            </li>
+                                                            foreach (var item in Model.BenefitOfferedList)
+                                                            {
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" value="@item.Id" id="Benefit_@item.Id">
+                                                                    <label for="Benefit_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
                                                         }
+                                                        else
+                                                        {
+                                                            foreach (var item in Model.BenefitOfferedList)
+                                                            {
+                                                                var isSelected = Model.Job.BenefitOfferedChildList.Any(x => x.BenefitOfferedId == item.Id);
+                                                                <li class="in checkbox">
+                                                                    <input class="checkbox-spin" type="checkbox" checked="@isSelected" value="@item.Id" id="Benefit_@item.Id">
+                                                                    <label for="Benefit_@item.Id"><span></span>@item.Name</label>
+                                                                </li>
+                                                            }
+                                                        }
+
                                                     }
                                                 </ul>
                                             </div>

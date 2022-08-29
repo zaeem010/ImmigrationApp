@@ -5,65 +5,73 @@
     $('#Job_StartDate').prop('disabled', true);
     $('#Job_DeadlineDate').prop('disabled', true);
     $('#Job_Description').richText();
+    SpecificAddress($('#Job_SpecificAddress').val());
+    PlanedstartDate($('#Job_PlanedstartDate').val());
+    Deadline($('#Job_Deadline').val());
+    ShowPayby($('#Job_ShowPayby').val());
     //Speicfy Address
     $('#Job_SpecificAddress').change(function (e) {
-        if (this.value == "")
-        {
-            $('#SpecificAddress').hide();
-            $('#NoSpecificAddress').hide();
-        }
-        else if (this.value == "true")
-        {
-            $('#SpecificAddress').show();
-            $('#NoSpecificAddress').hide();
-        }
-        else if (this.value == "false")
-        {
-            $('#SpecificAddress').hide();
-            $('#NoSpecificAddress').show();
-        }
+        SpecificAddress(this.value);
     });
     //PlanedstartDate
     $('#Job_PlanedstartDate').change(function (e) {
-        if (this.value == "true")
-        {
-            $('#Job_StartDate').prop('disabled', false);
-        }
-        else if (this.value == "false")
-        {
-            $('#Job_StartDate').prop('disabled', true);
-            $('#Job_StartDate').val('');
-        }
+        PlanedstartDate(this.value);
     });
     //DeadlineDate
     $('#Job_Deadline').change(function (e) {
-        if (this.value == "true")
-        {
-            $('#Job_DeadlineDate').prop('disabled', false);
-        }
-        else if (this.value == "false")
-        {
-            $('#Job_DeadlineDate').prop('disabled', true);
-            $('#Job_DeadlineDate').val('');
-        }
+        Deadline(this.value);
     });
     //ShowPayby
     $('#Job_ShowPayby').bind('load change', function () {
-        debugger;
-        if (this.value == "Range")
-        {
-            $('#excatpay').hide();
-            $('#PayRange').show();
-            $('#PayRange1').show();
-        }
-        else
-        {
-            $('#excatpay').show();
-            $('#PayRange').hide();
-            $('#PayRange1').hide();
-        }
+        ShowPayby(this.value);
     });
 });
+function ShowPayby(val) {
+    if (val == "Range") {
+        $('#excatpay').hide();
+        $('#PayRange').show();
+        $('#PayRange1').show();
+    }
+    else {
+        $('#excatpay').show();
+        $('#PayRange').hide();
+        $('#PayRange1').hide();
+    }
+}
+function Deadline(val) {
+    if (val == "true") {
+        $('#Job_DeadlineDate').prop('disabled', false);
+    }
+    else if (val == "false") {
+        $('#Job_DeadlineDate').prop('disabled', true);
+        $('#Job_DeadlineDate').val('');
+    }
+}
+function PlanedstartDate(val)
+{
+    if (val == "true") {
+        $('#Job_StartDate').prop('disabled', false);
+    }
+    else if (val == "false") {
+        $('#Job_StartDate').prop('disabled', true);
+        $('#Job_StartDate').val('');
+    }
+}
+function SpecificAddress(val)
+{
+    if (val == "") {
+        $('#SpecificAddress').hide();
+        $('#NoSpecificAddress').hide();
+    }
+    else if (val == "true") {
+        $('#SpecificAddress').show();
+        $('#NoSpecificAddress').hide();
+    }
+    else if (val == "false") {
+        $('#SpecificAddress').hide();
+        $('#NoSpecificAddress').show();
+    }
+}
 function SaveJob()
 {
     let Job = {};
@@ -172,13 +180,13 @@ function SaveJob()
                 if (res == "Registerd Successfully") {
                     ShowToaster(1, "Posted Job Successfully please wait to get your job Verified .!");
                     setTimeout(function () {
-                        location.reload();
+                        window.location.replace('/Job/Manage-Jobs');
                     }, 1500);
                 }
                 if (res == "Updated Successfully"){
                     ShowToaster(1, "Updated Job Successfully .!");
                     setTimeout(function () {
-                        location.reload();
+                        window.location.replace('/Job/Manage-Jobs');
                     }, 1500);
                 }
             }

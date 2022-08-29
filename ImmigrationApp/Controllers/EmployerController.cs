@@ -84,11 +84,5 @@ namespace ImmigrationApp.Controllers
             AddNotificationToView("Company Profile Updated Successfully", true);
             return RedirectToAction("Profile");
         }
-        //Post A Job//
-        public async Task<IActionResult> JobPost()
-        {
-
-            return View();
-        }
     }
 }
