@@ -15,6 +15,7 @@ namespace ImmigrationApp.Models
     {
         public List<CompanyInfo> CompanyInfoList { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
+        public int UserId { get; set; }
     }
     public class JobVM
     {
@@ -23,6 +24,8 @@ namespace ImmigrationApp.Models
         public List<JobSchedule> JobScheduleList { get; set; }
         public List<SupplementalPay> SupplementalPayList { get; set; }
         public List<BenefitOffered> BenefitOfferedList { get; set; }
+        public int UserId { get; set; }
+        public long CompanyId { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
     }
 }

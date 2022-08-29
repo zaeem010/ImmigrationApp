@@ -1,4 +1,5 @@
-﻿using ImmigrationApp.Models;
+﻿using ImmigrationApp.Currentuser;
+using ImmigrationApp.Models;
 using ImmigrationApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,11 @@ namespace ImmigrationApp.Controllers
     public class JobPostController : BaseController
     {
         private IJobPostRepository _job { get; set; }
-        public JobPostController(IJobPostRepository job)
+        private ICurrentuser _Cur { get; set; }
+        public JobPostController(ICurrentuser Cur, IJobPostRepository job)
         {
             _job = job;
+            _Cur = Cur;
         }
         [Route("/Job/Post-a-Job")]
         public async Task<IActionResult> JobPost()
@@ -24,7 +27,8 @@ namespace ImmigrationApp.Controllers
                 JobScheduleList=await _job.GetJobSchedule(),
                 SupplementalPayList=await _job.GetSupplementalPay(),
                 BenefitOfferedList=await _job.GetBenefitOffered(),
-                //Job = new Job()
+                UserId = _Cur.GetUserId(),
+                CompanyId = await _job.GetCompanyId(_Cur.GetUserId()),
             };
             return View(VM);
         }

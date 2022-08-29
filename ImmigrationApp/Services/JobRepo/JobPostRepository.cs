@@ -69,8 +69,24 @@ namespace ImmigrationApp.Services
                 _db.Job.Update(Job);
                 message = "Updated Successfully";
             }
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+                var error = e.Message;
+                throw;
+            }
             return message;
+        }
+
+        public async Task<long> GetCompanyId(int id)
+        {
+            var result = await _db.CompanyInfo.SingleOrDefaultAsync(c => c.UserId == id);
+
+            return result.Id;
         }
     }
 }

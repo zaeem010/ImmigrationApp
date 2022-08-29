@@ -86,6 +86,9 @@ function SaveJob()
     Job.Deadline = $('#Job_Deadline').val() || "";
     Job.Latitude = $('#Job_Latitude').val() || 0;
     Job.Longitude = $('#Job_Longitude').val() || 0;
+    Job.UserId = $('#UserId').val();
+    Job.CompanyInfoId = $('#CompanyId').val();
+    Job.JobSubCategoryId = $('#Job_JobSubCategoryId').val();
     //Condition Values
     //1
     Job.Street =  "";
@@ -102,7 +105,7 @@ function SaveJob()
     //5
     Job.Amount = 0;
     //6
-    Job.DeadlineDate = $('#Job_DeadlineDate').val() || "";
+    Job.DeadlineDate = "";
     //Condition Values End
     //
     if (Job.SpecificAddress == "true")

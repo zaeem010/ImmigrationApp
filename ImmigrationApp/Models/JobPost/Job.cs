@@ -64,6 +64,7 @@ namespace ImmigrationApp.Models
         public DateTime? DeadlineDate { get; set; }
         //
         public long JobSubCategoryId { get; set; }
+        public long CompanyInfoId { get; set; }
         public int UserId { get; set; }
         public bool Verify { get; set; } = false;
         //

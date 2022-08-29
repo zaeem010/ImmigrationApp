@@ -10,6 +10,7 @@ namespace ImmigrationApp.Services
     {
         IEnumerable<Job> GetAllJob();
         Job GetJob(long id);
+        Task<long> GetCompanyId(int id);
         Task<List<JobType>> GetJobType();
         Task<List<JobSchedule>> GetJobSchedule();
         Task<List<SupplementalPay>> GetSupplementalPay();

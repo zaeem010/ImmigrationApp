@@ -1,4 +1,5 @@
-﻿using ImmigrationApp.Data;
+﻿using ImmigrationApp.Currentuser;
+using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,11 @@ namespace ImmigrationApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _db { get; set; }
-        public HomeController(ApplicationDbContext db, ILogger<HomeController> logger)
+        private ICurrentuser _Cur { get; set; }
+        public HomeController(ICurrentuser Cur, ApplicationDbContext db, ILogger<HomeController> logger)
         {
             _db = db;
+            _Cur = Cur;
             _logger = logger;
         }
         [HttpGet]
@@ -28,7 +31,8 @@ namespace ImmigrationApp.Controllers
             var CompanyList = await _db.CompanyInfo.ToListAsync();
             var VM = new HomeVM
             {
-                CompanyInfoList=CompanyList
+                CompanyInfoList=CompanyList,
+                UserId=_Cur.GetUserId(),
             };
             return View(VM);
         }

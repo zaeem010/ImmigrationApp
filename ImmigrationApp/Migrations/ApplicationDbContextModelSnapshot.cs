@@ -181,6 +181,9 @@ namespace ImmigrationApp.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<long>("CompanyInfoId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Deadline")
                         .HasColumnType("bit");
 
