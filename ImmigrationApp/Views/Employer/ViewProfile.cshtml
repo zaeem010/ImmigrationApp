@@ -57,63 +57,69 @@
                         @Html.Raw(Model.Description)
                     </div>
                     <div class="single-candidate-widget">
-                        <h3>(0) Open Positions</h3>
-                        <div class="single-work-history company-single-page">
-                                <div class="single-candidate-list">
-                                    <div class="main-comment">
-                                        <div class="candidate-text">
-                                            <div class="candidate-info">
-                                                <div class="candidate-title">
-                                                    <h3><a href="#">Lead UX/UI Designer</a></h3>
+                        <h3>(@Model.JobAgainst) Open Positions</h3>
+                        @{
+                            foreach (var item in Model.JobList)
+                            {
+                                <div class="single-work-history company-single-page">
+                                    <div class="single-candidate-list">
+                                        <div class="main-comment">
+                                            <div class="candidate-text">
+                                                <div class="candidate-info">
+                                                    <div class="candidate-title">
+                                                        <h3><a href="#">@item.Title</a></h3>
+                                                    </div>
+                                                    <p class="company-state">
+                                                        <i class="fa fa-map-marker"></i>
+                                                        @item.Street
+                                                    </p>
+                                                    <p class="open-icon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        Full Time
+                                                    </p>
+                                                    <p class="varify">
+                                                        <i class="fa fa-check"></i>
+                                                        @item.ShowPayby : $@item.MinPay -$@item.MaxPay
+                                                    </p>
                                                 </div>
-                                                <p class="company-state">
-                                                    <i class="fa fa-map-marker"></i>
-                                                    Chicago
-                                                </p>
-                                                <p class="open-icon">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    Full Time
-                                                </p>
-                                                <p class="varify">
-                                                    <i class="fa fa-check"></i>
-                                                    Salary : $800-$1200
-                                                </p>
-                                            </div>
-                                            <div class="candidate-text-inner">
-                                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
+                                                <div class="candidate-text-inner">
+                                                    <p>@Html.Raw(item.Description)</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="single-work-history company-single-page">
-                                <div class="single-candidate-list">
-                                    <div class="main-comment">
-                                        <div class="candidate-text">
-                                            <div class="candidate-info">
-                                                <div class="candidate-title">
-                                                    <h3><a href="#">C Developer (Senior) C .Net</a></h3>
-                                                </div>
-                                                <p class="company-state">
-                                                    <i class="fa fa-map-marker"></i>
-                                                    Chicago
-                                                </p>
-                                                <p class="open-icon">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    Full Time
-                                                </p>
-                                                <p class="varify">
-                                                    <i class="fa fa-check"></i>
-                                                    Salary : $800-$1200
-                                                </p>
+                            }
+                        }
+
+                        @*<div class="single-work-history company-single-page">
+                            <div class="single-candidate-list">
+                                <div class="main-comment">
+                                    <div class="candidate-text">
+                                        <div class="candidate-info">
+                                            <div class="candidate-title">
+                                                <h3><a href="#">C Developer (Senior) C .Net</a></h3>
                                             </div>
-                                            <div class="candidate-text-inner">
-                                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                            </div>
+                                            <p class="company-state">
+                                                <i class="fa fa-map-marker"></i>
+                                                Chicago
+                                            </p>
+                                            <p class="open-icon">
+                                                <i class="fa fa-clock-o"></i>
+                                                Full Time
+                                            </p>
+                                            <p class="varify">
+                                                <i class="fa fa-check"></i>
+                                                Salary : $800-$1200
+                                            </p>
+                                        </div>
+                                        <div class="candidate-text-inner">
+                                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>*@
                     </div>
                 </div>
             </div>

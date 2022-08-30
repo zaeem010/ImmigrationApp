@@ -28,17 +28,9 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //var CompanyList = await  _db.CompanyInfo.ToListAsync();
-            var CompanyList = await (from c in _db.CompanyInfo 
-                                     select new CompanyInfo {
-                                     LogoPath =c.LogoPath,
-                                     SlugName=c.SlugName,
-                                     Company=c.Company,
-                                     Id=c.Id,
-                                     Address=c.Address,
-                                     JobAgainst = _db.Job.Where(x=>x.CompanyInfoId.Equals(c.Id)).Count()
-                                     }
-                                     ).ToListAsync();
+            var CompanyList = await  _db.CompanyInfo
+                .Include(c=>c.JobList)
+                .ToListAsync();
             var VM = new HomeVM
             {
                 CompanyInfoList=CompanyList,

@@ -54,8 +54,14 @@ namespace ImmigrationApp.Models
         [DataType(DataType.Url)]
         public string FacebookUrl { get; set; }
         public virtual User User { get; set; }
+        public List<Job> JobList { get; set; }
+        public CompanyInfo()
+        {
+            JobList = new List<Job>();
+        }
         [NotMapped]
-        public int JobAgainst { get; set; }
+        public int JobAgainst => JobList.Where(x => x.CompanyInfoId == Id).Count();
+
     }
-    
+
 }

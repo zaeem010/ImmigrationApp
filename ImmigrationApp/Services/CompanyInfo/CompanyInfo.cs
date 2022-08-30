@@ -23,7 +23,9 @@ namespace ImmigrationApp.Services
 
         public async Task<CompanyInfo> GetCompanyInfoByslugName(string SlugName)
         {
-            var companyInfo = await _db.CompanyInfo.SingleOrDefaultAsync(c => c.SlugName.Equals(SlugName));
+            var companyInfo = await _db.CompanyInfo
+                .Include(c=>c.JobList)
+                .SingleOrDefaultAsync(c => c.SlugName.Equals(SlugName));
             return companyInfo;
         }
     }
