@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImmigrationApp.Services
+namespace ImmigrationApp.Repositries
 {
     public class CompanyInfoRepo : ICompanyInfoRepo
     {
@@ -27,6 +27,11 @@ namespace ImmigrationApp.Services
                 .Include(c=>c.JobList)
                 .SingleOrDefaultAsync(c => c.SlugName.Equals(SlugName));
             return companyInfo;
+        }
+
+        public Task<bool> AddUpdateCompanyInfo(CompanyInfo CompanyInfo)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImmigrationApp.Services.CommonRepo
+namespace ImmigrationApp.Repositries
 {
     public class CommonRepo : ICommonRepo
     {

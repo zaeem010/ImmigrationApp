@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using ImmigrationApp.Permission;
 using System;
 using ImmigrationApp.Currentuser;
-using ImmigrationApp.Services.CommonRepo;
-using ImmigrationApp.Services;
+using ImmigrationApp.Repositries;
+using ImmigrationApp.Extensions;
 
 namespace ImmigrationApp
 {
@@ -32,8 +32,10 @@ namespace ImmigrationApp
             //Custom Services
             services.AddTransient<ICurrentuser, Currentuser.Currentuser>();
             services.AddTransient<ICommonRepo, CommonRepo>();
-            services.AddTransient<ICompanyInfoRepo, CompanyInfoRepo>();
+            //services.AddTransient<ICompanyInfoRepo, CompanyInfoRepo>();
             services.AddTransient<IJobPostRepository, JobPostRepository>();
+            //
+            services.AddModule(Configuration);
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

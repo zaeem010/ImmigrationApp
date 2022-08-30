@@ -1,17 +1,13 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using ImmigrationApp.Repositries;
 using ImmigrationApp.Services;
-using ImmigrationApp.Services.CommonRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ImmigrationApp.Controllers
@@ -19,14 +15,14 @@ namespace ImmigrationApp.Controllers
     public class EmployerController : BaseController
     {
         public ApplicationDbContext _db { get; set; }
-        public ICompanyInfoRepo _companyInfo { get; set; }
+        public ICompanyInfoServices _companyInfoservice { get; set; }
         public ICommonRepo _CommonRepo { get; set; }
         public ICurrentuser _Currentuser { get; set; }
         private readonly IWebHostEnvironment host;
-        public EmployerController(ApplicationDbContext db, ICommonRepo CommonRepo, ICurrentuser Currentuser, ICompanyInfoRepo companyInfo, IWebHostEnvironment host)
+        public EmployerController(ApplicationDbContext db, ICommonRepo CommonRepo, ICurrentuser Currentuser, ICompanyInfoServices companyInfo, IWebHostEnvironment host)
         {
             _db = db;
-            _companyInfo = companyInfo;
+            _companyInfoservice = companyInfo;
             _CommonRepo = CommonRepo;
             _Currentuser = Currentuser;
             this.host = host;
@@ -35,7 +31,7 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Dashboard()
         {
-            var CompanyInfo = await _companyInfo.GetSingleCompanyInfo(_Currentuser.GetUserId());
+            var CompanyInfo = await _companyInfoservice.GetSingleCompanyInfo(_Currentuser.GetUserId());
             return View(CompanyInfo);
         }
         [Route("/Employer/Profile")]

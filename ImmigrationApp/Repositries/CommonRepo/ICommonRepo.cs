@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImmigrationApp.Services
+namespace ImmigrationApp.Repositries
 {
     public interface ICommonRepo
     {
