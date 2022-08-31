@@ -17,7 +17,9 @@ namespace ImmigrationApp.Repositries
         }
         public async Task<CompanyInfo>  GetSingleCompanyInfo(int UserId)
         {
-            var companyInfo = await _db.CompanyInfo.SingleOrDefaultAsync(c => c.UserId.Equals(UserId));
+            var companyInfo = await _db.CompanyInfo
+                .Include(x=>x.JobList)
+                .SingleOrDefaultAsync(c => c.UserId.Equals(UserId));
             return companyInfo;
         }
 

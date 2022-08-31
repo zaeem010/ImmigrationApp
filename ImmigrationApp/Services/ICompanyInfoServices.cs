@@ -10,7 +10,7 @@ namespace ImmigrationApp.Services
     public interface ICompanyInfoServices
     {
         Task<IResult<bool>> AddUpdateCompanyInfo(CompanyInfo CompanyInfo);
-        public Task<IResult<List<CompanyInfo>>> GetCompanyInfo();
+        Task<IResult<List<CompanyInfo>>> GetCompanyInfo();
         Task<IResult<CompanyInfo>> GetSingleCompanyInfo(int id);
     }
 }

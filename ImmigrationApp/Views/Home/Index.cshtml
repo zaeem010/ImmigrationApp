@@ -246,26 +246,68 @@
                     <div class="tab-pane fade" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
                         <div class="top-company-tab">
                             <ul>
-                                <li>
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a href="#">
-                                                <img src="/Front/assets/img/company-logo-1.png" alt="company list 1" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a href="#">Regional Sales Manager</a></h3>
-                                            <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
-                                            <p class="open-icon"><i class="fa fa-clock-o"></i>2 minutes ago</p>
-                                            <p class="varify"><i class="fa fa-check"></i>Fixed price : $1200-$2000</p>
-                                            <p class="rating-company">4.1</p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">bid now</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
+                                @{
+                                    foreach (var item in Model.JobList)
+                                    {
+                                        string imgpath = "/Front/no-image.png";
+                                        if (!string.IsNullOrEmpty(item.logoPath))
+                                        {
+                                            imgpath = "/Upload/" + item.logoPath;
+                                        }
+                                        <li>
+                                            <div class="top-company-list">
+                                                <div class="company-list-logo">
+                                                    <a href="#">
+                                                        <img src="@imgpath" alt="Logo" />
+                                                    </a>
+                                                </div>
+                                                <div class="company-list-details">
+                                                    <h3><a href="#">@item.Title</a></h3>
+                                                    <p class="company-state"><i class="fa fa-map-marker"></i>
+                                                    @{ 
+                                                        if (item.SpecificAddress)
+                                                        {
+                                                            <span>@item.City , @item.Province</span>
+                                                        }
+                                                        else 
+                                                        {
+                                                            <span>@item.AddressToAdvertise</span>
+                                                        }
+                                                    }
+                                                    </p>
+                                                    <p class="open-icon"><i class="fa fa-clock-o"></i>2 minutes ago</p>
+                                                    <p class="varify">
+                                                        <i class="fa fa-check"></i>
+                                                        @{
+                                                            switch (item.ShowBy)
+                                                            {
+                                                                case "Range":
+                                                                    <span>Minimum $@item.MinPay.ToString("#,#00") To Maximum $@item.MaxPay.ToString("#,#00")</span>
+                                                                    break;
+                                                                case "Starting Amount":
+                                                                    <span>Starting From $@item.Amount.ToString("#,#00")</span>
+                                                                    break;
+                                                                case "Maximun Amount":
+                                                                    <span>Maximun To $@item.Amount.ToString("#,#00")</span>
+                                                                    break;
+                                                                case "Excat Amount":
+                                                                    <span>Fixed Price $@item.Amount.ToString("#,#00")</span>
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            }
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div class="company-list-btn">
+                                                    <a href="#" class="jobguru-btn">Apply Now</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+
+                                @*<li>
                                     <div class="top-company-list">
                                         <div class="company-list-logo">
                                             <a href="#">
@@ -321,7 +363,7 @@
                                             <a href="#" class="jobguru-btn">bid now</a>
                                         </div>
                                     </div>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                     </div>

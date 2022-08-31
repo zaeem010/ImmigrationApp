@@ -41,7 +41,7 @@ namespace ImmigrationApp.Controllers
         [Route("/Job/Manage-Jobs")]
         public async Task<IActionResult> ManageJobs()
         {
-            var result = await _job.GetAllJob();
+            var result = await _job.GetAllJob(_Cur.GetUserId());
             return View(result);
         }
         [Route("/Job/Update-Job")]

@@ -14,6 +14,7 @@ namespace ImmigrationApp.Models
     public class HomeVM
     {
         public List<CompanyInfo> CompanyInfoList { get; set; }
+        public List<JobDTO> JobList { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
         public int UserId { get; set; }
     }

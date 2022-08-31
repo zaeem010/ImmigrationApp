@@ -26,11 +26,13 @@ namespace ImmigrationApp.Repositries
             return List;
         }
 
-        public async Task<List<Job>> GetAllJob()
+        public async Task<List<Job>> GetAllJob(int id)
         {
             try
             {
-                var List = await _db.Job.ToListAsync();
+                var List = await _db.Job
+                    .Where(x=>x.UserId.Equals(id))
+                    .ToListAsync();
                 return List;
             }
             catch (Exception e)

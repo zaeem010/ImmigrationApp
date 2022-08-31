@@ -17,11 +17,13 @@ namespace ImmigrationApp.Controllers
         public ApplicationDbContext _db { get; set; }
         public ICompanyInfoServices _companyInfoservice { get; set; }
         public ICommonRepo _CommonRepo { get; set; }
+        public ICompanyInfoRepo _companyInfo { get; set; }
         public ICurrentuser _Currentuser { get; set; }
         private readonly IWebHostEnvironment host;
-        public EmployerController(ApplicationDbContext db, ICommonRepo CommonRepo, ICurrentuser Currentuser, ICompanyInfoServices companyInfo, IWebHostEnvironment host)
+        public EmployerController(ICompanyInfoRepo companyInfos, ApplicationDbContext db, ICommonRepo CommonRepo, ICurrentuser Currentuser, ICompanyInfoServices companyInfo, IWebHostEnvironment host)
         {
             _db = db;
+            _companyInfo = companyInfos;
             _companyInfoservice = companyInfo;
             _CommonRepo = CommonRepo;
             _Currentuser = Currentuser;
@@ -31,7 +33,7 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Dashboard()
         {
-            var CompanyInfo = await _companyInfoservice.GetSingleCompanyInfo(_Currentuser.GetUserId());
+            var CompanyInfo = await _companyInfo.GetSingleCompanyInfo(_Currentuser.GetUserId());
             return View(CompanyInfo);
         }
         [Route("/Employer/Profile")]

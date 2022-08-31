@@ -8,7 +8,7 @@ namespace ImmigrationApp.Repositries
 {
     public interface IJobPostRepository
     {
-        Task<List<Job>> GetAllJob();
+        Task<List<Job>> GetAllJob(int id);
         Task<Job> GetJob(long id);
         Task<long> GetCompanyId(int id);
         Task<List<JobType>> GetJobType();

@@ -48,4 +48,22 @@ namespace ImmigrationApp.Models
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public string ReturnUrl { get; set; }
     }
+    public class JobDTO
+    {
+        public long Id { get; set; }
+        public string logoPath { get; set; }
+        public string Title { get; set; }
+        
+        public bool SpecificAddress { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string PostalCode { get; set; }
+        public string AddressToAdvertise { get; set; }
+
+        public string ShowBy { get; set; }
+        public double MinPay { get; set; }
+        public double MaxPay { get; set; }
+        public double Amount { get; set; }
+    }
 }

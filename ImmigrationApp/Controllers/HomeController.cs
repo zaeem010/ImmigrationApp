@@ -31,9 +31,27 @@ namespace ImmigrationApp.Controllers
             var CompanyList = await  _db.CompanyInfo
                 .Include(c=>c.JobList)
                 .ToListAsync();
+            var JobList = await (from x in _db.Job select new JobDTO 
+            {
+                Id =x.Id,
+                logoPath =_db.CompanyInfo.Where(c=>c.Id.Equals(x.CompanyInfoId)).Select(a=>a.LogoPath).FirstOrDefault(),
+                Title =x.Title,
+                SpecificAddress=x.SpecificAddress,
+                Street = x.Street,
+                City = x.City,
+                Province = x.Province,
+                PostalCode = x.PostalCode,
+                AddressToAdvertise = x.AddressToAdvertise,
+                ShowBy = x.ShowPayby,
+                MinPay = x.MinPay,
+                MaxPay = x.MaxPay,
+                Amount = x.Amount,
+            }).ToListAsync();
+
             var VM = new HomeVM
             {
                 CompanyInfoList=CompanyList,
+                JobList =JobList,
                 UserId=_Cur.GetUserId(),
             };
             return View(VM);
