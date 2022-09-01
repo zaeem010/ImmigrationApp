@@ -60,10 +60,22 @@ namespace ImmigrationApp.Models
         public string Province { get; set; }
         public string PostalCode { get; set; }
         public string AddressToAdvertise { get; set; }
+        public string Industry { get; set; }
+        public string Vacant { get; set; }
+        public string Description { get; set; }
+        public string SlugName { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public string ShowBy { get; set; }
+        public string Rate { get; set; }
         public double MinPay { get; set; }
         public double MaxPay { get; set; }
         public double Amount { get; set; }
+        public List<JobTypeChild> jobTypes { get; set; }
+        public DateTime PostDateTime { get; set; }
+        public TimeSpan DateTimePassed => DateTime.Now - PostDateTime;
+        public int DayPassed => DateTimePassed.Days;
+        public int HourPassed => DateTimePassed.Hours;
+        public int MinPassed => DateTimePassed.Minutes;
     }
 }

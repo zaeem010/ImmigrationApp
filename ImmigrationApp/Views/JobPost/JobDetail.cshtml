@@ -1,0 +1,224 @@
+﻿@model JobDetailVM
+@{
+    ViewData["Title"] = "JobDetail";
+    string imgpath = "/Front/no-image.png";
+    if (!string.IsNullOrEmpty(Model.JobDTO.logoPath))
+    {
+        imgpath = "/Upload/" + Model.JobDTO.logoPath;
+    }
+}
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
+<!-- Single Candidate Start -->
+<section class="single-candidate-page section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-lg-6">
+                <div class="single-candidate-box">
+                    <div class="single-candidate-img">
+                        <img src="@imgpath" alt="Logo" />
+                    </div>
+                    <div class="single-candidate-box-right">
+                        <h4>@Model.JobDTO.Title</h4>
+                        <p>@Model.JobDTO.Industry</p>
+                        <div class="job-details-meta">
+                            <p><i class="fa fa-file-text"></i> Applications @Model.JobDTO.Vacant</p>
+                            @{ 
+                                if (Model.JobDTO.StartDate?.Year.ToString() !="1")
+                                {
+                                    <p><i class="fa fa-calendar"></i><span>@Model.JobDTO.StartDate?.ToString("MMM dd ,yyyy")</span></p>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-6">
+                <div class="single-candidate-action">
+                    <a href="#" class="candidate-contact"><i class="fa fa-star"></i>Bookmarks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Single Candidate End -->
+<!-- Single Candidate Bottom Start -->
+<section class="single-candidate-bottom-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-9 mx-auto">
+                <div class="single-candidate-bottom-left">
+                    @*<div class="single-candidate-widget clearfix">
+                        <h3>Job details</h3>
+                        <p><b>Job type</b></p>
+                        
+                    </div>*@
+                    <div class="single-candidate-widget">
+                        <h3>Full Job Description</h3>
+                        @Html.Raw(Model.JobDTO.Description)
+                    </div>
+
+
+                    <div class="single-candidate-widget clearfix">
+                        <h3>Hiring Insights</h3>
+                        <p><b>Job activity</b></p>
+                        @{
+                            if (Model.JobDTO.DayPassed > 0)
+                            {
+                                <span>Posted @Model.JobDTO.DayPassed days ago</span>
+                            }
+                            else if (Model.JobDTO.HourPassed > 0)
+                            {
+                                <span>Posted @Model.JobDTO.HourPassed hours ago</span>
+                            }
+                            else if (Model.JobDTO.MinPassed > 0)
+                            {
+                                <span>Posted @Model.JobDTO.MinPassed minutes ago</span>
+                            }
+                            else
+                            {
+                                <span>Posted Now</span>
+                            }
+                        }
+                    </div>
+                    <div class="single-candidate-widget clearfix">
+                        <h3>share this post</h3>
+                        <ul class="share-job">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        </ul>
+                    </div>
+                    @*<div class="single-candidate-widget">
+                        <h3>Similar Jobs</h3>
+                        <div class="sidebar-list-single">
+                            <div class="top-company-list">
+                                <div class="company-list-logo">
+                                    <a href="#">
+                                        <img src="assets/img/company-logo-2.png" alt="company list 1">
+                                    </a>
+                                </div>
+                                <div class="company-list-details">
+                                    <h3><a href="#">Regional Sales Manager</a></h3>
+                                    <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
+                                    <p class="open-icon"><i class="fa fa-clock-o"></i>2 minutes ago</p>
+                                    <p class="varify"><i class="fa fa-check"></i>Fixed price : $1200-$2000</p>
+                                    <p class="rating-company">4.1</p>
+                                </div>
+                                <div class="company-list-btn">
+                                    <a href="#" class="jobguru-btn">bid now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar-list-single">
+                            <div class="top-company-list">
+                                <div class="company-list-logo">
+                                    <a href="#">
+                                        <img src="assets/img/company-logo-3.png" alt="company list 1">
+                                    </a>
+                                </div>
+                                <div class="company-list-details">
+                                    <h3><a href="#">Asst. Teacher</a></h3>
+                                    <p class="company-state"><i class="fa fa-map-marker"></i> Chicago, Michigan</p>
+                                    <p class="open-icon"><i class="fa fa-clock-o"></i>2 minutes ago</p>
+                                    <p class="varify"><i class="fa fa-check"></i>Fixed price : $800-$1200</p>
+                                    <p class="rating-company">4.2</p>
+                                </div>
+                                <div class="company-list-btn">
+                                    <a href="#" class="jobguru-btn">bid now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-3 mx-auto">
+                <div class="single-candidate-bottom-right">
+                    <div class="single-candidate-widget-2">
+                        <a href="#" class="jobguru-btn-2">
+                            <i class="fa fa-paper-plane-o"></i>
+                            Apply Now
+                        </a>
+                    </div>
+                    <div class="single-candidate-widget-2">
+                        <h3>Job overview</h3>
+                        <ul class="job-overview">
+                            <li>
+                                <h4><i class="fa fa-briefcase"></i> Offerd Salary</h4>
+                                <p>
+                                    @{
+                                        switch (Model.JobDTO.ShowBy)
+                                        {
+                                            case "Range":
+                                                <span>Min $@Model.JobDTO.MinPay.ToString("#,#00") To Max $@Model.JobDTO.MaxPay.ToString("#,#00") @Model.JobDTO.Rate</span>
+                                                break;
+                                            case "Starting Amount":
+                                                <span>Starting From $@Model.JobDTO.Amount.ToString("#,#00") @Model.JobDTO.Rate</span>
+                                                break;
+                                            case "Maximun Amount":
+                                                <span>Maximun $@Model.JobDTO.Amount.ToString("#,#00") @Model.JobDTO.Rate</span>
+                                                break;
+                                            case "Excat Amount":
+                                                <span>Fixed Price $@Model.JobDTO.Amount.ToString("#,#00") @Model.JobDTO.Rate</span>
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                </p>
+                            </li>
+                            <li>
+                                <h4><i class="fa fa-map-marker"></i> Location</h4>
+                                <p>
+                                    @{
+                                        if (Model.JobDTO.SpecificAddress)
+                                        {
+                                            <span>@Model.JobDTO.City , @Model.JobDTO.Province</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@Model.JobDTO.AddressToAdvertise</span>
+                                        }
+                                    }
+                                </p>
+                            </li>
+                            <li>
+                                <h4><i class="fa fa-thumb-tack"></i> Job Type</h4>
+                                <p>
+                                    @{
+                                        foreach (var item in Model.JobDTO.jobTypes)
+                                        {
+                                            string type = Model.JobTypeList.Where(z => z.Id.Equals(item.JobTypeId)).Select(x => x.Name).FirstOrDefault();
+                                            <span>@type</span>
+                                            <br />
+                                        }
+                                    }
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="single-candidate-widget-2">
+                        <h3>Quick Contacts</h3>
+                        <form>
+                            <p>
+                                <input type="text" placeholder="Your Name">
+                            </p>
+                            <p>
+                                <input type="email" placeholder="Your Email Address">
+                            </p>
+                            <p>
+                                <textarea placeholder="Write here your message"></textarea>
+                            </p>
+                            <p>
+                                <button type="submit">Send Message</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Single Candidate Bottom End -->

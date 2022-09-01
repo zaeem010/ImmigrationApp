@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class JobDetailVM
+    {
+        public JobDTO JobDTO { get; set; }
+        public List<JobType> JobTypeList { get; set; }
+    }
     public class CompanyInfoVM
     {
         public CompanyInfo CompanyInfo { get; set; }

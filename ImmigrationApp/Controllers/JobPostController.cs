@@ -1,7 +1,9 @@
 ﻿using ImmigrationApp.Currentuser;
+using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using ImmigrationApp.Repositries;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,13 @@ namespace ImmigrationApp.Controllers
     public class JobPostController : BaseController
     {
         private IJobPostRepository _job { get; set; }
+        private ApplicationDbContext _db { get; set; }
         private ICurrentuser _Cur { get; set; }
-        public JobPostController(ICurrentuser Cur, IJobPostRepository job)
+        public JobPostController(ApplicationDbContext db, ICurrentuser Cur, IJobPostRepository job)
         {
             _job = job;
             _Cur = Cur;
+            _db = db;
         }
         [Route("/Job/Post-a-Job")]
         public async Task<IActionResult> JobPost()
@@ -59,6 +63,41 @@ namespace ImmigrationApp.Controllers
             };
             return View("JobPost", VM);
         }
-
+        [Route("/Job/Job-Detail/{SlugName}")]
+        public async Task<IActionResult> JobDetail(string SlugName)
+        {
+            var result = await (from x in _db.Job
+                                 select new JobDTO
+                                 {
+                                     Id = x.Id,
+                                     logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
+                                     Title = x.Title,
+                                     SpecificAddress = x.SpecificAddress,
+                                     Street = x.Street,
+                                     City = x.City,
+                                     Province = x.Province,
+                                     PostalCode = x.PostalCode,
+                                     AddressToAdvertise = x.AddressToAdvertise,
+                                     ShowBy = x.ShowPayby,
+                                     MinPay = x.MinPay,
+                                     MaxPay = x.MaxPay,
+                                     Amount = x.Amount,
+                                     Rate = x.Rate,
+                                     PostDateTime = x.PostDateTime,
+                                     Vacant = x.Numberofvaccant,
+                                     StartDate = x.StartDate,
+                                     Description = x.Description,
+                                     SlugName = x.SlugName,
+                                     Industry = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.Industry).FirstOrDefault(),
+                                     jobTypes =x.JobTypeChildList
+                                 })
+                                 .SingleOrDefaultAsync(x=>x.SlugName == SlugName);
+            var VM = new JobDetailVM {
+            JobDTO=result,
+            JobTypeList =await _db.JobType.ToListAsync()
+            };
+            return View(VM);
+        }
+        
     }
 }

@@ -79,8 +79,11 @@ namespace ImmigrationApp.Repositries
                 Job.PostalCode = " ";
                 Job.Province = " ";
             }
-                if (Job.Id == 0)
+            string Slugname = Job.Title;
+            Job.SlugName = Slugname.Replace(" ", "-");
+            if (Job.Id == 0)
             {
+                Job.PostDateTime = DateTime.Now;
                 await _db.Job.AddAsync(Job);
                 message = "Registerd Successfully";
             }

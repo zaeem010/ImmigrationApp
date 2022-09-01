@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -66,7 +67,10 @@ namespace ImmigrationApp.Models
         public long JobSubCategoryId { get; set; }
         public long CompanyInfoId { get; set; }
         public int UserId { get; set; }
+        public DateTime PostDateTime { get; set; }
         public bool Verify { get; set; } = false;
+        [MaxLength(455)]
+        public string SlugName { get; set; }
         //
         public virtual JobSubCategory JobSubCategory { get; set; }
         public virtual User User { get; set; }
@@ -75,6 +79,15 @@ namespace ImmigrationApp.Models
         public virtual List<SupplementalPayChild> SupplementalPayChildList { get; set; }
         public virtual List<BenefitOfferedChild> BenefitOfferedChildList { get; set; }
         public virtual List<JobEmailChild> JobEmailChildList { get; set; }
+        //Not Mapped
+        [NotMapped]
+        public TimeSpan DateTimePassed => DateTime.Now - PostDateTime;
+        [NotMapped]
+        public int DayPassed => DateTimePassed.Days;
+        [NotMapped]
+        public int HourPassed => DateTimePassed.Hours;
+        [NotMapped]
+        public int MinPassed => DateTimePassed.Minutes;
     }
     public class JobTypeChild 
     {

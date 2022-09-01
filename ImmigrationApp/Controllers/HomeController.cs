@@ -46,6 +46,9 @@ namespace ImmigrationApp.Controllers
                 MinPay = x.MinPay,
                 MaxPay = x.MaxPay,
                 Amount = x.Amount,
+                Rate = x.Rate,
+                SlugName = x.SlugName,
+                PostDateTime =x.PostDateTime,
             }).ToListAsync();
 
             var VM = new HomeVM

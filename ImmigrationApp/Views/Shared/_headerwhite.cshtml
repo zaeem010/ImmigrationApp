@@ -30,7 +30,7 @@
                     <div class="header-menu">
                         <nav id="navigation">
                             <ul id="jobguru_navigation">
-                                <li><a asp-action="Index" asp-controller="Home">Find Jobs</a></li>
+                                <li><a asp-action="JobFind" asp-controller="FindJob">Find Jobs</a></li>
                                 <li><a href="#">Company Reviews</a></li>
                                 <li><a href="#">Salary Guide</a></li>
                                 @{
@@ -43,6 +43,8 @@
                                                 <ul>
                                                     <li><a asp-action="Dashboard" asp-controller="Employer">Dashboard</a></li>
                                                     <li><a asp-action="Profile" asp-controller="Employer">Profile</a></li>
+                                                    <li><a asp-action="JobPost" asp-controller="JobPost">Post a Job</a></li>
+                                                    <li><a asp-action="ManageJobs" asp-controller="JobPost">Manage Job</a></li>
                                                 </ul>
                                             </li>
                                         }
