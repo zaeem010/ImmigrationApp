@@ -4,14 +4,16 @@ using ImmigrationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmigrationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220903104455_custom-resume")]
+    partial class customresume
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,13 +210,7 @@ namespace ImmigrationApp.Migrations
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
-                    b.Property<bool>("Relocate")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("ShowPhoneNumber")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowtoPublic")
                         .HasColumnType("bit");
 
                     b.Property<string>("Street")
@@ -225,12 +221,7 @@ namespace ImmigrationApp.Migrations
                         .HasMaxLength(455)
                         .HasColumnType("nvarchar(455)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("CustomResume");
                 });
@@ -1037,17 +1028,6 @@ namespace ImmigrationApp.Migrations
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.CompanyInfo", b =>
-                {
-                    b.HasOne("ImmigrationApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ImmigrationApp.Models.CustomResume", b =>
                 {
                     b.HasOne("ImmigrationApp.Models.User", "User")
                         .WithMany()

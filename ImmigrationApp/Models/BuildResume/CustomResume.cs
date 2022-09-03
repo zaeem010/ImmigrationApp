@@ -26,6 +26,8 @@ namespace ImmigrationApp.Models
         public string Summary { get; set; }
         //Address
         [MaxLength(255)]
+        public string Country { get; set; }
+        [MaxLength(255)]
         public string Street { get; set; }
         [MaxLength(255)]
         public string City { get; set; }
@@ -35,11 +37,25 @@ namespace ImmigrationApp.Models
         public string PostalCode { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool ShowtoPublic { get; set; } = false;
+        public bool Relocate { get; set; } = false;
+        public int UserId { get; set; }
+        public virtual  User User { get; set; }
         //Education
         public List<ResumeEducation> ResumeEducationList { get; set; }
+        public List<ResumeLanguageChild> ResumeLanguageChildList { get; set; }
+        public List<ResumeLinkChild> ResumeLinkChildList { get; set; }
         //Work Experience
         public List<ResumeExperience> ResumeExperienceList { get; set; }
         public List<ResumeSkillChild> ResumeSkillChildList { get; set; }
+        public CustomResume()
+        {
+            ResumeEducationList = new List<ResumeEducation>();
+            ResumeLanguageChildList = new List<ResumeLanguageChild>();
+            ResumeLinkChildList = new List<ResumeLinkChild>();
+            ResumeExperienceList = new List<ResumeExperience>();
+            ResumeSkillChildList = new List<ResumeSkillChild>();
+        }
     }
     public class ResumeSkillChild 
     {
@@ -48,6 +64,22 @@ namespace ImmigrationApp.Models
         public long CustomResumeId { get; set; }
         public long SkillId { get; set; }
         public virtual Skill Skill { get; set; }
+    }
+    public class ResumeLanguageChild 
+    {
+        [Key]
+        public long Id { get; set; }
+        public long CustomResumeId { get; set; }
+        [MaxLength(255)]
+        public string Values { get; set; }
+    }
+    public class ResumeLinkChild 
+    {
+        [Key]
+        public long Id { get; set; }
+        public long CustomResumeId { get; set; }
+        [MaxLength(255)]
+        public string Values { get; set; }
     }
     public class ResumeEducation 
     {
