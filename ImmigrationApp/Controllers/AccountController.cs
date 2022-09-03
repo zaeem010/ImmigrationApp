@@ -33,6 +33,7 @@ namespace ImmigrationApp.Controllers
             _signInManager = signInManager;
             _logger = logger;
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
@@ -44,6 +45,7 @@ namespace ImmigrationApp.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(new LoginDTO());
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO LoginDTO, string returnUrl = null)
         {
@@ -67,6 +69,7 @@ namespace ImmigrationApp.Controllers
             }
             return View("Login", LoginDTO);
         }
+        [AllowAnonymous]
         [Route("/Account/Employer-SignUp")]
         public IActionResult EmployeeSignUp()
         {
@@ -78,6 +81,19 @@ namespace ImmigrationApp.Controllers
             ViewBag.Country = Country;
             return View();
         }
+        [AllowAnonymous]
+        [Route("/Account/Candidate-SignUp")]
+        public IActionResult CandidateSignUp()
+        {
+            IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+            {
+                Value =c.CountryName,
+                Text =c.CountryName,
+            });
+            ViewBag.Country = Country;
+            return View();
+        }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(UserDto UserDto, string returnUrl = null)
         {
@@ -109,18 +125,22 @@ namespace ImmigrationApp.Controllers
                         _logger.LogInformation("User created a new account with password.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
-                        string Slugname = UserDto.Company;
-                        var CompanyInfo = new CompanyInfo
+                        if (UserDto.Type == "Employee")
                         {
-                            Country =UserDto.Country,
-                            Company =UserDto.Company,
-                            Contact =UserDto.Contact,
-                            NumberOfEmployee = UserDto.NumberOfEmployee,
-                            Email = UserDto.Email,
-                            SlugName = Slugname.Replace(" ","-"),
-                            UserId = GetId.Id,
-                        };
-                        await _db.CompanyInfo.AddAsync(CompanyInfo);
+                            string Slugname = UserDto.Company;
+                            var CompanyInfo = new CompanyInfo
+                            {
+                                Country = UserDto.Country,
+                                Company = UserDto.Company,
+                                Contact = UserDto.Contact,
+                                NumberOfEmployee = UserDto.NumberOfEmployee,
+                                Email = UserDto.Email,
+                                SlugName = Slugname.Replace(" ", "-"),
+                                UserId = GetId.Id,
+                            };
+                            await _db.CompanyInfo.AddAsync(CompanyInfo);
+                        }
+                        
                         await _db.SaveChangesAsync();
                         return LocalRedirect(returnUrl);
                     }
@@ -136,6 +156,69 @@ namespace ImmigrationApp.Controllers
                     ViewBag.Country = Country;
                     AddNotificationToView("The User With This Email Already Exists.", false);
                     return View("EmployeeSignUp", UserDto);
+                }
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RegisterCanidate(UserCandidateDto UserDto, string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+                {
+                    Value = c.CountryName,
+                    Text = c.CountryName,
+                });
+                var check = await _userManager.FindByEmailAsync(UserDto.Email);
+                if (check == null)
+                {
+                    var user = new User
+                    {
+                        FirstName = UserDto.FirstName,
+                        LastName = UserDto.LastName,
+                        UserName = UserDto.Email,
+                        Email = UserDto.Email,
+                        Type = UserDto.Type,
+                        Created = DateTime.Now,
+                        IsActive = UserDto.IsActive,
+                    };
+                    var result = await _userManager.CreateAsync(user, UserDto.Password);
+                    await _userManager.AddToRoleAsync(user, Roles.Canidate.ToString());
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
+                            await _userManager.AddToRoleAsync(user, Roles.Canidate.ToString());
+                            string Slugname = UserDto.FirstName +' '+ UserDto.LastName;
+                            var Candidate = new CustomResume
+                            {
+                                FirstName = UserDto.FirstName,
+                                LastName = UserDto.LastName,
+                                Country = UserDto.Country,
+                                PhoneNumber = UserDto.Contact,
+                                Email = UserDto.Email,
+                                SlugName = Slugname.Replace(" ", "-"),
+                                UserId = GetId.Id,
+                            };
+                        await _db.CustomResume.AddAsync(Candidate);
+                        await _db.SaveChangesAsync();
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        ViewBag.Country = Country;
+                        AddNotificationToView("An Error Occured While Creating The Account", false);
+                        return View("CandidateSignUp", UserDto);
+                    }
+                }
+                else
+                {
+                    ViewBag.Country = Country;
+                    AddNotificationToView("The User With This Email Already Exists.", false);
+                    return View("CandidateSignUp", UserDto);
                 }
             }
             return View();

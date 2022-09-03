@@ -48,6 +48,16 @@
                                                 </ul>
                                             </li>
                                         }
+                                        if (user.Type == "Candidate")
+                                        {
+                                            <li class="active has-children">
+                                                <a href="#">Candidate</a>
+                                                <ul>
+                                                    <li><a asp-action="Profile" asp-controller="Candidate">Profile</a></li>
+                                                    <li><a href="#" @*asp-action="MyJob" asp-controller="Candidate"*@>MyJob</a></li>
+                                                </ul>
+                                            </li>
+                                        }
                                     }
                                 }
                             </ul>
@@ -57,14 +67,19 @@
                 <div class="col-lg-4">
                     <div class="header-right-menu">
                         <ul>
-                            <li><a asp-action="JobPost" asp-controller="JobPost" class="post-jobs">Post jobs</a></li>
                             @{
+                                if (isSignedIn && user.Type == "Employee")
+                                {
+                                    <li><a asp-action="JobPost" asp-controller="JobPost" class="post-jobs">Post jobs</a></li>
+                                }
+                                else if (!isSignedIn)
+                                {
+                                    <li><a asp-action="JobPost" asp-controller="JobPost" class="post-jobs">Post jobs</a></li>
+                                }
                                 if (isSignedIn)
                                 {
-                                    if (user.Type == "Employee")
-                                    {
-                                        <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user"></i>Welcome @userName</a></li>
-                                    }
+
+                                    <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user"></i>Welcome @userName</a></li>
                                 }
                                 else
                                 {

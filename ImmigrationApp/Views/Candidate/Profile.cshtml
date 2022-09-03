@@ -1,0 +1,288 @@
+﻿@model CanidateVM
+@{
+    ViewData["Title"] = "Profile";
+}
+<style>
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        text-transform: capitalize !important;
+        border: 2px solid #e8ecec;
+        color: #777 !important
+    }
+    table, td, th, tr {
+        border: 0px solid #25AD60;
+        font: -webkit-small-control;
+    }
+
+    .cu-table {
+        border-collapse: collapse;
+        height:30px
+    }
+
+</style>
+<script>
+    $(document).ready(function () {
+        $('#CustomResume_Summary').richText();
+    });
+</script> 
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
+<!-- Breadcromb Area Start -->
+<section class="jobguru-breadcromb-area">
+    <div class="breadcromb-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcromb-box-pagin">
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">Candidate</a></li>
+                            <li class="active-breadcromb"><a href="#">Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcromb Area End -->
+<!-- Candidate Dashboard Area Start -->
+<section class="candidate-dashboard-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="dashboard-right">
+                    <form asp-action="UpdateProfile" enctype="multipart/form-data">
+                        <div class="candidate-profile">
+                            <div class="candidate-single-profile-info">
+                                <div class="resume-box">
+                                    <h3>company profile</h3>
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input">
+                                            <label>First Name</label>
+                                            <input type="text" asp-for="CustomResume.FirstName">
+                                            <span asp-validation-for="CustomResume.FirstName" class="text-danger"></span>
+                                        </div>
+                                        <div class="single-input">
+                                            <label>Last Name</label>
+                                            <input type="text" asp-for="CustomResume.LastName">
+                                            <span asp-validation-for="CustomResume.LastName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input">
+                                            <label>Country</label>
+                                            <select class="country-select select2" asp-for="CustomResume.Country" asp-items="Model.CountryList">
+                                                <option value="">select an option</option>
+                                            </select>
+                                            <span asp-validation-for="CustomResume.Country" class="text-danger"></span>
+                                        </div>
+                                        <div class="single-input">
+                                            <label>City</label>
+                                            <input asp-for="CustomResume.City">
+                                        </div>
+                                    </div>
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input">
+                                            <label>Street / Address</label>
+                                            <input asp-for="CustomResume.Street" />
+                                            <span asp-validation-for="CustomResume.Street" class="text-danger"></span>
+                                        </div>
+                                        <div class="single-input">
+                                            <label>Post Code</label>
+                                            <input asp-for="CustomResume.PostalCode" />
+                                            <span asp-validation-for="CustomResume.PostalCode" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="resume-box">
+                                    <h3>Personal Info</h3>
+
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input">
+                                            <label>Head Line</label>
+                                            <input asp-for="CustomResume.Headline" />
+                                            <span asp-validation-for="CustomResume.Headline" class="text-danger"></span>
+                                        </div>
+                                        <div class="single-input">
+                                            <label>Phone Number</label>
+                                            <input asp-for="CustomResume.PhoneNumber" />
+                                            <span asp-validation-for="CustomResume.PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="single-resume-feild ">
+                                        <div class="single-input">
+                                            <label for="Bio">Summary:</label>
+                                            <textarea asp-for="CustomResume.Summary"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input">
+                                            <label for="name">I am willing to relocate</label>
+                                            <select asp-for="CustomResume.Relocate">
+                                                <option value="false">No</option>
+                                                <option value="true">Yes</option>
+                                            </select>
+                                        </div>
+                                        <div class="single-input">
+                                            <label for="name">Show Profile To public</label>
+                                            <select asp-for="CustomResume.ShowtoPublic">
+                                                <option value="false">No</option>
+                                                <option value="true">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="resume-box">
+                                    <h3>Education &nbsp;<i class="fa fa-plus-circle"></i></h3>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table cu-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Subject</th>
+                                                    <th>Period</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Bachelor's in Computer Science</td>
+                                                    <td>Bzu - Toronto, ON</td>
+                                                    <td>September 2019 to December 2021</td>
+                                                    <td><a class="btn"><i class="fa fa-edit"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="resume-box">
+                                    <h3>Work Experience</h3>
+                                </div>
+                                <div class="submit-resume">
+                                    <button type="submit">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="CustomResume.Id" />
+                        <input type="hidden" asp-for="CustomResume.UserId" />
+                        <input type="hidden" asp-for="CustomResume.Email" />
+                        <input type="hidden" asp-for="CustomResume.SlugName" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Candidate Dashboard Area End -->
+
+@*<div class="resume-box">
+    <h3>company profile</h3>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label for="name">Company Title:</label>
+            <input type="text" asp-for="CompanyInfo.Company">
+            <span asp-validation-for="CompanyInfo.Company" class="text-danger"></span>
+        </div>
+        <div class="single-input">
+            <label for="c_cat">company category:</label>
+            <select asp-for="CompanyInfo.Industry">
+                <option value="">Choose Category</option>
+                <option value="IT Service">IT Service</option>
+                <option value="StartUP">StartUP</option>
+                <option value="Corporate">Corporate</option>
+            </select>
+            <span asp-validation-for="CompanyInfo.Industry" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label>Contact</label>
+            <input type="text" asp-for="CompanyInfo.Contact">
+            <span asp-validation-for="CompanyInfo.Contact" class="text-danger"></span>
+        </div>
+        <div class="single-input">
+            <label>Team Member</label>
+            <select asp-for="CompanyInfo.NumberOfEmployee">
+                <option value="">select an option</option>
+                <option value="1/49">1 to 49</option>
+                <option value="50/149">50 to 149</option>
+                <option value="150/249">150 to 249</option>
+                <option value="250/449">250 to 499</option>
+                <option value="500/749">500 to 749</option>
+                <option value="750/999">750 to 999</option>
+                <option value="1000">1000+</option>
+            </select>
+        </div>
+    </div>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label>Country</label>
+            <select class="country-select select2" asp-for="CompanyInfo.Country" asp-items="Model.CountryList">
+                <option value="">select an option</option>
+            </select>
+            <span asp-validation-for="CompanyInfo.Country" class="text-danger"></span>
+        </div>
+        <div class="single-input">
+            <label>City</label>
+            <input asp-for="CompanyInfo.City">
+        </div>
+    </div>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label>Post Code</label>
+            <input asp-for="CompanyInfo.PostCode" />
+            <span asp-validation-for="CompanyInfo.PostCode" class="text-danger"></span>
+        </div>
+        <div class="single-input">
+            <label>Address</label>
+            <input asp-for="CompanyInfo.Address">
+        </div>
+    </div>
+    <div class="single-resume-feild ">
+        <div class="single-input">
+            <label for="Bio">Description:</label>
+            <textarea asp-for="CompanyInfo.Description"></textarea>
+        </div>
+    </div>
+</div>*@
+
+@*<div class="resume-box">
+    <h3>social link</h3>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label>
+                <i class="fa fa-file-word-o google"></i>
+                Company Website
+            </label>
+            <input asp-for="CompanyInfo.WebsiteUrl">
+        </div>
+
+        <div class="single-input">
+            <label for="twitter">
+                <i class="fa fa-facebook facebook"></i>
+                facebook
+            </label>
+            <input asp-for="CompanyInfo.FacebookUrl">
+        </div>
+    </div>
+    <div class="single-resume-feild feild-flex-2">
+        <div class="single-input">
+            <label for="twitter">
+                <i class="fa fa-twitter twitter"></i>
+                twitter
+            </label>
+            <input asp-for="CompanyInfo.TwitterUrl">
+        </div>
+        <div class="single-input">
+            <label for="linkedin">
+                <i class="fa fa-linkedin linkedin"></i>
+                linkedin
+            </label>
+            <input asp-for="CompanyInfo.LinkedinUrl">
+        </div>
+    </div>
+</div>*@

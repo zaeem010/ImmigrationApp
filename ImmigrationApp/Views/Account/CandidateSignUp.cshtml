@@ -1,6 +1,6 @@
-﻿@model UserDto
+﻿@model UserCandidateDto
 @{
-    ViewData["Title"] = "Employers-SignUp";
+    ViewData["Title"] = "Candidate-SignUp";
 }
 <style>
     .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -22,7 +22,7 @@
                         <ul>
                             <li><a href="#">home</a></li>
                             <li><a href="#">Account</a></li>
-                            <li class="active-breadcromb"><a href="#">Employeer</a></li>
+                            <li class="active-breadcromb"><a href="#">candidate</a></li>
                         </ul>
                     </div>
                 </div>
@@ -47,17 +47,17 @@
                 <div class=" job-tab">
                     <ul class="nav nav-pills job-tab-switch" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a asp-action="EmployeeSignUp"asp-controller="Account" class="nav-link active">Employeer</a>
+                            <a asp-action="EmployeeSignUp" asp-controller="Account" class="nav-link">Employeer</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="CandidateSignUp"asp-controller="Account" class="nav-link">Canidate</a>
+                            <a asp-action="CandidateSignUp" asp-controller="Account" class="nav-link active">Candidate</a>
                         </li>
                     </ul>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active">
                         <div class="new-job-submission">
-                            <form asp-action="Register">
+                            <form asp-action="RegisterCanidate">
                                 <div class="resume-box">
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
@@ -68,37 +68,17 @@
                                             <span asp-validation-for="Country" class="text-danger"></span>
                                         </div>
                                         <div class="single-input">
-                                            <label for="Location">Your Company's Name <i class="fa fa-star text-danger"></i></label>
-                                            <input type="text" asp-for="Company">
-                                            <span asp-validation-for="Company" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="single-resume-feild feild-flex-2">
-                                        <div class="single-input">
                                             <label>First Name <i class="fa fa-star text-danger"></i></label>
                                             <input type="text" asp-for="FirstName">
                                             <span asp-validation-for="FirstName" class="text-danger"></span>
                                         </div>
-                                        <div class="single-input">
-                                            <label>Last Name</label>
-                                            <input type="text" asp-for="LastName">
-                                            <span asp-validation-for="LastName" class="text-danger"></span>
-                                        </div>
                                     </div>
+
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
-                                            <label>Your company's number of employees </label>
-                                            <select asp-for="NumberOfEmployee">
-                                                <option value="">select an option</option>
-                                                <option value="1/49">1 to 49</option>
-                                                <option value="50/149">50 to 149</option>
-                                                <option value="150/249">150 to 249</option>
-                                                <option value="250/449">250 to 499</option>
-                                                <option value="500/749">500 to 749</option>
-                                                <option value="750/999">750 to 999</option>
-                                                <option value="1000">1000+</option>
-                                            </select>
+                                            <label>Last Name <i class="fa fa-star text-danger"></i></label>
+                                            <input type="text" asp-for="LastName">
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
                                         </div>
                                         <div class="single-input">
                                             <label>Your Phone Number</label>
@@ -106,6 +86,7 @@
                                             <span asp-validation-for="Contact" class="text-danger"></span>
                                         </div>
                                     </div>
+                                  
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
                                             <label>Email <i class="fa fa-star text-danger"></i></label>
@@ -123,12 +104,12 @@
                                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         </div>
                                     </div>
-                             
+
                                 </div>
                                 <div class="single-input submit-resume">
                                     <button type="submit">Sign Up</button>
                                 </div>
-                                <input type="hidden" value="Employee" asp-for="Type" />
+                                <input type="hidden" value="Candidate" asp-for="Type" />
                                 <input type="hidden" value="true" asp-for="IsActive" />
                             </form>
                         </div>
@@ -139,7 +120,7 @@
     </div>
 </section>
 <script>
-    
+
 </script>
 <!-- Login Area End -->
 <partial name="_ValidationScriptsPartial" />

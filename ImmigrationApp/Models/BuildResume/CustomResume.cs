@@ -39,6 +39,11 @@ namespace ImmigrationApp.Models
         public double Longitude { get; set; }
         public bool ShowtoPublic { get; set; } = false;
         public bool Relocate { get; set; } = false;
+        [EmailAddress]
+        [MaxLength(455)]
+        public string Email { get; set; }
+        [MaxLength(455)]
+        public string SlugName { get; set; }
         public int UserId { get; set; }
         public virtual  User User { get; set; }
         //Education

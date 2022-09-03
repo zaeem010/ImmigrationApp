@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class CanidateVM
+    {
+        public CustomResume CustomResume { get; set; }
+        public List<Skill> SkillList { get; set; }
+        public IEnumerable<SelectListItem> CountryList { get; set; }
+    }
     public class JobDetailVM
     {
         public JobDTO JobDTO { get; set; }
