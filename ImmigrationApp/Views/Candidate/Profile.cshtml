@@ -17,7 +17,10 @@
         border-collapse: collapse;
         height:30px
     }
-
+    .modal-title{
+        color:black;
+        font:bolder;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -136,10 +139,10 @@
                                     </div>
                                 </div>
                                 <div class="resume-box">
-                                    <h3>Education &nbsp;<i class="fa fa-plus-circle"></i></h3>
+                                    <h3>Education &nbsp; <a data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus-circle"></i></a></h3>
                                     
                                     <div class="table-responsive">
-                                        <table class="table cu-table">
+                                        <table class="table cu-table" id="educationtable">
                                             <thead>
                                                 <tr>
                                                     <th>Title</th>
@@ -149,12 +152,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Bachelor's in Computer Science</td>
-                                                    <td>Bzu - Toronto, ON</td>
-                                                    <td>September 2019 to December 2021</td>
-                                                    <td><a class="btn"><i class="fa fa-edit"></i></a></td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -177,8 +175,113 @@
         </div>
     </div>
 </section>
-<!-- Candidate Dashboard Area End -->
 
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="status" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <div class="single-resume-feild feild-flex-2">
+                    <div class="single-input">
+                        <label>Level Of Education</label>
+                        <select id="leveleducation">
+                            <option value="">Select</option>
+                            <option value="Phd">Phd</option>
+                            <option value="MPhill">M Phill</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                        </select>
+                    </div>
+                    <div class="single-input">
+                        <label>Field Of Study</label>
+                        <input type="text" id="filedstudy" />
+                    </div>
+                    <div class="single-input">
+                        <label>School Name</label>
+                        <input type="text" id="schoolname" />
+                    </div>
+                </div>
+                <div class="single-resume-feild feild-flex-2">
+                    <div class="single-input">
+                        <label>Country</label>
+                        <select id="country" asp-items="Model.CountryList">
+                            <option value="">select an option</option>
+                        </select>
+                    </div>
+                    <div class="single-input">
+                        <label>City , Province</label>
+                        <input type="text" id="city" />
+                    </div>
+                    <div class="single-input">
+                        <label>Currently Enrolled</label>
+                        <select id="enrolled">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="single-resume-feild feild-flex-2">
+                    <div class="single-input">
+                        <label>From Month</label>
+                        <select id="fmonth">
+                            <option value='Janaury'>Janaury</option>
+                            <option value='February'>February</option>
+                            <option value='March'>March</option>
+                            <option value='April'>April</option>
+                            <option value='May'>May</option>
+                            <option value='June'>June</option>
+                            <option value='July'>July</option>
+                            <option value='August'>August</option>
+                            <option value='September'>September</option>
+                            <option value='October'>October</option>
+                            <option value='November'>November</option>
+                            <option value='December'>December</option>
+                        </select>
+                    </div>
+                    <div class="single-input">
+                        <label>From Year</label>
+                        <select id="fyear" class="dropdownYear" >
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="single-resume-feild feild-flex-2">
+                    <div class="single-input">
+                        <label>To Month</label>
+                        <select id="tmonth">
+                            <option value='Janaury'>Janaury</option>
+                            <option value='February'>February</option>
+                            <option value='March'>March</option>
+                            <option value='April'>April</option>
+                            <option value='May'>May</option>
+                            <option value='June'>June</option>
+                            <option value='July'>July</option>
+                            <option value='August'>August</option>
+                            <option value='September'>September</option>
+                            <option value='October'>October</option>
+                            <option value='November'>November</option>
+                            <option value='December'>December</option>
+                        </select>
+                    </div>
+                    <div class="single-input">
+                        <label>To Year</label>
+                        <select id="tyear" class="dropdownYear">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="AddEducation();" data-dismiss="modal">Save changes / Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Candidate Dashboard Area End -->
+<script src="~/js/CanProfile.js" asp-append-version="true"></script>
 @*<div class="resume-box">
     <h3>company profile</h3>
     <div class="single-resume-feild feild-flex-2">
