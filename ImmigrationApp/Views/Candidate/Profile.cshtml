@@ -22,11 +22,6 @@
         font:bolder;
     }
 </style>
-<script>
-    $(document).ready(function () {
-        $('#CustomResume_Summary').richText();
-    });
-</script> 
 <!-- Header Area Start -->
 <partial name="_headerwhite" />
 <!-- Header Area End -->
@@ -55,7 +50,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="dashboard-right">
-                    <form asp-action="UpdateProfile" enctype="multipart/form-data">
+                    <form action="Javascript:Updateprofile()" enctype="multipart/form-data">
                         <div class="candidate-profile">
                             <div class="candidate-single-profile-info">
                                 <div class="resume-box">
@@ -139,8 +134,108 @@
                                     </div>
                                 </div>
                                 <div class="resume-box">
-                                    <h3>Education &nbsp; <a data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus-circle"></i></a></h3>
-                                    
+                                    <h3>Education &nbsp; <a data-bs-toggle="collapse" data-bs-target="#education" aria-expanded="true" aria-controls="education" id="educationclick"><i class="fa fa-plus-circle" id="edclass"></i></a></h3>
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="accordion-item">
+                                            <div id="education" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>Level Of Education</label>
+                                                            <select id="leveleducation">
+                                                                <option value="">Select</option>
+                                                                <option value="Phd">Phd</option>
+                                                                <option value="MPhill">M Phill</option>
+                                                                <option value="Bachelor">Bachelor</option>
+                                                                <option value="Master">Master</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>Field Of Study</label>
+                                                            <input type="text" id="filedstudy" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>School Name</label>
+                                                            <input type="text" id="schoolname" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>Country</label>
+                                                            <select id="country" asp-items="Model.CountryList">
+                                                                <option value="">select an option</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>City , Province</label>
+                                                            <input type="text" id="city" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>Currently Enrolled</label>
+                                                            <select id="enrolled">
+                                                                <option value="false">No</option>
+                                                                <option value="true">Yes</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>From Month</label>
+                                                            <select id="fmonth">
+                                                                <option value='Janaury'>Janaury</option>
+                                                                <option value='February'>February</option>
+                                                                <option value='March'>March</option>
+                                                                <option value='April'>April</option>
+                                                                <option value='May'>May</option>
+                                                                <option value='June'>June</option>
+                                                                <option value='July'>July</option>
+                                                                <option value='August'>August</option>
+                                                                <option value='September'>September</option>
+                                                                <option value='October'>October</option>
+                                                                <option value='November'>November</option>
+                                                                <option value='December'>December</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>From Year</label>
+                                                            <select id="fyear" class="dropdownYear">
+                                                                <option value="">Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>To Month</label>
+                                                            <select id="tmonth">
+                                                                <option value='Janaury'>Janaury</option>
+                                                                <option value='February'>February</option>
+                                                                <option value='March'>March</option>
+                                                                <option value='April'>April</option>
+                                                                <option value='May'>May</option>
+                                                                <option value='June'>June</option>
+                                                                <option value='July'>July</option>
+                                                                <option value='August'>August</option>
+                                                                <option value='September'>September</option>
+                                                                <option value='October'>October</option>
+                                                                <option value='November'>November</option>
+                                                                <option value='December'>December</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>To Year</label>
+                                                            <select id="tyear" class="dropdownYear">
+                                                                <option value="">Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="submit-resume">
+                                                    <a class="btn btn-primary mb-1" onclick="AddEducation()">Add Education</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table cu-table" id="educationtable">
                                             <thead>
@@ -148,17 +243,171 @@
                                                     <th>Title</th>
                                                     <th>Subject</th>
                                                     <th>Period</th>
-                                                    <th></th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+                                                @{ 
+                                                    foreach (var item in Model.CustomResume.ResumeEducationList)
+                                                    {
+                                                        <tr>
+                                                            <td class="d-none">@item.LevelofEducation</td>
+                                                            <td class="d-none">@item.FieldofStudy</td>
+                                                            <td class="d-none">@item.SchoolName</td>
+                                                            <td class="d-none">@item.StudyCountry</td>
+                                                            <td class="d-none">@item.StudyCity</td>
+                                                            <td class="d-none">@item.CurrentlyEnrolled</td>
+                                                            <td class="d-none">@item.FromMonth</td>
+                                                            <td class="d-none">@item.FromYear</td>
+                                                            <td class="d-none">@item.ToMonth</td>
+                                                            <td class="d-none">@item.ToYear</td>
+                                                            <td>@item.LevelofEducation in @item.FieldofStudy</td>
+                                                            <td>@item.SchoolName - @item.StudyCity</td>
+                                                            <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
+                                                            <td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>
+                                                        </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="resume-box">
-                                    <h3>Work Experience</h3>
+                                    <h3>Work Experience &nbsp; <a data-bs-toggle="collapse" data-bs-target="#work" aria-expanded="true" aria-controls="work" id="workclick"><i class="fa fa-plus-circle" id="wclass"></i></a></h3>
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="accordion-item">
+                                            <div id="work" class="accordion-collapse collapse" aria-labelledby="work" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>Job Title</label>
+                                                            <input type="text" id="jobtitle" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>Company</label>
+                                                            <input type="text" id="company" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>Country</label>
+                                                            <select id="wcountry" asp-items="Model.CountryList">
+                                                                <option value="">select an option</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>City , Province</label>
+                                                            <input type="text" id="wcity" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>Currently Enrolled</label>
+                                                            <select id="wenrolled">
+                                                                <option value="false">No</option>
+                                                                <option value="true">Yes</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>From Month</label>
+                                                            <select id="wfmonth">
+                                                                <option value='Janaury'>Janaury</option>
+                                                                <option value='February'>February</option>
+                                                                <option value='March'>March</option>
+                                                                <option value='April'>April</option>
+                                                                <option value='May'>May</option>
+                                                                <option value='June'>June</option>
+                                                                <option value='July'>July</option>
+                                                                <option value='August'>August</option>
+                                                                <option value='September'>September</option>
+                                                                <option value='October'>October</option>
+                                                                <option value='November'>November</option>
+                                                                <option value='December'>December</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>From Year</label>
+                                                            <select id="wfyear" class="dropdownYear">
+                                                                <option value="">Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-resume-feild feild-flex-2">
+                                                        <div class="single-input">
+                                                            <label>To Month</label>
+                                                            <select id="wtmonth">
+                                                                <option value='Janaury'>Janaury</option>
+                                                                <option value='February'>February</option>
+                                                                <option value='March'>March</option>
+                                                                <option value='April'>April</option>
+                                                                <option value='May'>May</option>
+                                                                <option value='June'>June</option>
+                                                                <option value='July'>July</option>
+                                                                <option value='August'>August</option>
+                                                                <option value='September'>September</option>
+                                                                <option value='October'>October</option>
+                                                                <option value='November'>November</option>
+                                                                <option value='December'>December</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>To Year</label>
+                                                            <select id="wtyear" class="dropdownYear">
+                                                                <option value="">Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-resume-feild ">
+                                                        <div class="single-input">
+                                                            <label>Description</label>
+                                                            <textarea id="wdes"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="submit-resume">
+                                                    <a class="btn btn-primary mb-1" onclick="Addwork()">Add work Experience</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table cu-table" id="worktable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Location</th>
+                                                    <th>Period</th>
+                                                    <th>Description</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in Model.CustomResume.ResumeExperienceList)
+                                                    {
+                                                        <tr>
+                                                            <td class="d-none">@item.JobTitle</td>
+                                                            <td class="d-none">@item.Company</td>
+                                                            <td class="d-none">@item.JobCountry</td>
+                                                            <td class="d-none">@item.JobCity</td>
+                                                            <td class="d-none">@item.CurrentlyEnrolled</td>
+                                                            <td class="d-none">@item.FromMonth</td>
+                                                            <td class="d-none">@item.FromYear</td>
+                                                            <td class="d-none">@item.ToMonth</td>
+                                                            <td class="d-none">@item.ToYear</td>
+                                                            <td class="d-none">@item.Description</td>
+                                                            <td>@item.JobTitle in @item.Company</td>
+                                                            <td>@item.Company - @item.JobCity</td>
+                                                            <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
+                                                            <td>@item.Description</td>
+                                                            <td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="submit-resume">
                                     <button type="submit">Update</button>
@@ -176,110 +425,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="status" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-            </div>
-            <div class="modal-body">
-                <div class="single-resume-feild feild-flex-2">
-                    <div class="single-input">
-                        <label>Level Of Education</label>
-                        <select id="leveleducation">
-                            <option value="">Select</option>
-                            <option value="Phd">Phd</option>
-                            <option value="MPhill">M Phill</option>
-                            <option value="Bachelor">Bachelor</option>
-                            <option value="Master">Master</option>
-                        </select>
-                    </div>
-                    <div class="single-input">
-                        <label>Field Of Study</label>
-                        <input type="text" id="filedstudy" />
-                    </div>
-                    <div class="single-input">
-                        <label>School Name</label>
-                        <input type="text" id="schoolname" />
-                    </div>
-                </div>
-                <div class="single-resume-feild feild-flex-2">
-                    <div class="single-input">
-                        <label>Country</label>
-                        <select id="country" asp-items="Model.CountryList">
-                            <option value="">select an option</option>
-                        </select>
-                    </div>
-                    <div class="single-input">
-                        <label>City , Province</label>
-                        <input type="text" id="city" />
-                    </div>
-                    <div class="single-input">
-                        <label>Currently Enrolled</label>
-                        <select id="enrolled">
-                            <option value="false">No</option>
-                            <option value="true">Yes</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="single-resume-feild feild-flex-2">
-                    <div class="single-input">
-                        <label>From Month</label>
-                        <select id="fmonth">
-                            <option value='Janaury'>Janaury</option>
-                            <option value='February'>February</option>
-                            <option value='March'>March</option>
-                            <option value='April'>April</option>
-                            <option value='May'>May</option>
-                            <option value='June'>June</option>
-                            <option value='July'>July</option>
-                            <option value='August'>August</option>
-                            <option value='September'>September</option>
-                            <option value='October'>October</option>
-                            <option value='November'>November</option>
-                            <option value='December'>December</option>
-                        </select>
-                    </div>
-                    <div class="single-input">
-                        <label>From Year</label>
-                        <select id="fyear" class="dropdownYear" >
-                            <option value="">Select</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="single-resume-feild feild-flex-2">
-                    <div class="single-input">
-                        <label>To Month</label>
-                        <select id="tmonth">
-                            <option value='Janaury'>Janaury</option>
-                            <option value='February'>February</option>
-                            <option value='March'>March</option>
-                            <option value='April'>April</option>
-                            <option value='May'>May</option>
-                            <option value='June'>June</option>
-                            <option value='July'>July</option>
-                            <option value='August'>August</option>
-                            <option value='September'>September</option>
-                            <option value='October'>October</option>
-                            <option value='November'>November</option>
-                            <option value='December'>December</option>
-                        </select>
-                    </div>
-                    <div class="single-input">
-                        <label>To Year</label>
-                        <select id="tyear" class="dropdownYear">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="AddEducation();" data-dismiss="modal">Save changes / Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Candidate Dashboard Area End -->
 <script src="~/js/CanProfile.js" asp-append-version="true"></script>
 @*<div class="resume-box">

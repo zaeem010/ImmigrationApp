@@ -5,6 +5,7 @@
     $('#Job_StartDate').prop('disabled', true);
     $('#Job_DeadlineDate').prop('disabled', true);
     $('#Job_Description').richText();
+    //
     SpecificAddress($('#Job_SpecificAddress').val());
     PlanedstartDate($('#Job_PlanedstartDate').val());
     Deadline($('#Job_Deadline').val());
