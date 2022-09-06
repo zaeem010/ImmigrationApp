@@ -98,6 +98,8 @@ function SaveJob()
     Job.UserId = $('#UserId').val();
     Job.CompanyInfoId = $('#CompanyId').val();
     Job.JobSubCategoryId = $('#Job_JobSubCategoryId').val();
+    Job.PostDateTime = $('#Job_PostDateTime').val();
+    Job.Verify = $('#Job_Verify').val();
     //Condition Values
     //1
     Job.Street =  "";

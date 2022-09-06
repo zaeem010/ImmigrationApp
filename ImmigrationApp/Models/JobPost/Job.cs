@@ -79,15 +79,13 @@ namespace ImmigrationApp.Models
         public virtual List<SupplementalPayChild> SupplementalPayChildList { get; set; }
         public virtual List<BenefitOfferedChild> BenefitOfferedChildList { get; set; }
         public virtual List<JobEmailChild> JobEmailChildList { get; set; }
-        //Not Mapped
+       
         [NotMapped]
-        public TimeSpan DateTimePassed => DateTime.Now - PostDateTime;
+        public int DayPassed => (DateTime.Now - PostDateTime).Days ;
         [NotMapped]
-        public int DayPassed => DateTimePassed.Days;
+        public int HourPassed => (DateTime.Now - PostDateTime).Hours;
         [NotMapped]
-        public int HourPassed => DateTimePassed.Hours;
-        [NotMapped]
-        public int MinPassed => DateTimePassed.Minutes;
+        public int MinPassed => (DateTime.Now - PostDateTime).Minutes;
     }
     public class JobTypeChild 
     {

@@ -99,9 +99,9 @@ namespace ImmigrationApp.Models
         public double Amount { get; set; }
         public List<JobTypeChild> jobTypes { get; set; }
         public DateTime PostDateTime { get; set; }
-        public TimeSpan DateTimePassed => DateTime.Now - PostDateTime;
-        public int DayPassed => DateTimePassed.Days;
-        public int HourPassed => DateTimePassed.Hours;
-        public int MinPassed => DateTimePassed.Minutes;
+
+        public int DayPassed => (DateTime.Now - PostDateTime).Days;
+        public int HourPassed => (DateTime.Now - PostDateTime).Hours;
+        public int MinPassed => (DateTime.Now - PostDateTime).Minutes;
     }
 }

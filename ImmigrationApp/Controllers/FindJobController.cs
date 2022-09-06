@@ -1,6 +1,7 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,7 @@ namespace ImmigrationApp.Controllers
             _db = db;
             _Cur = Cur;
         }
+        [AllowAnonymous]
         [Route("/Find-a-job")]
         public async Task<IActionResult> JobFind()
         {
