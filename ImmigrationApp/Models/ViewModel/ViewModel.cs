@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class SearchjobVM
+    {
+        public List<JobDTO> JobDTOList { get; set; }
+        public List<JobType> JobTypeList { get; set; }
+    }
     public class CanidateVM
     {
         public CustomResume CustomResume { get; set; }

@@ -1,11 +1,15 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +19,12 @@ namespace ImmigrationApp.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         public ICurrentuser _Currentuser { get; set; }
-        public CandidateController(ApplicationDbContext db, ICurrentuser Currentuser)
+        private readonly IWebHostEnvironment host;
+        public CandidateController(ApplicationDbContext db, ICurrentuser Currentuser, IWebHostEnvironment host)
         {
             _Currentuser = Currentuser;
             _db = db;
+            this.host = host;
         }
         [Route("/Candidate/Profile")]
         [HttpGet]
@@ -47,8 +53,27 @@ namespace ImmigrationApp.Controllers
             return View(VM);
         }
         [HttpPost]
-        public async Task<JsonResult> Update(CustomResume CustomResume)
+        public async Task<JsonResult> Update(IFormCollection form)
         {
+            var Request = form["candidaterequest"];
+            var CustomResume = JsonConvert.DeserializeObject<CustomResume>(Request);
+            //
+            Random r = new Random();
+            int num = r.Next();
+            var webrootpath = host.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            string Username = await _db.User.Where(x=>x.Id.Equals(_Currentuser.GetUserId())).Select(x => x.FirstName).FirstOrDefaultAsync();
+            //Image Insert
+            if (files.Count > 0)
+            {
+                var uploads = Path.Combine(webrootpath, "Upload");
+                var Ext = Path.GetExtension(files[0].FileName);
+                using (var stream = new FileStream(Path.Combine(uploads, $"{Username}_{num}_{Ext}"), FileMode.Create))
+                {
+                    files[0].CopyTo(stream);
+                }
+                CustomResume.ResumeUrlPath = $"{Username}_{num}_{Ext}";
+            }
             _db.ResumeExperience.RemoveRange(await _db.ResumeExperience.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeEducation.RemoveRange(await _db.ResumeEducation.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeSkillChild.RemoveRange(await _db.ResumeSkillChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());

@@ -43,6 +43,8 @@ namespace ImmigrationApp.Models
         [MaxLength(455)]
         public string Email { get; set; }
         [MaxLength(455)]
+        public string ResumeUrlPath { get; set; }
+        [MaxLength(455)]
         public string SlugName { get; set; }
         public int UserId { get; set; }
         public virtual  User User { get; set; }

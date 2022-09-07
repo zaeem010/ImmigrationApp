@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class SearchDTO
+    {
+        public string Title { get; set; }
+        public string category { get; set; }
+        public string datepost { get; set; }
+        public List<long> types { get; set; }
+    }
     public class UserDto
     {
         [Required(ErrorMessage = "Required")]

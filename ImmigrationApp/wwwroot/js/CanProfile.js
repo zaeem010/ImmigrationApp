@@ -241,6 +241,7 @@ function Updateprofile() {
     CustomResume.Relocate = $('#CustomResume_Relocate').val();
     CustomResume.ShowtoPublic = $('#CustomResume_ShowtoPublic').val();
     CustomResume.UserId = $('#CustomResume_UserId').val();
+    CustomResume.ResumeUrlPath = $('#CustomResume_ResumeUrlPath').val();
 
     //table ResumeEducationList
     $('#educationtable tbody tr').each((index, elem) => {
@@ -287,11 +288,20 @@ function Updateprofile() {
             CustomResume.ResumeExperienceList.push(data);
         }
     });
+    var _customResume = new FormData();
+    const resumeurlpath = document.getElementById("w_screen").files[0];
+    if (resumeurlpath != undefined) {
+        _customResume.append("candidaterequest", resumeurlpath);
+    }
+    _customResume.append("candidaterequest", JSON.stringify(CustomResume));
     //Post/Update
     $.ajax({
-        type: "POST",
         url: '/Candidate/Update',
-        data: CustomResume,
+        type: "POST",
+        contentType: false,
+        processData: false,
+        data: _customResume,
+        dataType: "json",
         success: (res) => {
             if (res !== null) {
                 if (res == "Updated Successfully") {
