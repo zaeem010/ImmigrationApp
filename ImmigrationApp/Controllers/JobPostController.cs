@@ -2,6 +2,7 @@
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using ImmigrationApp.Repositries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,7 +35,15 @@ namespace ImmigrationApp.Controllers
                 UserId = _Cur.GetUserId(),
                 CompanyId = await _job.GetCompanyId(_Cur.GetUserId()),
             };
-            return View(VM);
+            if (VM.CompanyId != 0)
+            {
+                return View(VM);
+            }
+            else
+            {
+                return RedirectToAction("Index","Home");
+            }
+            
         }
         [Route("/Job/Save")]
         public async Task<JsonResult> Save(Job Job)
@@ -63,6 +72,7 @@ namespace ImmigrationApp.Controllers
             };
             return View("JobPost", VM);
         }
+        [AllowAnonymous]
         [Route("/Job/Job-Detail/{SlugName}")]
         public async Task<IActionResult> JobDetail(string SlugName)
         {

@@ -40,24 +40,8 @@
 <section class="candidate-dashboard-area section_70">
     <div class="container">
         <div class="row">
-            <!--Sidebar For Employer-->
-            <div class="col-md-4 col-lg-3 dashboard-left-border">
-                <div class="dashboard-left">
-                    <ul class="dashboard-menu">
-                        <li><a asp-action="Dashboard"><i class="fa fa-tachometer"></i>Dashboard</a></li>
-                        <li class="active"><a asp-action="Profile"><i class="fa fa-users"></i>Company Profile</a></li>
-                        <li><a asp-action="Messages"><i class="fa fa-envelope-open"></i>messages</a></li>
-                        <li><a asp-action="JobPost" asp-controller="JobPost"><i class="fa fa-envelope-open"></i>post a job</a></li>
-                        <li><a asp-action="ManageJobs" asp-controller="JobPost"><i class="fa fa-briefcase"></i>manage job</a></li>
-                        <li><a asp-action="Manage"><i class="fa fa-briefcase"></i>manage candidates</a></li>
-                        <li><a href="#"><i class="fa fa-rocket"></i>transaction</a></li>
-                        <li><a asp-action="Password"><i class="fa fa-lock"></i>change password</a></li>
-                        <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-power-off"></i>LogOut</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!--Sidebar For Employer End-->
-            <div class="col-md-8 col-lg-9">
+         
+            <div class="col-md-12 col-lg-12">
                 <div class="dashboard-right">
                     <form asp-action="UpdateProfile" enctype="multipart/form-data">
                         <div class="candidate-profile">

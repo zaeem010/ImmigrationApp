@@ -116,8 +116,14 @@ namespace ImmigrationApp.Repositries
         public async Task<long> GetCompanyId(int id)
         {
             var result = await _db.CompanyInfo.SingleOrDefaultAsync(c => c.UserId == id);
-
-            return result.Id;
+            if (result != null)
+            {
+                return result.Id;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

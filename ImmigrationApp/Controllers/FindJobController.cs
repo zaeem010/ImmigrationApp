@@ -47,5 +47,11 @@ namespace ImmigrationApp.Controllers
                                 }).ToListAsync();
             return View(JobList);
         }
+        [Route("/Apply-for-job/{slugname}")]
+        public async Task<IActionResult> JobApply(string slugname)
+        {
+            return View(slugname);
+        }
+
     }
 }
