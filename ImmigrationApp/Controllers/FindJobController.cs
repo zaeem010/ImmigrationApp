@@ -55,9 +55,10 @@ namespace ImmigrationApp.Controllers
         }
         [AllowAnonymous]
         [Obsolete]
-        public async Task<IActionResult> searchjob(SearchDTO SearchDTO)
+        public async Task<JsonResult> searchjob(SearchDTO SearchDTO)
         {
             var predicate = PredicateBuilder.True<Job>();
+            predicate = predicate.And(c => c.ShowPayby == "Range" ? c.MinPay <= SearchDTO.minval && c.MaxPay >= SearchDTO.maxval : c.Amount >= SearchDTO.minval && c.Amount <= SearchDTO.maxval);
             if (!string.IsNullOrEmpty(SearchDTO.Title))
             {
                 predicate = predicate.And(c => c.Title.Contains(SearchDTO.Title));
@@ -66,6 +67,7 @@ namespace ImmigrationApp.Controllers
             {
                 predicate = predicate.And(c => c.JobSubCategoryId.Equals(SearchDTO.category));
             }
+
             if (SearchDTO.types != null)
             {
                 string[] _type = new string[] { };
@@ -78,27 +80,32 @@ namespace ImmigrationApp.Controllers
                 }
                 predicate = predicate.And(c => c.JobTypeChildList.Any(z => _type.Contains(z.JobTypeId.ToString())));
             }
-            var JobList = await (from x in _db.Job
-                                 select new JobDTO
-                                 {
-                                     Id = x.Id,
-                                     logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
-                                     Title = x.Title,
-                                     SpecificAddress = x.SpecificAddress,
-                                     Street = x.Street,
-                                     City = x.City,
-                                     Province = x.Province,
-                                     PostalCode = x.PostalCode,
-                                     AddressToAdvertise = x.AddressToAdvertise,
-                                     ShowBy = x.ShowPayby,
-                                     MinPay = x.MinPay,
-                                     MaxPay = x.MaxPay,
-                                     Amount = x.Amount,
-                                     Rate = x.Rate,
-                                     SlugName = x.SlugName,
-                                     PostDateTime = x.PostDateTime,
-                                 }).ToListAsync();
-            return View();
+            var firstlist = await _db.Job.Where(predicate).ToListAsync();
+
+            var JobList = new List<JobDTO>();
+            foreach (var x in firstlist)
+            {
+                JobList.Add(new JobDTO
+                {
+                    Id =x.Id,
+                    logoPath =_db.CompanyInfo.Where(z=>z.Id.Equals(x.CompanyInfoId)).Select(z=>z.LogoPath).FirstOrDefault(),
+                    Title = x.Title,
+                    SpecificAddress = x.SpecificAddress,
+                    Street = x.Street,
+                    City = x.City,
+                    Province = x.Province,
+                    PostalCode = x.PostalCode,
+                    AddressToAdvertise = x.AddressToAdvertise,
+                    ShowBy = x.ShowPayby,
+                    MinPay = x.MinPay,
+                    MaxPay = x.MaxPay,
+                    Amount = x.Amount,
+                    Rate = x.Rate,
+                    SlugName = x.SlugName,
+                    PostDateTime = x.PostDateTime,
+                });
+            }
+            return Json(JobList);
         }
         [Route("/Apply-for-job/{slugname}")]
         public async Task<IActionResult> JobApply(string slugname)

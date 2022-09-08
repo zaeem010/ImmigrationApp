@@ -68,12 +68,18 @@ JS INDEX
 
 		$("#slider").slider({
 			range: true,
-			min: 500,
-			max: 20000,
-			values: [1500, 20000],
+			min: 20000,
+			max: 200000,
+			values: [20000, 200000],
+			step:10000,
 			slide: function (event, ui) {
 				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-			}
+				$("#minval").val(ui.values[0]);
+				$("#maxval").val(ui.values[1]);
+			},
+			stop: function (event, ui) {
+				search();
+			},
 		});
 		$("#amount").val("$" + $("#slider").slider("values", 0) +
 			" - $" + $("#slider").slider("values", 1));
