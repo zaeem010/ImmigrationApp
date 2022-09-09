@@ -1,0 +1,193 @@
+﻿@model CanidateVM
+@{
+    ViewData["Title"] = "Profile-View";
+}
+<style>
+    .main-comment {
+        font-size: 14px;
+        padding: 30px 0 0 0px;
+        position: relative;
+    }
+</style>
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
+<!-- Single Candidate Start -->
+<section class="single-candidate-page section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="single-candidate-box">
+                    <div class="single-candidate-box-right">
+                        <h4>@Model.CustomResume.FirstName @Model.CustomResume.LastName</h4>
+                        <p>@Model.CustomResume.Headline</p>
+                        @*<div class="single-candidate-rate">
+                            <p class="rating-company">4.9</p>
+                            <ul>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star-half-o"></i></li>
+                            </ul>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="single-candidate-action">
+                    <a href="#" class="bookmarks"><i class="fa fa-star"></i>Bookmarks</a>
+                    <a href="#" class="candidate-contact"><i class="fa fa-envelope"></i>send message</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Single Candidate End -->
+<!-- Single Candidate Bottom Start -->
+<div class="single-candidate-bottom-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-9 mx-auto">
+                <div class="single-candidate-bottom-left">
+                    <div class="single-candidate-widget">
+                        <h3>About Me</h3>
+                        @Html.Raw(Model.CustomResume.Summary)
+                    </div>
+                    <div class="single-candidate-widget">
+                        <h3>Skills</h3>
+                        <ul>
+                            <li><a href="#">iOS</a></li>
+                            <li><a href="#">python</a></li>
+                            <li><a href="#">java</a></li>
+                            <li><a href="#">PHP</a></li>
+                            <li><a href="#">wordpress</a></li>
+                            <li><a href="#">Android</a></li>
+                            <li><a href="#">django</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="single-candidate-widget">
+                        <h3>work History</h3>
+                        @foreach (var item in Model.CustomResume.ResumeExperienceList)
+                        {
+                            <div class="single-work-history">
+                                <div class="single-candidate-list">
+                                    <div class="main-comment">
+                                        <div class="candidate-text">
+                                            <div class="candidate-info">
+                                                <div class="candidate-title">
+                                                    <h3><a href="#">@item.Company</a></h3>
+                                                </div>
+                                                <p><i class="fa fa-calendar-check-o"></i>
+                                                @item.FromMonth @item.FromYear -
+                                                @{ 
+                                                    if (item.CurrentlyEnrolled == true)
+                                                    {
+                                                        <span>Present</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.ToMonth @item.ToYear</span>
+                                                    }
+                                                }
+                                                
+                                                </p>
+                                            </div>
+                                            <div class="candidate-text-inner">
+                                                @Html.Raw(item.Description)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        
+                    </div>
+                    <div class="single-candidate-widget">
+                        <h3>education History</h3>
+                        @foreach (var item in Model.CustomResume.ResumeEducationList)
+                        {
+                            <div class="single-work-history">
+                                <div class="single-candidate-list">
+                                    <div class="main-comment">
+                                        <div class="candidate-text">
+                                            <div class="candidate-info">
+                                                <div class="candidate-title">
+                                                    <h3><a href="#">@item.SchoolName - @item.LevelofEducation in @item.FieldofStudy</a></h3>
+                                                </div>
+                                                <p><i class="fa fa-calendar-check-o"></i>
+                                                @item.FromMonth @item.FromYear -
+                                                @{ 
+                                                    if (item.CurrentlyEnrolled == true)
+                                                    {
+                                                        <span>Present</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.ToMonth @item.ToYear</span>
+                                                    }
+                                                }
+                                                
+                                                </p>
+                                            </div>
+                                            @*<div class="candidate-text-inner">
+                                                @Html.Raw(item.Description)
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-3 mx-auto">
+                <div class="single-candidate-bottom-right">
+                    <div class="single-candidate-widget-2">
+                        <a href="#" class="jobguru-btn-2">
+                            <i class="fa fa-info-circle"></i>
+                            candidate info
+                        </a>
+                    </div>
+                    <div class="single-candidate-widget-2">
+                        <ul>
+                            <li><i class="fa fa-envelope"></i> @Model.CustomResume.Email</li>
+                            <li><i class="fa fa-phone"></i> @Model.CustomResume.PhoneNumber</li>
+                            <li><i class="fa fa-reddit-square"></i> <a href="/Upload/@Model.CustomResume.ResumeUrlPath" target="_blank">Check Resume</a></li>
+                        </ul>
+                    </div>
+                    <div class="single-candidate-widget-2">
+                        <h3>Social Links</h3>
+                        <ul class="candidate-social">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="single-candidate-widget-2">
+                        <h3>Quick Contacts</h3>
+                        <form>
+                            <p>
+                                <input type="text" placeholder="Your Name">
+                            </p>
+                            <p>
+                                <input type="email" placeholder="Your Email Address">
+                            </p>
+                            <p>
+                                <textarea placeholder="Write here your message"></textarea>
+                            </p>
+                            <p>
+                                <button type="submit">Send Message</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Single Candidate Bottom End -->

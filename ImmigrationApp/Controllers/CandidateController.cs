@@ -1,6 +1,7 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,43 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
+        [AllowAnonymous]
+        [Route("/Candidate/Profile-View/{Slugname}")]
+        [HttpGet]
+        public async Task<IActionResult> ProfileView(string Slugname)
+        {
+            var CanidateInfo = await _db.CustomResume
+                .Include(x=>x.ResumeEducationList)
+                .Include(x=>x.ResumeExperienceList)
+                .Include(x=>x.ResumeSkillChildList)
+                .Include(x=>x.ResumeLanguageChildList)
+                .Include(x=>x.ResumeLinkChildList)
+                .SingleOrDefaultAsync(x=>x.SlugName == Slugname);
+            var VM = new CanidateVM
+            {
+                CustomResume = CanidateInfo,
+            };
+            return View(VM);
+        }
+        [AllowAnonymous]
+        [Route("/Candidate/Browse-Candidate")]
+        [HttpGet]
+        public async Task<IActionResult> BrowseCandidate()
+        {
+            var CanidateInfo = await _db.CustomResume
+                .Include(x=>x.ResumeEducationList)
+                .Include(x=>x.ResumeExperienceList)
+                .Include(x=>x.ResumeSkillChildList)
+                .Include(x=>x.ResumeLanguageChildList)
+                .Include(x=>x.ResumeLinkChildList)
+                .ToListAsync();
+            var VM = new CanidateVM
+            {
+                CustomResumeList = CanidateInfo,
+            };
+            return View(VM);
+        }
+
         [HttpPost]
         public async Task<JsonResult> Update(IFormCollection form)
         {

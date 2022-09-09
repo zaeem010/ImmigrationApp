@@ -15,6 +15,7 @@ namespace ImmigrationApp.Models
     {
         public CustomResume CustomResume { get; set; }
         public List<Skill> SkillList { get; set; }
+        public List<CustomResume> CustomResumeList { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
     }
     public class JobDetailVM
