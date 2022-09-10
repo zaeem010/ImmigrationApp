@@ -22,7 +22,6 @@ namespace ImmigrationApp.Models
         //info
         [MaxLength(255)]
         public string Headline { get; set; }
-        [MaxLength(455)]
         public string Summary { get; set; }
         //Address
         [MaxLength(255)]
@@ -69,8 +68,11 @@ namespace ImmigrationApp.Models
         [Key]
         public long Id { get; set; }
         public long CustomResumeId { get; set; }
-        public long SkillId { get; set; }
-        public virtual Skill Skill { get; set; }
+        [MaxLength(455)]
+        public string SkillName { get; set; }
+        [MaxLength(455)]
+        public string SkillLevel { get; set; }
+        
     }
     public class ResumeLanguageChild 
     {
@@ -150,5 +152,7 @@ namespace ImmigrationApp.Models
         [Required(ErrorMessage = "Required")]
         [MaxLength(455)]
         public string Name { get; set; }
+        [MaxLength(455)]
+        public string NormalizedName { get; set; }
     }
 }

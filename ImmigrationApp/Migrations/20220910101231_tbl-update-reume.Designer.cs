@@ -4,14 +4,16 @@ using ImmigrationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmigrationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220910101231_tbl-update-reume")]
+    partial class tblupdatereume
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -682,17 +684,14 @@ namespace ImmigrationApp.Migrations
                     b.Property<long>("CustomResumeId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("SkillLevel")
-                        .HasMaxLength(455)
-                        .HasColumnType("nvarchar(455)");
-
-                    b.Property<string>("SkillName")
-                        .HasMaxLength(455)
-                        .HasColumnType("nvarchar(455)");
+                    b.Property<long>("SkillId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomResumeId");
+
+                    b.HasIndex("SkillId");
 
                     b.ToTable("ResumeSkillChild");
                 });
@@ -706,10 +705,6 @@ namespace ImmigrationApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(455)
-                        .HasColumnType("nvarchar(455)");
-
-                    b.Property<string>("NormalizedName")
                         .HasMaxLength(455)
                         .HasColumnType("nvarchar(455)");
 
@@ -1198,6 +1193,14 @@ namespace ImmigrationApp.Migrations
                         .HasForeignKey("CustomResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ImmigrationApp.Models.Skill", "Skill")
+                        .WithMany()
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.SupplementalPayChild", b =>

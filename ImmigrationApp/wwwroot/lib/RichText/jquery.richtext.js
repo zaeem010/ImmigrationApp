@@ -289,7 +289,7 @@
                 class: "richText-btn",
                 "data-command": "removeFormat",
                 "title": settings.translations.removeStyles,
-                html: '<span class="fa fa-recycle"></span>'
+                html: '<span class="fa fa-recycle"> Remove Style</span>'
             }), // clean up styles
             $btnCode = $('<a />', {
                 class: "richText-btn",

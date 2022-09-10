@@ -1,5 +1,33 @@
 ﻿$(document).ready(function () {
     GetYear();
+    //Autocomplete for skill
+    $("#Skname").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Candidate/GetSkill",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    var dataloop = [];
+                    for (var i = 0; i < data.length; i++) {
+                        let loop = {
+                            id: data[i].id,
+                            label: data[i].name,
+                            value: data[i].name,
+                        };
+                        dataloop.push(loop);
+                    }
+                    response(dataloop);
+                }
+            });
+        },
+        delay: 1,
+        minLength: 2,
+        select: function (event, ui) {
+            //$('#SkId').val(ui.item.id);
+        }
+    });
     //
     $('#CustomResume_Summary').richText();
     $('#wdes').richText();
@@ -53,8 +81,17 @@
 
         }
     });
+    $("#skilltable").on("click", "#DeleteButton", function () {
+        var result = confirm('Do you want to perform this action?');
+        if (!result) {
+            return false;
+        } else {
+            $(this).closest("tr").remove();
+
+        }
+    });
 });
-//GetYear
+//Get Year
 function GetYear() {
     let currYear = new Date().getFullYear();
     let futureYear = currYear + 50;
@@ -69,7 +106,7 @@ function GetYear() {
         $('.dropdownYear').append(sop);
     }
 }
-//AddEducation
+//Add Education
 function AddEducation() {
     let leveleducation = $('#leveleducation').val();
     let filedstudy = $('#filedstudy').val();
@@ -81,10 +118,13 @@ function AddEducation() {
     let fyear = $('#fyear').val();
     let tmonth = $('#tmonth').val();
     let tyear = $('#tyear').val();
+
     if (enrolled == "true") {
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        tmonth = months[new Date().getMonth()];
-        tyear = new Date().getFullYear();
+        //var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        //tmonth = months[new Date().getMonth()];
+        //tyear = new Date().getFullYear();
+        tmonth = "Pre";
+        tyear = "sent";
     }
 
     if (leveleducation == "") {
@@ -123,7 +163,11 @@ function AddEducation() {
         table += '<td class="d-none">' + tyear + '</td>';
         table += '<td>' + leveleducation + ' in ' + filedstudy + '</td>';
         table += '<td>' + schoolname + ' - ' + city + '</td>';
-        table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + ' ' + tyear + '</td>';
+        if (enrolled == "true") {
+            table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + tyear + '</td>';
+        } else {
+            table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + ' ' + tyear + '</td>';
+        }
         table += '<td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>';
         table += '</tr>';
         $('#educationtable').append(table);
@@ -135,20 +179,19 @@ function AddEducation() {
         $('#city').val('');
         $('#enrolled').val('false');
         $('#fmonth').val('Janaury');
-        $('#fyear').val('2022');
+        $('#fyear').val(new Date().getFullYear());
         $('#tmonth').val('Janaury');
-        $('#tyear').val('2022');
+        $('#tyear').val(new Date().getFullYear());
         //
         $('#tmonth').prop('disabled', false);
         $('#tyear').prop('disabled', false);
     }
 }
-//Addwork
+//Add work
 function Addwork() {
     let jobtitle = $('#jobtitle').val();
     let company = $('#company').val();
     let des = $('#wdes').val();
-
     let country = $('#wcountry').val();
     let city = $('#wcity').val();
     let enrolled = $('#wenrolled').val();
@@ -158,9 +201,8 @@ function Addwork() {
     let tyear = $('#wtyear').val();
 
     if (enrolled == "true") {
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        tmonth = months[new Date().getMonth()];
-        tyear = new Date().getFullYear();
+        tmonth = "Pre";
+        tyear = "sent";
     }
 
     if (jobtitle == "") {
@@ -195,7 +237,11 @@ function Addwork() {
         table += '<td class="d-none">' + des + '</td>';
         table += '<td>' + jobtitle + ' in ' + company + '</td>';
         table += '<td>' + company + ' - ' + city + '</td>';
-        table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + ' ' + tyear + '</td>';
+        if (enrolled == "true") {
+            table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + tyear + '</td>';
+        } else {
+            table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + ' ' + tyear + '</td>';
+        }
         table += '<td>' + des + '</td>';
         table += '<td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>';
         table += '</tr>';
@@ -207,16 +253,38 @@ function Addwork() {
         $('#wcity').val('');
         $('#wenrolled').val('false');
         $('#wfmonth').val('Janaury');
-        $('#wfyear').val('2022');
+        $('#wfyear').val(new Date().getFullYear());
         $('#wtmonth').val('Janaury');
-        $('#wtyear').val('2022');
+        $('#wtyear').val(new Date().getFullYear());
         $('#wdes').val('').trigger('change');
         //
         $('#wtmonth').prop('disabled', false);
         $('#wtyear').prop('disabled', false);
     }
 }
-// 
+//Add Skill
+function AddSkill() {
+    let Skname = $('#Skname').val();
+    let Sklevel = $('#Sklevel').val();
+    if (Skname == "") {
+        ShowToaster(0, "Skill is required.!");
+        return false;
+    }
+    else {
+        //
+        let table = '';
+        table += '<tr>';
+        table += '<td>' + Skname + '</td>';
+        table += '<td>' + Sklevel + '</td>';
+        table += '<td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>';
+        table += '</tr>';
+        $('#skilltable').append(table);
+        //
+        $('#Skname').val('');
+        $('#Sklevel').val('Standard');
+    }
+}
+//Update Profile
 function Updateprofile() {
     let CustomResume = {};
     CustomResume.ResumeEducationList = [];
@@ -243,6 +311,20 @@ function Updateprofile() {
     CustomResume.UserId = $('#CustomResume_UserId').val();
     CustomResume.ResumeUrlPath = $('#CustomResume_ResumeUrlPath').val();
 
+    //table skill table
+    $('#skilltable tbody tr').each((index, elem) => {
+        $tr = $(elem);
+        // check for empty row
+        if ($tr.find('td').length > 1) {
+            const data = {
+                Id: 0,
+                CustomResumeId: CustomResume.Id,
+                SkillName: $tr.find("td:eq(0)").text(),
+                SkillLevel: $tr.find("td:eq(1)").text(),
+            }
+            CustomResume.ResumeSkillChildList.push(data);
+        }
+    });
     //table ResumeEducationList
     $('#educationtable tbody tr').each((index, elem) => {
         $tr = $(elem);
@@ -259,8 +341,8 @@ function Updateprofile() {
                 CurrentlyEnrolled: $tr.find("td:eq(5)").text(),
                 FromYear: $tr.find("td:eq(6)").text(),
                 FromMonth: $tr.find("td:eq(7)").text(),
-                ToYear: $tr.find("td:eq(8)").text(),
-                ToMonth: $tr.find("td:eq(9)").text(),
+                ToYear: $tr.find("td:eq(9)").text(),
+                ToMonth: $tr.find("td:eq(8)").text(),
             }
             CustomResume.ResumeEducationList.push(data);
         }
@@ -281,9 +363,9 @@ function Updateprofile() {
                 CurrentlyEnrolled: $tr.find("td:eq(4)").text(),
                 FromYear: $tr.find("td:eq(5)").text(),
                 FromMonth: $tr.find("td:eq(6)").text(),
-                ToYear: $tr.find("td:eq(7)").text(),
-                ToMonth: $tr.find("td:eq(8)").text(),
-                Description: $tr.find("td:eq(9)").text(),
+                ToYear: $tr.find("td:eq(8)").text(),
+                ToMonth: $tr.find("td:eq(7)").text(),
+                Description: $tr.find("td:eq(9)").html(),
             }
             CustomResume.ResumeExperienceList.push(data);
         }

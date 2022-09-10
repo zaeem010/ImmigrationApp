@@ -57,13 +57,10 @@
                     <div class="single-candidate-widget">
                         <h3>Skills</h3>
                         <ul>
-                            <li><a href="#">iOS</a></li>
-                            <li><a href="#">python</a></li>
-                            <li><a href="#">java</a></li>
-                            <li><a href="#">PHP</a></li>
-                            <li><a href="#">wordpress</a></li>
-                            <li><a href="#">Android</a></li>
-                            <li><a href="#">django</a></li>
+                            @foreach (var item in Model.CustomResume.ResumeSkillChildList)
+                            {
+                                <li><a href="#">@item.SkillName</a></li>
+                            }
                         </ul>
                     </div>
                     

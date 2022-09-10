@@ -21,6 +21,9 @@
         color:black;
         font:bolder;
     }
+    .ui-autocomplete-loading {
+        background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+    }
 </style>
 <!-- Header Area Start -->
 <partial name="_headerwhite" />
@@ -144,6 +147,51 @@
                                     </div>
                                 </div>
                                 <div class="resume-box">
+                                    <h3>Skills </h3>
+                                    <div class="single-resume-feild feild-flex-2">
+                                        <div class="single-input ui-widget">
+                                            <label>Skill Name</label>
+                                            <input id="Skname" placeholder="Skill...." />
+                                            <input type="hidden" id="SkId" />
+                                        </div>
+                                        <div class="single-input">
+                                            <label>Level</label>
+                                            <select id="Sklevel">
+                                                <option value="Standard">Standard</option>
+                                                <option value="Experienced">Experienced</option>
+                                                <option value="Expert">Expert</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="submit-resume">
+                                        <a class="btn bg-success text-white" onclick="AddSkill()">Add Skill</a>
+                                    </div>
+                                   
+                                    <div class="table-responsive" style=" height: 200px; overflow-y: auto;">
+                                        <table class="table cu-table" id="skilltable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Experience</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in Model.CustomResume.ResumeSkillChildList)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.SkillName</td>
+                                                            <td>@item.SkillLevel</td>
+                                                            <td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="resume-box">
                                     <h3>Education &nbsp; <a data-bs-toggle="collapse" data-bs-target="#education" aria-expanded="true" aria-controls="education" id="educationclick"><i class="fa fa-plus-circle" id="edclass"></i></a></h3>
                                     <div class="accordion" id="accordionExample">
                                         <div class="accordion-item">
@@ -257,7 +305,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @{ 
+                                                @{
                                                     foreach (var item in Model.CustomResume.ResumeEducationList)
                                                     {
                                                         <tr>
@@ -273,7 +321,14 @@
                                                             <td class="d-none">@item.ToYear</td>
                                                             <td>@item.LevelofEducation in @item.FieldofStudy</td>
                                                             <td>@item.SchoolName - @item.StudyCity</td>
-                                                            <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
+                                                            @if (item.CurrentlyEnrolled == true)
+                                                            {
+                                                                <td>@item.FromMonth @item.FromYear to  @(item.ToMonth + item.ToYear)</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
+                                                            }
                                                             <td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>
                                                         </tr>
                                                     }
@@ -406,11 +461,18 @@
                                                             <td class="d-none">@item.FromYear</td>
                                                             <td class="d-none">@item.ToMonth</td>
                                                             <td class="d-none">@item.ToYear</td>
-                                                            <td class="d-none">@item.Description</td>
+                                                            <td class="d-none">@Html.Raw(item.Description)</td>
                                                             <td>@item.JobTitle in @item.Company</td>
                                                             <td>@item.Company - @item.JobCity</td>
-                                                            <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
-                                                            <td>@item.Description</td>
+                                                            @if (item.CurrentlyEnrolled == true)
+                                                            {
+                                                                <td>@item.FromMonth @item.FromYear to @(item.ToMonth + item.ToYear)</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@item.FromMonth @item.FromYear to @item.ToMonth @item.ToYear</td>
+                                                            }
+                                                            <td>@Html.Raw(item.Description)</td>
                                                             <td><a class="btn" id="DeleteButton"><i class="fa fa-trash"></i></a></td>
                                                         </tr>
                                                     }

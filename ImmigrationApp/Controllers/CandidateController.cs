@@ -112,15 +112,38 @@ namespace ImmigrationApp.Controllers
                 }
                 CustomResume.ResumeUrlPath = $"{Username}_{num}_{Ext}";
             }
+            var Sk = await _db.ResumeSkillChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync();
+            var skill = await _db.Skill.Select(x=>x.NormalizedName).ToListAsync();
+            foreach (var item in Sk)
+            {
+                var ch = skill.Any(c => c == item.SkillName.ToUpper());
+                if (!ch)
+                {
+                    var addskill = new Skill();
+                    addskill.Name = item.SkillName;
+                    addskill.NormalizedName = item.SkillName.ToUpper();
+                    await _db.Skill.AddAsync(addskill);
+                }
+            }
             _db.ResumeExperience.RemoveRange(await _db.ResumeExperience.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeEducation.RemoveRange(await _db.ResumeEducation.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
-            _db.ResumeSkillChild.RemoveRange(await _db.ResumeSkillChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
+            _db.ResumeSkillChild.RemoveRange(Sk);
             _db.ResumeLanguageChild.RemoveRange(await _db.ResumeLanguageChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeLinkChild.RemoveRange(await _db.ResumeLinkChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             //
+            string slugname = CustomResume.FirstName + ' ' + CustomResume.LastName;
+            CustomResume.SlugName = slugname.Replace(" ", "-");
             _db.CustomResume.Update(CustomResume);
             await _db.SaveChangesAsync();
             return Json("Updated Successfully");
+        }
+        [HttpGet]
+        [Route("/Candidate/GetSkill")]
+        public async Task<JsonResult> GetSkill(string term)
+        {
+            term = term.ToUpper();
+            var Skills = await _db.Skill.Where(c=>c.NormalizedName.Contains(term)).Distinct().ToListAsync();
+            return Json(Skills);
         }
     }
 }

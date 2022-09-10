@@ -4,14 +4,16 @@ using ImmigrationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmigrationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220910134239_tbl-update-skillchild")]
+    partial class tblupdateskillchild
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -682,11 +684,12 @@ namespace ImmigrationApp.Migrations
                     b.Property<long>("CustomResumeId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("SkillLevel")
+                    b.Property<string>("NormalizedSkillName")
                         .HasMaxLength(455)
                         .HasColumnType("nvarchar(455)");
 
                     b.Property<string>("SkillName")
+                        .IsRequired()
                         .HasMaxLength(455)
                         .HasColumnType("nvarchar(455)");
 
@@ -706,10 +709,6 @@ namespace ImmigrationApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(455)
-                        .HasColumnType("nvarchar(455)");
-
-                    b.Property<string>("NormalizedName")
                         .HasMaxLength(455)
                         .HasColumnType("nvarchar(455)");
 
