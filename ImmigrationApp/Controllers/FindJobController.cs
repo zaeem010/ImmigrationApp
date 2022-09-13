@@ -58,10 +58,14 @@ namespace ImmigrationApp.Controllers
         public async Task<JsonResult> searchjob(SearchDTO SearchDTO)
         {
             var predicate = PredicateBuilder.True<Job>();
-            predicate = predicate.And(c => c.ShowPayby == "Range" ? c.MinPay <= SearchDTO.minval && c.MaxPay >= SearchDTO.maxval : c.Amount >= SearchDTO.minval && c.Amount <= SearchDTO.maxval);
+            
             if (!string.IsNullOrEmpty(SearchDTO.Title))
             {
                 predicate = predicate.And(c => c.Title.Contains(SearchDTO.Title));
+            }
+            if (!string.IsNullOrEmpty(SearchDTO.address))
+            {
+                predicate = predicate.And(c => c.Street.Contains(SearchDTO.address));
             }
             if (!string.IsNullOrEmpty(SearchDTO.category))
             {
@@ -81,7 +85,7 @@ namespace ImmigrationApp.Controllers
                 predicate = predicate.And(c => c.JobTypeChildList.Any(z => _type.Contains(z.JobTypeId.ToString())));
             }
             var firstlist = await _db.Job.Where(predicate).ToListAsync();
-
+            
             var JobList = new List<JobDTO>();
             foreach (var x in firstlist)
             {

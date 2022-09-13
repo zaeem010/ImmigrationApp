@@ -8,9 +8,7 @@ function search() {
     SearchDTO.types = [];
     SearchDTO.Title = $('#title').val();
     SearchDTO.category = $('#category').val();
-    SearchDTO.datepost = $('#datepost').val();
-    SearchDTO.minval = $('#minval').val();
-    SearchDTO.maxval = $('#maxval').val();
+    SearchDTO.address = $('#address').val();
     //
     $('#types li input[type="checkbox"]:checked').each(function (i) {
         SearchDTO.types.push($(this)[0].defaultValue);

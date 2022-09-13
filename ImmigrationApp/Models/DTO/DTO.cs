@@ -11,9 +11,7 @@ namespace ImmigrationApp.Models
     {
         public string Title { get; set; }
         public string category { get; set; }
-        public string datepost { get; set; }
-        public double minval { get; set; }
-        public double maxval { get; set; }
+        public string address { get; set; }
         public List<long> types { get; set; }
     }
     public class UserDto

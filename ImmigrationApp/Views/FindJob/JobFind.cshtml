@@ -30,94 +30,39 @@
         <div class="row">
             <div class="col-md-10 col-lg-3 mx-auto">
                 <div class="job-grid-sidebar">
-                    <!-- Single Job Sidebar Start -->
-                    @*<div class="single-job-sidebar sidebar-location">
+                    <div class="single-job-sidebar sidebar-location">
                         <h3>location</h3>
                         <div class="job-sidebar-box">
                             <form>
                                 <p>
-                                    <input type="search" placeholder="Location">
+                                    <input type="search" id="address" placeholder="Location">
                                 </p>
-                                <p class="location-value">
-                                    <input type="text" value="50">
-                                </p>
-                                <div class="dropdown">
+                                @*<div class="dropdown">
                                     <button class="btn-dropdown dropdown-toggle" type="button" id="location" data-bs-toggle="dropdown" aria-haspopup="true">km</button>
                                     <ul class="dropdown-menu" aria-labelledby="location">
                                         <li>km</li>
                                         <li>miles</li>
                                     </ul>
-                                </div>
+                                </div>*@
                             </form>
                         </div>
-                    </div>*@
-                    <!-- Single Job Sidebar End -->
-                    <!-- Single Job Sidebar Start -->
-                    @*<div class="single-job-sidebar sidebar-keywords">
-                        <h3>Keywords</h3>
-                        <div class="job-sidebar-box">
-                            <form>
-                                <select class="sidebar-category-select" name="states[]" multiple="multiple">
-                                    <option value="1">accounting</option>
-                                    <option value="2">finance</option>
-                                    <option value="3">automotive</option>
-                                    <option value="4">construction</option>
-                                    <option value="5">photoshop</option>
-                                    <option value="6">graphics</option>
-                                    <option value="7">After affects</option>
-                                    <option value="8">poster design</option>
-                                </select>
-                            </form>
-                        </div>
-                    </div>*@
-                    <!-- Single Job Sidebar End -->
+                    </div>
                     <!-- Single Job Sidebar Start -->
                     <div class="single-job-sidebar sidebar-category">
                         <h3>Category</h3>
                         <div class="job-sidebar-box">
-                                <select class="sidebar-category-select-2" id="category">
-                                    <option value="">any category</option>
-                                    <option value="2">accounting/finance</option>
-                                    <option value="3">automotive jobs</option>
-                                    <option value="4">construction</option>
-                                    <option value="5">design, art & multimedia</option>
-                                    <option value="6">education training</option>
-                                    <option value="7">restaurent/food</option>
-                                    <option value="7">programming/tech</option>
-                                    <option value="7">sales/marketing</option>
-                                    <option value="7">data science/analysis</option>
-                                </select>
-                        </div>
-                    </div>
-                    <!-- Single Job Sidebar End -->
-                    <!-- Single Job Sidebar Start -->
-                    <div class="single-job-sidebar sidebar-location">
-                        <h3>Date Posted</h3>
-                        <div class="date-post-job job-sidebar-box">
-                            <div class="form-group form-radio">
-                                <input id="last_hour" value="1h" name="datepost" type="radio">
-                                <label for="last_hour" class="inline control-label">last hour</label>
-                            </div>
-                            <div class="form-group form-radio">
-                                <input id="last_24" value="24h" name="datepost" type="radio">
-                                <label for="last_24" class="inline control-label">Last 24 hours</label>
-                            </div>
-                            <div class="form-group form-radio">
-                                <input id="last_7" value="7d" name="datepost" type="radio">
-                                <label for="last_7" class="inline control-label">Last 7 days</label>
-                            </div>
-                            <div class="form-group form-radio">
-                                <input id="last_14" value="14d" name="datepost" type="radio">
-                                <label for="last_14" class="inline control-label">Last 14 days</label>
-                            </div>
-                            <div class="form-group form-radio">
-                                <input id="last_30" value="30d" name="datepost" type="radio">
-                                <label for="last_30" class="inline control-label">Last 30 days</label>
-                            </div>
-                            <div class="form-group form-radio">
-                                <input id="last_all" value="all" name="datepost" type="radio">
-                                <label for="last_all" class="inline control-label">all</label>
-                            </div>
+                            <select class="sidebar-category-select-2" id="category">
+                                <option value="">any category</option>
+                                <option value="2">accounting/finance</option>
+                                <option value="3">automotive jobs</option>
+                                <option value="4">construction</option>
+                                <option value="5">design, art & multimedia</option>
+                                <option value="6">education training</option>
+                                <option value="7">restaurent/food</option>
+                                <option value="7">programming/tech</option>
+                                <option value="7">sales/marketing</option>
+                                <option value="7">data science/analysis</option>
+                            </select>
                         </div>
                     </div>
                     <!-- Single Job Sidebar End -->
@@ -139,44 +84,17 @@
                         </div>
                     </div>
                     <!-- Single Job Sidebar End -->
-                    <!-- Single Job Sidebar Start -->
-                    <div class="single-job-sidebar sidebar-salary">
-                        <h3>Filter by Salary</h3>
-                        <div class="job-sidebar-box">
-                            <p>
-                                <input type="text" id="amount" readonly>
-                                <input type="hidden" id="minval" />
-                                <input type="hidden" id="maxval" />
-                            </p>
-                            <div id="slider"></div>
-                        </div>
-                    </div>
-                    <!-- Single Job Sidebar End -->
-
                 </div>
             </div>
             <div class="col-md-10 col-lg-9 mx-auto">
                 <div class="job-grid-right">
                     <div class="browse-job-head-option">
+                       
                         <div class="job-browse-search">
                             <form action="#">
-                                <input type="search" id="title" placeholder="Search Jobs Here...">
-                                <button onclick="search();"><i class="fa fa-search"></i></button>
+                                <input type="search" id="title" placeholder="job title, keyword">
+                                <button type="button" onclick="search();"><i class="fa fa-search"></i></button>
                             </form>
-                        </div>
-                        <div class="job-browse-action">
-                            <div class="email-alerts">
-                                <input type="checkbox" class="styled" id="b_1">
-                                <label class="styled" for="b_1">email alerts for this search</label>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn-dropdown dropdown-toggle" type="button" id="dropdowncur" data-bs-toggle="dropdown" aria-haspopup="true">Sort By</button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdowncur">
-                                    <li>Newest</li>
-                                    <li>Oldest</li>
-                                    <li>Random</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <!-- end job head -->
