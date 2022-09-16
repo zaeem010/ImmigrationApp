@@ -45,6 +45,21 @@ namespace ImmigrationApp.Controllers
             }
             
         }
+        [HttpGet]
+        [Route("/Job/Gettitle")]
+        public async Task<IActionResult> Gettitle(string term)
+        {
+            if (!string.IsNullOrEmpty(term))
+            {
+                var states = await _db.JobSubCategory.ToListAsync();
+                var data = states.Where(c => c.Name.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
+                return Ok(data);
+            }
+            else
+            {
+                return Ok();
+            }
+        }
         [Route("/Job/Save")]
         public async Task<JsonResult> Save(Job Job)
         {
@@ -98,7 +113,7 @@ namespace ImmigrationApp.Controllers
                                      StartDate = x.StartDate,
                                      Description = x.Description,
                                      SlugName = x.SlugName,
-                                     Industry = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.Industry).FirstOrDefault(),
+                                     Industry = x.JobSubCategory.Name,
                                      jobTypes =x.JobTypeChildList
                                  })
                                  .SingleOrDefaultAsync(x=>x.SlugName == SlugName);

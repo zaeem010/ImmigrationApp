@@ -14,6 +14,12 @@ namespace ImmigrationApp.Models
         public string address { get; set; }
         public List<long> types { get; set; }
     }
+    public class SearchcanidateDTO
+    {
+        public string keyword { get; set; }
+        public string address { get; set; }
+        public long category { get; set; }
+    }
     public class UserDto
     {
         [Required(ErrorMessage = "Required")]

@@ -25,7 +25,7 @@
                         <div class="job-details-meta">
                             <p><i class="fa fa-file-text"></i> Applications @Model.JobDTO.Vacant</p>
                             @{ 
-                                if (Model.JobDTO.StartDate?.Year.ToString() !="1")
+                                if (Model.JobDTO.StartDate?.Year.ToString() !="1" && Model.JobDTO.StartDate != null)
                                 {
                                     <p><i class="fa fa-calendar"></i><span>@Model.JobDTO.StartDate?.ToString("MMM dd ,yyyy")</span></p>
                                 }

@@ -49,6 +49,7 @@ namespace ImmigrationApp.Repositries
                 .Include(x => x.BenefitOfferedChildList)
                 .Include(x => x.JobTypeChildList)
                 .Include(x => x.JobScheduleChildList)
+                .Include(x => x.JobSubCategory)
                 .SingleOrDefaultAsync(x => x.Id.Equals(id));
                 return result;
         }

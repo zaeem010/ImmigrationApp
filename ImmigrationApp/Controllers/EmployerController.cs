@@ -6,8 +6,12 @@ using ImmigrationApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ImmigrationApp.Controllers
@@ -42,10 +46,16 @@ namespace ImmigrationApp.Controllers
         {
             var CompanyInfo = await _companyInfo.GetSingleCompanyInfo(_Currentuser.GetUserId());
             var Country =  _CommonRepo.GetCountryList(CompanyInfo.Country);
+            IEnumerable<SelectListItem> Category = _db.JobMainCategory.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name,
+            });
             var VM = new CompanyInfoVM
             {
                 CompanyInfo=CompanyInfo,
                 CountryList=Country,
+                JobMainCategoryList=Category
             };
             return View(VM);
         }

@@ -4,14 +4,16 @@ using ImmigrationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImmigrationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220916173736_chatapp")]
+    partial class chatapp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +85,6 @@ namespace ImmigrationApp.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ChatAppHub");
                 });
@@ -564,8 +564,6 @@ namespace ImmigrationApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("PeopleHub");
                 });
@@ -1105,17 +1103,6 @@ namespace ImmigrationApp.Migrations
                     b.Navigation("BenefitOffered");
                 });
 
-            modelBuilder.Entity("ImmigrationApp.Models.ChatAppHub", b =>
-                {
-                    b.HasOne("ImmigrationApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ImmigrationApp.Models.CompanyInfo", b =>
                 {
                     b.HasOne("ImmigrationApp.Models.User", "User")
@@ -1215,17 +1202,6 @@ namespace ImmigrationApp.Migrations
                         .IsRequired();
 
                     b.Navigation("JobType");
-                });
-
-            modelBuilder.Entity("ImmigrationApp.Models.PeopleHub", b =>
-                {
-                    b.HasOne("ImmigrationApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.ResumeEducation", b =>

@@ -27,6 +27,7 @@ namespace ImmigrationApp.Models
     {
         public CompanyInfo CompanyInfo { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
+        public IEnumerable<SelectListItem> JobMainCategoryList { get; set; }
     }
     public class HomeVM
     {
@@ -44,6 +45,7 @@ namespace ImmigrationApp.Models
         public List<BenefitOffered> BenefitOfferedList { get; set; }
         public int UserId { get; set; }
         public long CompanyId { get; set; }
+        public string CategoryName { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }
     }
 }

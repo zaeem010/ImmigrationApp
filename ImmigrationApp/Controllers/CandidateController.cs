@@ -1,6 +1,7 @@
 ﻿using ImmigrationApp.Currentuser;
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
+using LinqKit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -89,7 +90,38 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
+        [AllowAnonymous]
+        [Obsolete]
+        public async Task<JsonResult> searchcanidate(SearchcanidateDTO SearchcanidateDTO)
+        {
+            var predicate = PredicateBuilder.True<CustomResume>();
 
+            if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
+            {
+                predicate = predicate.Or(c => c.FirstName.Contains(SearchcanidateDTO.keyword));
+            }
+            if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
+            {
+                predicate = predicate.Or(c => c.LastName.Contains(SearchcanidateDTO.keyword));
+            }
+            if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
+            {
+                predicate = predicate.Or(c => c.Headline.Contains(SearchcanidateDTO.keyword));
+            }
+            if (!string.IsNullOrEmpty(SearchcanidateDTO.address))
+            {
+                predicate = predicate.And(c => c.Street.Contains(SearchcanidateDTO.address));
+            }
+            //
+            var canidateInfo = await _db.CustomResume.Where(predicate)
+                .Include(x => x.ResumeEducationList)
+                .Include(x => x.ResumeExperienceList)
+                .Include(x => x.ResumeSkillChildList)
+                .Include(x => x.ResumeLanguageChildList)
+                .Include(x => x.ResumeLinkChildList)
+                .ToListAsync();
+            return Json(canidateInfo);
+        }
         [HttpPost]
         public async Task<JsonResult> Update(IFormCollection form)
         {

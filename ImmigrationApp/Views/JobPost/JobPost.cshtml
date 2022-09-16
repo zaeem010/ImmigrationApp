@@ -14,6 +14,12 @@
         width: 50%;
     }
 </style>
+<div class="categorytext">
+    @if (Model.Job != null)
+    {
+        <span>@Model.Job.JobSubCategory.Name</span>
+    }
+</div>
 <!-- Header Area Start -->
 <partial name="_headerwhite" />
 <!-- Header Area End -->
@@ -52,6 +58,15 @@
                                             <label for="name">Job Title</label>
                                             <input type="text" asp-for="Job.Title">
                                             <span class="text-danger" asp-validation-for="Job.Title"></span>
+                                        </div>
+                                        <div class="single-input">
+                                            <label>Job Category</label>
+                                            <select id="jobcategroy" onchange="afterchange()">
+                                            </select>
+                                            <div class="jobcategory">
+                                                
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="Job.JobSubCategoryId"></span>
                                         </div>
                                         <div class="single-input">
                                             <label>Where will an employee report to work?</label>
@@ -366,7 +381,7 @@
                         <input type="hidden" asp-for="UserId"/>
                         <input type="hidden" asp-for="CompanyId"/>
                         <input type="hidden" asp-for="Job.Verify"/>
-                        <input type="hidden" asp-for="Job.JobSubCategoryId" value="2"/>
+                        <input type="hidden" asp-for="Job.JobSubCategoryId"/>
                         <input type="hidden" asp-for="Job.PostDateTime"/>
                         <input type="hidden" asp-for="Job.Latitude"/>
                         <input type="hidden" asp-for="Job.Longitude"/>

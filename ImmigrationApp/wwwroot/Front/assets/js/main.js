@@ -151,6 +151,9 @@ JS INDEX
 		$('.country-select').select2({
 			placeholder: 'Choose Country'
 		});
+		$('.category-select').select2({
+			placeholder: 'Choose Category'
+		});
 
 
 		/* 

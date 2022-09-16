@@ -42,5 +42,8 @@ namespace ImmigrationApp.Data
         public DbSet<ResumeExperience> ResumeExperience { get; set; }
         //Resume MetaData
         public DbSet<Skill> Skill { get; set; }
+        //Chat
+        public DbSet<ChatAppHub> ChatAppHub { get; set; }
+        public DbSet<PeopleHub> PeopleHub { get; set; }
     }
 }

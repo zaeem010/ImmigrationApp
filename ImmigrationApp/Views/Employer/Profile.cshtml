@@ -74,11 +74,8 @@
                                         </div>
                                         <div class="single-input">
                                             <label for="c_cat">company category:</label>
-                                            <select asp-for="CompanyInfo.Industry">
+                                            <select class="category-select select2" asp-for="CompanyInfo.Industry" asp-items="Model.JobMainCategoryList">
                                                 <option value="">Choose Category</option>
-                                                <option value="IT Service">IT Service</option>
-                                                <option value="StartUP">StartUP</option>
-                                                <option value="Corporate">Corporate</option>
                                             </select>
                                             <span asp-validation-for="CompanyInfo.Industry" class="text-danger"></span>
                                         </div>

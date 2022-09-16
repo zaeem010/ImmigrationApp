@@ -1,4 +1,55 @@
-﻿$(document).ready(function () {
+﻿$(function () {
+    $("#jobcategroy").select2({
+        //theme: "classic",
+        ajax: {
+            url: "/Job/Gettitle",
+            contentType: "application/json; charset=utf-8",
+            delay: 250,
+            data: function (params) {
+                var query =
+                {
+                    term: params.term,
+                };
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            id: item.id,
+                            text: item.name
+                        };
+                    }),
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Search for a Category',
+        minimumInputLength: 3,
+        allowClear: true,
+        closeOnSelect: true,
+    });
+    jobcategory($('.categorytext').text());
+});
+function afterchange()
+{
+    var e = document.getElementById("jobcategroy");
+    var text = e.options[e.selectedIndex].text;
+    var Id = e.options[e.selectedIndex].value;
+    $('#Job_JobSubCategoryId').val(Id);
+    jobcategory(text);
+}
+function jobcategory(val)
+{
+    debugger;
+
+    $('.jobcategory').html('');
+    if (val.trim() !== "" && val !== undefined)
+    {
+        $('.jobcategory').html('<span>' + val + '</span>&nbsp;<a onclick="jobcategory()"><i class="fa fa-times"></i></a>');
+    }
+}
+$(document).ready(function () {
     $('#SpecificAddress').hide();
     $('#NoSpecificAddress').hide();
     $('#excatpay').hide();
