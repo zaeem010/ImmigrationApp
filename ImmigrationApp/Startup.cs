@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using ImmigrationApp.Permission;
 using System;
 using ImmigrationApp.Currentuser;
 using ImmigrationApp.Repositries;
 using ImmigrationApp.Extensions;
+using ImmigrationApp.Hubs;
 
 namespace ImmigrationApp
 {
@@ -68,6 +70,7 @@ namespace ImmigrationApp
                 //options.LogoutPath = $"/account/logout";
                 //options.AccessDeniedPath = $"/account/access-denied";
             });
+            services.AddSignalR();
             services.AddMvc();
             //services.AddAuthentication()
             //    .AddGoogle(options =>
@@ -103,6 +106,10 @@ namespace ImmigrationApp
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/notify");
+            });
 
             app.UseEndpoints(endpoints =>
             {
