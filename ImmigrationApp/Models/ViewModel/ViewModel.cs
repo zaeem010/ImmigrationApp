@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class ChatHubVM
+    {
+        public List<PeopleHubDTO> peopleHub { get; set; }
+        public ChatAppHub ChatAppHub { get; set; }
+        public List<ChatAppHub> chatAppHublist { get; set; }
+    }
     public class SearchjobVM
     {
         public List<JobDTO> JobDTOList { get; set; }

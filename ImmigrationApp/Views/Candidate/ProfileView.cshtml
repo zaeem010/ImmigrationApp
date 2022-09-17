@@ -37,7 +37,7 @@
             <div class="col-md-6">
                 <div class="single-candidate-action">
                     <a href="#" class="bookmarks"><i class="fa fa-star"></i>Bookmarks</a>
-                    <a href="#" class="candidate-contact"><i class="fa fa-envelope"></i>send message</a>
+                    <a asp-route-ConnectionId="@Model.CustomResume.UserId" asp-action="CreatePeopleHub" asp-controller="ChatApp" class="candidate-contact"><i class="fa fa-envelope"></i>send message</a>
                 </div>
             </div>
         </div>

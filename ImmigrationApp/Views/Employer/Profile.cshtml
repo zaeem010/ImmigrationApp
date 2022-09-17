@@ -74,10 +74,10 @@
                                         </div>
                                         <div class="single-input">
                                             <label for="c_cat">company category:</label>
-                                            <select class="category-select select2" asp-for="CompanyInfo.Industry" asp-items="Model.JobMainCategoryList">
+                                            <select class="category-select select2" asp-for="CompanyInfo.JobMainCategoryId" asp-items="Model.JobMainCategoryList">
                                                 <option value="">Choose Category</option>
                                             </select>
-                                            <span asp-validation-for="CompanyInfo.Industry" class="text-danger"></span>
+                                            <span asp-validation-for="CompanyInfo.JobMainCategoryId" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="single-resume-feild feild-flex-2">

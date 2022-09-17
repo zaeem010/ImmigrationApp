@@ -67,7 +67,7 @@ namespace ImmigrationApp.Controllers
             {
                 predicate = predicate.And(c => c.Street.Contains(SearchDTO.address));
             }
-            if (!string.IsNullOrEmpty(SearchDTO.category))
+            if (SearchDTO.category != null && SearchDTO.category !=0)
             {
                 predicate = predicate.And(c => c.JobSubCategoryId.Equals(SearchDTO.category));
             }

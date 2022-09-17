@@ -22,7 +22,10 @@
                     <div class="single-candidate-box-right">
                         <h4>@Model.Company</h4>
                         @*<img src="assets/img/pl.svg" alt="region" />*@
-                        <p>@Model.Industry</p>
+                        @if (Model.JobMainCategory != null)
+                        {
+                            <p>@Model.JobMainCategory.Name</p>
+                        }
                         @*<div class="single-candidate-rate">
                                 <p class="rating-company">4.9</p>
                                 <ul>

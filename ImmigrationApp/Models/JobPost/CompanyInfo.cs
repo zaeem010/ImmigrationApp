@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImmigrationApp.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+
     public class CompanyInfo
     {
+        private ApplicationDbContext _db;
         [Key]
         public long Id { get; set; }
         [Required(ErrorMessage = "Required")]
@@ -23,8 +26,7 @@ namespace ImmigrationApp.Models
         public string Contact { get; set; }
         [MaxLength(255)]
         public string NumberOfEmployee { get; set; }
-        [MaxLength(255)]
-        public string Industry { get; set; }
+        public long? JobMainCategoryId { get; set; }
         public string Description { get; set; }
         public string LogoPath { get; set; }
         public int UserId { get; set; }
@@ -54,6 +56,7 @@ namespace ImmigrationApp.Models
         [DataType(DataType.Url)]
         public string FacebookUrl { get; set; }
         public virtual User User { get; set; }
+        public virtual JobMainCategory JobMainCategory { get; set; }
         public List<Job> JobList { get; set; }
         public CompanyInfo()
         {
@@ -61,7 +64,6 @@ namespace ImmigrationApp.Models
         }
         [NotMapped]
         public int JobAgainst => JobList.Where(x => x.CompanyInfoId == Id).Count();
-
     }
 
 }

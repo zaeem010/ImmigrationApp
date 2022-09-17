@@ -1,8 +1,10 @@
-﻿
+﻿@model ChatHubVM
 @{
     ViewData["Title"] = "Message";
 }
-<input type="hidden" id="userInput" />
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
 <!-- Breadcromb Area Start -->
 <section class="jobguru-breadcromb-area">
     <div class="breadcromb-bottom">
@@ -42,14 +44,19 @@
                                 <!-- End Chat Search -->
                                 <div class="chat-list-body">
                                     <ul class="chat-list">
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <div class="chat-about">
-                                                    <h4><b>David Johnson</b> <span class="badge bg-dark">0</span></h4>
-                                                    <small class="online">Online</small>
-                                                </div>
-                                            </a>
-                                        </li>
+                                        @{
+                                            foreach (var item in Model.peopleHub)
+                                            {
+                                                <li class="clearfix">
+                                                    <a onclick="loadchat(this)" data-connectid="1">
+                                                        <div class="chat-about">
+                                                            <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
+                                                            <small class="online">Online</small>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
                                     </ul>
                                 </div>
                                 <!-- End Chat List Body -->
@@ -115,8 +122,12 @@
                                             </div>
                                             <div class="message-text-area">
                                                 <form action="#">
-                                                    <textarea id="messageInput" placeholder="Type message..."></textarea>
+                                                    <textarea asp-for="ChatAppHub.Message" placeholder="Type message..."></textarea>
                                                     <button type="button" id="sendButton"><i class="fa fa-send"></i></button>
+                                                    <input type="hidden" asp-for="ChatAppHub.UserId" />
+                                                    <input type="hidden" asp-for="ChatAppHub.Type" />
+                                                    <input type="hidden" asp-for="ChatAppHub.MessageDateTime" />
+                                                    <input type="hidden" asp-for="ChatAppHub.PeopleHubId" />
                                                 </form>
                                             </div>
                                         </div>
@@ -135,4 +146,5 @@
 
 <!-- Candidate Dashboard Area End -->
 <script src="/js/signalr/dist/browser/signalr.js"></script>
-<script src="/js/signalr/chat.js"></script>
+<script src="/js/signalr/signalrReqHandler.js"></script>
+<script src="/js/signalr/ChatHub.js"></script>

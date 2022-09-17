@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Models
 {
+    public class PeopleHubDTO
+    {
+        public long Id { get; set; }
+        public int UserId { get; set; }
+        public int ConnectedId { get; set; }
+        public string ConnectedName { get; set; }
+    }
     public class SearchDTO
     {
         public string Title { get; set; }
-        public string category { get; set; }
+        public long? category { get; set; }
         public string address { get; set; }
         public List<long> types { get; set; }
     }

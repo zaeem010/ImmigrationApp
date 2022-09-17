@@ -83,6 +83,7 @@ namespace ImmigrationApp.Controllers
                 .Include(x=>x.ResumeSkillChildList)
                 .Include(x=>x.ResumeLanguageChildList)
                 .Include(x=>x.ResumeLinkChildList)
+                .Include(x=>x.User)
                 .ToListAsync();
             var VM = new CanidateVM
             {

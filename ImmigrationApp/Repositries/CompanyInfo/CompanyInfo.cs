@@ -27,6 +27,7 @@ namespace ImmigrationApp.Repositries
         {
             var companyInfo = await _db.CompanyInfo
                 .Include(c=>c.JobList)
+                .Include(c=>c.JobMainCategory)
                 .SingleOrDefaultAsync(c => c.SlugName.Equals(SlugName));
             return companyInfo;
         }

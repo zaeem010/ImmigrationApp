@@ -103,7 +103,7 @@
                                                 </div>
                                                 <div class="candidate-action">
                                                     <a asp-action="ProfileView" asp-controller="Candidate" asp-route-slugname="@item.SlugName" class="jobguru-btn-2">view profile</a>
-                                                    <a href="#" class="jobguru-btn-2">Send message</a>
+                                                    <a asp-route-ConnectionId="@item.UserId" asp-action="CreatePeopleHub" asp-controller="ChatApp" class="jobguru-btn-2">Send message</a>
                                                 </div>
                                             </div>
                                         </div>
