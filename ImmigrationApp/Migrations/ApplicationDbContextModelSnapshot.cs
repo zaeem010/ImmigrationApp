@@ -72,6 +72,9 @@ namespace ImmigrationApp.Migrations
                     b.Property<DateTime>("MessageDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("PeopleHubId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Type")
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
@@ -83,6 +86,8 @@ namespace ImmigrationApp.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PeopleHubId");
 
                     b.HasIndex("UserId");
 
@@ -1107,6 +1112,12 @@ namespace ImmigrationApp.Migrations
 
             modelBuilder.Entity("ImmigrationApp.Models.ChatAppHub", b =>
                 {
+                    b.HasOne("ImmigrationApp.Models.PeopleHub", null)
+                        .WithMany("ChatAppHubList")
+                        .HasForeignKey("PeopleHubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ImmigrationApp.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -1381,6 +1392,11 @@ namespace ImmigrationApp.Migrations
                     b.Navigation("JobTypeChildList");
 
                     b.Navigation("SupplementalPayChildList");
+                });
+
+            modelBuilder.Entity("ImmigrationApp.Models.PeopleHub", b =>
+                {
+                    b.Navigation("ChatAppHubList");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.Role", b =>

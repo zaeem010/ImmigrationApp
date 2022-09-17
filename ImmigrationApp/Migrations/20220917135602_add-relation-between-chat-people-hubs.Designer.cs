@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImmigrationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220910141057_tbl-update-skillchilda0")]
-    partial class tblupdateskillchilda0
+    [Migration("20220917135602_add-relation-between-chat-people-hubs")]
+    partial class addrelationbetweenchatpeoplehubs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,42 @@ namespace ImmigrationApp.Migrations
                     b.HasIndex("JobId");
 
                     b.ToTable("BenefitOfferedChild");
+                });
+
+            modelBuilder.Entity("ImmigrationApp.Models.ChatAppHub", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("MessageDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("PeopleHubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(55)
+                        .HasColumnType("nvarchar(55)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("seen")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PeopleHubId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatAppHub");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.CompanyInfo", b =>
@@ -519,6 +555,26 @@ namespace ImmigrationApp.Migrations
                     b.HasIndex("JobTypeId");
 
                     b.ToTable("JobTypeChild");
+                });
+
+            modelBuilder.Entity("ImmigrationApp.Models.PeopleHub", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ConnectedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PeopleHub");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.ResumeEducation", b =>
@@ -1056,6 +1112,23 @@ namespace ImmigrationApp.Migrations
                     b.Navigation("BenefitOffered");
                 });
 
+            modelBuilder.Entity("ImmigrationApp.Models.ChatAppHub", b =>
+                {
+                    b.HasOne("ImmigrationApp.Models.PeopleHub", null)
+                        .WithMany("ChatAppHubList")
+                        .HasForeignKey("PeopleHubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ImmigrationApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ImmigrationApp.Models.CompanyInfo", b =>
                 {
                     b.HasOne("ImmigrationApp.Models.User", "User")
@@ -1155,6 +1228,17 @@ namespace ImmigrationApp.Migrations
                         .IsRequired();
 
                     b.Navigation("JobType");
+                });
+
+            modelBuilder.Entity("ImmigrationApp.Models.PeopleHub", b =>
+                {
+                    b.HasOne("ImmigrationApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.ResumeEducation", b =>
@@ -1310,6 +1394,11 @@ namespace ImmigrationApp.Migrations
                     b.Navigation("JobTypeChildList");
 
                     b.Navigation("SupplementalPayChildList");
+                });
+
+            modelBuilder.Entity("ImmigrationApp.Models.PeopleHub", b =>
+                {
+                    b.Navigation("ChatAppHubList");
                 });
 
             modelBuilder.Entity("ImmigrationApp.Models.Role", b =>

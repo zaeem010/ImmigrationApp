@@ -10,6 +10,7 @@ namespace ImmigrationApp.Models
     {
         [Key]
         public long Id { get; set; }
+        public long PeopleHubId { get; set; }
         public int UserId { get; set; }
         [MaxLength(55)]
         public string Type { get; set; }
@@ -26,5 +27,10 @@ namespace ImmigrationApp.Models
         public int UserId { get; set; }
         public int ConnectedId { get; set; }
         public virtual User User { get; set; }
+        public virtual List<ChatAppHub> ChatAppHubList { get; set; }
+        public PeopleHub()
+        {
+            ChatAppHubList = new List<ChatAppHub>();
+        }
     }
 }
