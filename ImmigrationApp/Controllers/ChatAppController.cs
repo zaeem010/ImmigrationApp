@@ -31,7 +31,11 @@ namespace ImmigrationApp.Controllers
         }
         public async Task<IActionResult> Message()
         {
-            var peopleHublist = (from x in _db.PeopleHub
+            var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
+            var peopleHublist = new List<PeopleHubDTO>();
+            if (e == "Employee")
+            {
+                peopleHublist = (from x in _db.PeopleHub
                                  select new PeopleHubDTO
                                  {
                                      Id = x.Id,
@@ -39,6 +43,19 @@ namespace ImmigrationApp.Controllers
                                      ConnectedId = x.ConnectedId,
                                      ConnectedName = _db.User.Where(z => z.Id == x.ConnectedId).Select(z => z.FullName).FirstOrDefault()
                                  }).ToList();
+            }
+            else if(e == "Candidate")
+            {
+                peopleHublist = (from a in _db.PeopleHub
+                                 select new PeopleHubDTO
+                                 {
+                                     Id = a.Id,
+                                     UserId = a.UserId,
+                                     ConnectedId = a.ConnectedId,
+                                     ConnectedName = _db.User.Where(z => z.Id == a.UserId).Select(z => z.FullName).FirstOrDefault()
+                                 }).ToList();
+            }
+            
 
             var chatAppHublist = new List<ChatAppHub>();
             var chatAppHub = new ChatAppHub();
@@ -52,6 +69,24 @@ namespace ImmigrationApp.Controllers
                 chatAppHublist=chatAppHublist,
             };
             return View(VM);
+        }
+        public IActionResult GetChat(long Id)
+        {
+            string res = "";
+            var chatlist = new List<ChatAppHub>();
+            if (Id != 0)
+            {
+                try
+                {
+                    chatlist = _db.ChatAppHub.Where(x => x.PeopleHubId == Id).ToList();
+                    res = "Success";
+                }
+                catch (Exception e)
+                {
+                    res = e.Message;
+                }
+            }
+            return Json(new { res = res, chatlist = chatlist });
         }
         [Route("/ChatApp/Save")]
         public async Task<IActionResult> Save(ChatAppHub ChatAppHub) 

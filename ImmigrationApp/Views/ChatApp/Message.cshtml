@@ -6,6 +6,7 @@
 <partial name="_headerwhite" />
 <!-- Header Area End -->
 <!-- Breadcromb Area Start -->
+<script src="~/js/LoadChat.js" asp-append-version="true"></script>
 <section class="jobguru-breadcromb-area">
     <div class="breadcromb-bottom">
         <div class="container">
@@ -48,7 +49,7 @@
                                             foreach (var item in Model.peopleHub)
                                             {
                                                 <li class="clearfix">
-                                                    <a onclick="loadchat(this)" data-connectid="1">
+                                                    <a onclick="mychatloadfunction(this)" data-connectid="@item.Id" data-connectdname="@item.ConnectedName">
                                                         <div class="chat-about">
                                                             <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
                                                             <small class="online">Online</small>
@@ -70,7 +71,7 @@
                                         <div class="user-details-nav">
                                             <div class="user-info pull-left">
                                                 <a href="#" title="Mike Litorus">
-                                                    <h4><b>Mike Litorus</b></h4>
+                                                    <h4 ><b id="CanidateName"></b></h4>
                                                 </a>
                                                 <small class="online">online</small>
                                             </div>
@@ -88,7 +89,7 @@
                                         <div class="chat-box-inner">
                                             <ul class="chat-list" id="messagesList">
 
-                                                <li>
+                                                @*<li>
                                                     <div class="chat-content">
                                                         <div class="chat-text">
                                                             It’s Great opportunity to work.
@@ -104,7 +105,7 @@
                                                         </div>
                                                         <div class="chat-action">10:57 am</div>
                                                     </div>
-                                                </li>
+                                                </li>*@
 
                                             </ul>
                                         </div>

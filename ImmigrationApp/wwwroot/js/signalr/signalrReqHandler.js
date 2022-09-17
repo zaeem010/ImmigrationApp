@@ -1,7 +1,6 @@
 ﻿var connection = new signalR.HubConnectionBuilder()
     .withUrl('/notify')
     .build();
-
 connection.on('ReceiveMessage', addMessageToChat);
 
 connection.start()
