@@ -11,6 +11,8 @@ namespace ImmigrationApp.Models
         public List<PeopleHubDTO> peopleHub { get; set; }
         public ChatAppHub ChatAppHub { get; set; }
         public List<ChatAppHub> chatAppHublist { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverEmail { get; set; }
     }
     public class SearchjobVM
     {

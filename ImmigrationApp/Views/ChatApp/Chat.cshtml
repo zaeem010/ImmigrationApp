@@ -71,7 +71,7 @@
                                         <div class="user-details-nav">
                                             <div class="user-info pull-left">
                                                 <a href="#" title="Mike Litorus">
-                                                    <h4><b id="CanidateName"></b></h4>
+                                                    <h4><b>@Model.ReceiverName</b></h4>
                                                 </a>
                                                 <small class="online">online</small>
                                             </div>
@@ -124,6 +124,7 @@
                                                     <input type="hidden" asp-for="ChatAppHub.Type" />
                                                     <input type="hidden" asp-for="ChatAppHub.MessageDateTime" />
                                                     <input type="hidden" asp-for="ChatAppHub.PeopleHubId" />
+                                                    <input type="text" id="ReceiverEmail"  />
                                                 </form>
                                             </div>
                                         </div>

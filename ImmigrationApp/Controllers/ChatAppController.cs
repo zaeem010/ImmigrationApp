@@ -33,9 +33,10 @@ namespace ImmigrationApp.Controllers
         {
             var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
             var peopleHublist = new List<PeopleHubDTO>();
+        
             if (e == "Employee")
             {
-                peopleHublist = (from x in _db.PeopleHub
+                peopleHublist = (from x in _db.PeopleHub where x.UserId == _cur.GetUserId() 
                                  select new PeopleHubDTO
                                  {
                                      Id = x.Id,
@@ -47,6 +48,7 @@ namespace ImmigrationApp.Controllers
             else if(e == "Candidate")
             {
                 peopleHublist = (from a in _db.PeopleHub
+                                 where a.ConnectedId == _cur.GetUserId()
                                  select new PeopleHubDTO
                                  {
                                      Id = a.Id,
@@ -73,15 +75,23 @@ namespace ImmigrationApp.Controllers
             string error;
             var chatlist = new List<ChatAppHub>();
             var chatAppHub = new ChatAppHub();
+            var PeopleHub = new PeopleHub();
+            var User = new User();
             var peopleHublist = new List<PeopleHubDTO>();
+            string ReceiverName = "",ReceiverEmail="";
             if (Id != 0)
             {
                 try
                 {
+                    PeopleHub = _db.PeopleHub.SingleOrDefault(x=>x.Id == Id);
                     var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
                     if (e == "Employee")
                     {
+                        User = _db.User.SingleOrDefault(x=>x.Id == PeopleHub.ConnectedId);
+                        ReceiverName = User.FullName;
+                        ReceiverEmail = User.UserName;
                         peopleHublist = (from x in _db.PeopleHub
+                                         where x.UserId == _cur.GetUserId()
                                          select new PeopleHubDTO
                                          {
                                              Id = x.Id,
@@ -92,7 +102,11 @@ namespace ImmigrationApp.Controllers
                     }
                     else if (e == "Candidate")
                     {
+                        User = _db.User.SingleOrDefault(x => x.Id == PeopleHub.UserId);
+                        ReceiverName = User.FullName;
+                        ReceiverEmail = User.UserName;
                         peopleHublist = (from a in _db.PeopleHub
+                                         where a.ConnectedId == _cur.GetUserId()
                                          select new PeopleHubDTO
                                          {
                                              Id = a.Id,
@@ -111,6 +125,8 @@ namespace ImmigrationApp.Controllers
                         peopleHub = peopleHublist,
                         ChatAppHub = chatAppHub,
                         chatAppHublist = chatlist,
+                        ReceiverName= ReceiverName,
+                        ReceiverEmail= ReceiverEmail,
                     };
                     return View(VM);
                 }
@@ -122,6 +138,8 @@ namespace ImmigrationApp.Controllers
                         peopleHub = peopleHublist,
                         ChatAppHub = chatAppHub,
                         chatAppHublist = chatlist,
+                        ReceiverName = ReceiverName,
+                        ReceiverEmail = ReceiverEmail,
                     };
                     return View(VM);
                 }

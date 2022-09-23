@@ -10,6 +10,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
     ChatAppHub.Message = $('#ChatAppHub_Message').val();
     ChatAppHub.MessageDateTime = $('#ChatAppHub_MessageDateTime').val();
     ChatAppHub.PeopleHubId = $('#ChatAppHub_PeopleHubId').val();
+    let receiverConnectionId = $('#ReceiverEmail').val();
     //
     var currentdate = new Date();
     currentdate=(currentdate.getMonth() + 1) + "-"
@@ -31,13 +32,9 @@ document.getElementById('sendButton').addEventListener('click', () => {
             if (res !== null) {
                 if (res == "Registerd Successfully")
                 {
-                    let sendmessage = {
-                        userId: ChatAppHub.UserId,
-                        message: ChatAppHub.Message
-                    }
                     $('#ChatAppHub_Message').val('');
-                    sendMessageToHub(ChatAppHub.UserId, ChatAppHub.Message);
-                    addMessageToChat(sendmessage);
+                    //sendMessageToHub(ChatAppHub.UserId, ChatAppHub.Message);
+                    sendMessageToUser(ChatAppHub.UserId, receiverConnectionId, ChatAppHub.Message);
                 } else
                 {
                     ShowToaster(0, "Couldn't send message due to error.!");
@@ -50,10 +47,11 @@ document.getElementById('sendButton').addEventListener('click', () => {
     //Save In Database
 });
 
-function addMessageToChat(value) {
+function addMessageToChat(value,message) {
     debugger;
-    if (value.message != undefined) {
-        let isCurrentUserMessage = value.userId === $('#UserId').val();
+    if (message != undefined) {
+        let userId = $('#ChatAppHub_UserId').val();
+        let isCurrentUserMessage = value === userId;
         var chatposition = "";
         if (isCurrentUserMessage) {
             chatposition = "chat-list-right";
@@ -61,7 +59,7 @@ function addMessageToChat(value) {
         let li = `<li class=${chatposition}>
                 <div class="chat-content">
                     <div class="chat-text">
-                        ${value.message}
+                        ${message}
                     </div>
                     <div class="chat-time">${_Datetime}</div>
                 </div>
