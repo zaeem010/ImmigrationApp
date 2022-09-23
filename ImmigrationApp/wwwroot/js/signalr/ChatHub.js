@@ -31,9 +31,13 @@ document.getElementById('sendButton').addEventListener('click', () => {
             if (res !== null) {
                 if (res == "Registerd Successfully")
                 {
+                    let sendmessage = {
+                        userId: ChatAppHub.UserId,
+                        message: ChatAppHub.Message
+                    }
                     $('#ChatAppHub_Message').val('');
                     sendMessageToHub(ChatAppHub.UserId, ChatAppHub.Message);
-                    addMessageToChat(ChatAppHub.UserId, ChatAppHub.Message);
+                    addMessageToChat(sendmessage);
                 } else
                 {
                     ShowToaster(0, "Couldn't send message due to error.!");
@@ -48,21 +52,22 @@ document.getElementById('sendButton').addEventListener('click', () => {
 
 function addMessageToChat(value) {
     debugger;
-    let isCurrentUserMessage = value.UserId === $('#UserId').val();
-    var chatposition = "";
-    if (isCurrentUserMessage)
-    {
-        chatposition = "chat-list-right";
-    }
-    let li = `<li class=${chatposition}>
+    if (value.message != undefined) {
+        let isCurrentUserMessage = value.userId === $('#UserId').val();
+        var chatposition = "";
+        if (isCurrentUserMessage) {
+            chatposition = "chat-list-right";
+        }
+        let li = `<li class=${chatposition}>
                 <div class="chat-content">
                     <div class="chat-text">
-                        ${_message}
+                        ${value.message}
                     </div>
                     <div class="chat-time">${_Datetime}</div>
                 </div>
             </li>`;
-    $('#messagesList').append(li);
-    var div = document.getElementById("messagesList");
-    div.scrollTop = div.scrollHeight - div.clientHeight;
+        $('#messagesList').append(li);
+        var div = document.getElementById("messagesList");
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+    }
 }

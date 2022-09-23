@@ -8,6 +8,7 @@ connection.start()
         console.error(error.message);
     });
 
-function sendMessageToHub(message) {
-    connection.invoke('SendMessage', message)
+function sendMessageToHub(user, message) {
+    debugger;
+    connection.invoke('SendMessage', user, message)
 }

@@ -6,7 +6,7 @@
 <partial name="_headerwhite" />
 <!-- Header Area End -->
 <!-- Breadcromb Area Start -->
-<script src="~/js/LoadChat.js" asp-append-version="true"></script>
+
 <section class="jobguru-breadcromb-area">
     <div class="breadcromb-bottom">
         <div class="container">
@@ -49,7 +49,7 @@
                                             foreach (var item in Model.peopleHub)
                                             {
                                                 <li class="clearfix">
-                                                    <a onclick="mychatloadfunction(this)" data-connectid="@item.Id" data-connectdname="@item.ConnectedName">
+                                                    <a asp-route-Id="@item.Id" asp-action="Chat" asp-controller="ChatApp">
                                                         <div class="chat-about">
                                                             <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
                                                             <small class="online">Online</small>
@@ -63,81 +63,7 @@
                                 <!-- End Chat List Body -->
                             </div>
                         </div>
-                        <!-- Col End -->
-                        <div class="col-lg-8 col-md-12">
-                            <div class="chat-board-right">
-                                <div class="chat-board-header">
-                                    <div class="navbar">
-                                        <div class="user-details-nav">
-                                            <div class="user-info pull-left">
-                                                <a href="#" title="Mike Litorus">
-                                                    <h4 ><b id="CanidateName"></b></h4>
-                                                </a>
-                                                <small class="online">online</small>
-                                            </div>
-                                        </div>
-                                        @*<ul class="nav navbar-nav pull-right custom-menu">
-                                                <li class="dropdown">
-                                                    <a href="#"><i class="fa fa-cog"></i></a>
-                                                </li>
-                                            </ul>*@
-                                    </div>
-                                </div>
-                                <!-- End Chatbot Header -->
-                                <div class="chat-board-content">
-                                    <div class="chat-box-wrapper">
-                                        <div class="chat-box-inner">
-                                            <ul class="chat-list" id="messagesList">
-
-                                                @*<li>
-                                                    <div class="chat-content">
-                                                        <div class="chat-text">
-                                                            It’s Great opportunity to work.
-                                                        </div>
-                                                        <div class="chat-time">10:57 am</div>
-                                                    </div>
-                                                </li>
-
-                                                <li class="chat-list-right">
-                                                    <div class="chat-content">
-                                                        <div class="chat-text">
-                                                            simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                                                        </div>
-                                                        <div class="chat-action">10:57 am</div>
-                                                    </div>
-                                                </li>*@
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Chatbot COntent -->
-                                <div class="chat-footer">
-                                    <div class="message-bar">
-                                        <div class="message-bar-inner">
-                                            <div class="attach-icon">
-                                                <p>
-                                                    <i class="fa fa-paperclip"></i>
-                                                </p>
-                                                <input type="file">
-                                            </div>
-                                            <div class="message-text-area">
-                                                <form action="#">
-                                                    <textarea asp-for="ChatAppHub.Message" placeholder="Type message..."></textarea>
-                                                    <button type="button" id="sendButton"><i class="fa fa-send"></i></button>
-                                                    <input type="hidden" asp-for="ChatAppHub.UserId" />
-                                                    <input type="hidden" asp-for="ChatAppHub.Type" />
-                                                    <input type="hidden" asp-for="ChatAppHub.MessageDateTime" />
-                                                    <input type="hidden" asp-for="ChatAppHub.PeopleHubId" />
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Chat Footer -->
-                            </div>
-                        </div>
-                        <!-- Col Start -->
+                        
                     </div>
                 </div>
             </div>
@@ -146,6 +72,4 @@
 </section>
 
 <!-- Candidate Dashboard Area End -->
-<script src="/js/signalr/dist/browser/signalr.js"></script>
-<script src="/js/signalr/signalrReqHandler.js"></script>
-<script src="/js/signalr/ChatHub.js"></script>
+

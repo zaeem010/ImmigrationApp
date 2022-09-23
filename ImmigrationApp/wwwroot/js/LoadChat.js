@@ -1,7 +1,4 @@
-﻿setTimeout(function () {
-    mychatloadfunction(e)
-}, 1500);
-function mychatloadfunction(e) {
+﻿function mychatloadfunction(e) {
     let Id = parseInt(e.dataset.connectid);
     let Name = e.dataset.connectdname;
 
@@ -25,7 +22,6 @@ function mychatloadfunction(e) {
                     {
                         chatposition = "chat-list-right";
                     }
-                    debugger;
                     var currentdate = new Date(data.chatlist[i].messageDateTime);
                     currentdate = (currentdate.getMonth() + 1) + "-"
                         + currentdate.getDate() + "-"

@@ -29,7 +29,7 @@ namespace ImmigrationApp.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction("Message");
         }
-        public async Task<IActionResult> Message()
+        public IActionResult Message()
         {
             var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
             var peopleHublist = new List<PeopleHubDTO>();
@@ -55,8 +55,6 @@ namespace ImmigrationApp.Controllers
                                      ConnectedName = _db.User.Where(z => z.Id == a.UserId).Select(z => z.FullName).FirstOrDefault()
                                  }).ToList();
             }
-            
-
             var chatAppHublist = new List<ChatAppHub>();
             var chatAppHub = new ChatAppHub();
             chatAppHub.PeopleHubId = 1;
@@ -70,23 +68,65 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
-        public IActionResult GetChat(long Id)
+        public IActionResult Chat(long Id)
         {
-            string res = "";
+            string error;
             var chatlist = new List<ChatAppHub>();
+            var chatAppHub = new ChatAppHub();
+            var peopleHublist = new List<PeopleHubDTO>();
             if (Id != 0)
             {
                 try
                 {
+                    var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
+                    if (e == "Employee")
+                    {
+                        peopleHublist = (from x in _db.PeopleHub
+                                         select new PeopleHubDTO
+                                         {
+                                             Id = x.Id,
+                                             UserId = x.UserId,
+                                             ConnectedId = x.ConnectedId,
+                                             ConnectedName = _db.User.Where(z => z.Id == x.ConnectedId).Select(z => z.FullName).FirstOrDefault()
+                                         }).ToList();
+                    }
+                    else if (e == "Candidate")
+                    {
+                        peopleHublist = (from a in _db.PeopleHub
+                                         select new PeopleHubDTO
+                                         {
+                                             Id = a.Id,
+                                             UserId = a.UserId,
+                                             ConnectedId = a.ConnectedId,
+                                             ConnectedName = _db.User.Where(z => z.Id == a.UserId).Select(z => z.FullName).FirstOrDefault()
+                                         }).ToList();
+                    }
                     chatlist = _db.ChatAppHub.Where(x => x.PeopleHubId == Id).ToList();
-                    res = "Success";
+                    chatAppHub.PeopleHubId = Id;
+                    chatAppHub.UserId = _cur.GetUserId();
+                    chatAppHub.Type = _db.User.Where(x => x.Id.Equals(_cur.GetUserId())).Select(x => x.Type).FirstOrDefault();
+                    error = "";
+                    var VM = new ChatHubVM
+                    {
+                        peopleHub = peopleHublist,
+                        ChatAppHub = chatAppHub,
+                        chatAppHublist = chatlist,
+                    };
+                    return View(VM);
                 }
                 catch (Exception e)
                 {
-                    res = e.Message;
+                    error = e.Message;
+                    var VM = new ChatHubVM
+                    {
+                        peopleHub = peopleHublist,
+                        ChatAppHub = chatAppHub,
+                        chatAppHublist = chatlist,
+                    };
+                    return View(VM);
                 }
             }
-            return Json(new { res = res, chatlist = chatlist });
+            return RedirectToAction("Message");
         }
         [Route("/ChatApp/Save")]
         public async Task<IActionResult> Save(ChatAppHub ChatAppHub) 

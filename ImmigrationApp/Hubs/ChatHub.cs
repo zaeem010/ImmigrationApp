@@ -10,7 +10,15 @@ namespace ImmigrationApp.Hubs
     {
         public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            try
+            {
+                await Clients.All.SendAsync("ReceiveMessage", user, message);
+            }
+            catch (Exception e)
+            {
+                var error = e.Message;
+                throw;
+            }
         }
     }
 }
