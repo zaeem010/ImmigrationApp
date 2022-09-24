@@ -176,5 +176,25 @@ namespace ImmigrationApp.Controllers
             }
             return Json(res);
         }
+        
+        public IActionResult GetChat(long Id)
+        {
+            string error = "";
+            var chatlist = new List<ChatAppHub>();
+            if (Id != 0)
+            {
+                try
+                {
+                    chatlist = _db.ChatAppHub.Where(x => x.PeopleHubId == Id).ToList();
+                    error = "Success";
+                }
+                catch (Exception e)
+                {
+                    error = e.Message;
+                }
+            }
+            return Json(new { error = error, chatlist = chatlist });
+        }
+
     }
 }

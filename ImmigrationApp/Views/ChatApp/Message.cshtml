@@ -37,22 +37,22 @@
                         <div class="col-lg-4 col-md-12 ">
                             <div class="chat-list-left">
                                 <div class="chat-search-form">
-                                    <form>
-                                        <input type="search" placeholder="Search Contact">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                    <form action="#">
+                                        <input type="text" id="search" placeholder="Search Contact">
+                                        <button type="button"><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>
                                 <!-- End Chat Search -->
                                 <div class="chat-list-body">
-                                    <ul class="chat-list">
+                                    <ul class="chat-list" id="contacts">
                                         @{
                                             foreach (var item in Model.peopleHub)
                                             {
                                                 <li class="clearfix">
                                                     <a asp-route-SlugName="@item.SlugName" asp-action="Chat" asp-controller="ChatApp">
                                                         <div class="chat-about">
-                                                            <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
-                                                            <small class="online">Online</small>
+                                                            <h4><b>@item.ConnectedName</b> @*<span class="badge bg-dark">0</span>*@</h4>
+                                                            @*<small class="online">Online</small>*@
                                                         </div>
                                                     </a>
                                                 </li>
@@ -70,6 +70,6 @@
         </div>
     </div>
 </section>
-
+<script src="/js/Filtering.js"></script>
 <!-- Candidate Dashboard Area End -->
 

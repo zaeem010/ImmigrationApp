@@ -1,23 +1,16 @@
-﻿function mychatloadfunction(e) {
-    let Id = parseInt(e.dataset.connectid);
-    let Name = e.dataset.connectdname;
-
+﻿function mychatloadfunction() {
+    let Id = $('#ChatAppHub_PeopleHubId').val();
     $.ajax({
         type: "POST",
         url: '/ChatApp/GetChat',
         data: {Id: Id},
         success: (data) => {
-            if (data !== null && data.res == "Success") {
-                
+            if (data !== null && data.error == "Success") {
                 $('#messagesList').children().remove();
-                $('#CanidateName').text(Name);
-                $('#ChatAppHub_PeopleHubId').val(Id);
                 let li = '';
                 for (var i = 0; i < data.chatlist.length; i++) {
                     let otherId = $('#ChatAppHub_UserId').val();
-                    //let isCurrentUserMessage = data.chatlist[i].userId === otherId;
                     var chatposition = "";
-                    
                     if (data.chatlist[i].userId == otherId)
                     {
                         chatposition = "chat-list-right";
@@ -27,7 +20,7 @@
                         + currentdate.getDate() + "-"
                         + currentdate.getFullYear() + " "
                         + currentdate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-
+                    //
                     li += `<li class=${chatposition}>
                             <div class="chat-content">
                                 <div class="chat-text">
@@ -42,7 +35,7 @@
                 div.scrollTop = div.scrollHeight - div.clientHeight;
             }
             else {
-                ShowToaster(0, "Couldn't load message due to error.!");
+                //ShowToaster(0, "Couldn't load message due to error.!");
             }
         }
     });

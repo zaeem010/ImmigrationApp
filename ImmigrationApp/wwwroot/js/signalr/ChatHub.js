@@ -1,9 +1,24 @@
-﻿$(function () {
-    var _message = "";
-    var _Datetime = "";
+﻿var myVar;
+$(document).ready(function () {
+    myVar = setInterval("mychatloadfunction()", 10000);
+});
+$(function () {
+    scrolltobottom();
     //
 });
-document.getElementById('sendButton').addEventListener('click', () => {
+function scrolltobottom() {
+    debugger;
+    var div = document.getElementById("messagesList");
+    div.scrollTop = div.scrollHeight - div.clientHeight;
+}
+$(document).keypress(function (e) {
+    if (e.which == 13 || event.keyCode == 13) {
+        savechat();
+    }
+});
+
+
+function savechat() {
     var ChatAppHub = {};
     ChatAppHub.UserId = $('#ChatAppHub_UserId').val();
     ChatAppHub.Type = $('#ChatAppHub_Type').val();
@@ -13,13 +28,13 @@ document.getElementById('sendButton').addEventListener('click', () => {
     let receiverConnectionId = $('#ReceiverEmail').val();
     //
     var currentdate = new Date();
-    currentdate=(currentdate.getMonth() + 1) + "-"
+    currentdate = (currentdate.getMonth() + 1) + "-"
         + currentdate.getDate() + "-"
         + currentdate.getFullYear() + " "
         + currentdate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
     _Datetime = currentdate;
     ChatAppHub.MessageDateTime = currentdate;
-        
+
     //Date End
     if (ChatAppHub.Message.trim() === "") return;
     _message = ChatAppHub.Message;
@@ -30,23 +45,32 @@ document.getElementById('sendButton').addEventListener('click', () => {
         data: ChatAppHub,
         success: (res) => {
             if (res !== null) {
-                if (res == "Registerd Successfully")
-                {
+                if (res == "Registerd Successfully") {
+                    let li = `<li class="chat-list-right">
+                            <div class="chat-content">
+                                <div class="chat-text">
+                                    ${ChatAppHub.Message}
+                                </div>
+                                <div class="chat-time">${ChatAppHub.MessageDateTime}</div>
+                            </div>
+                        </li>`;
+                    $('#messagesList').append(li);
+                    var div = document.getElementById("messagesList");
+                    div.scrollTop = div.scrollHeight - div.clientHeight;
+                    //
                     $('#ChatAppHub_Message').val('');
                     //sendMessageToHub(ChatAppHub.UserId, ChatAppHub.Message);
-                    sendMessageToUser(ChatAppHub.UserId, receiverConnectionId, ChatAppHub.Message);
-                } else
-                {
+                    //sendMessageToUser(ChatAppHub.UserId, receiverConnectionId, ChatAppHub.Message);
+                } else {
                     ShowToaster(0, "Couldn't send message due to error.!");
                 }
-            }else {
+            } else {
                 ShowToaster(0, "Couldn't send message due to error.!");
             }
         }
     });
     //Save In Database
-});
-
+}
 function addMessageToChat(value,message) {
     debugger;
     if (message != undefined) {

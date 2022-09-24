@@ -37,22 +37,22 @@
                         <div class="col-lg-4 col-md-12 ">
                             <div class="chat-list-left">
                                 <div class="chat-search-form">
-                                    <form>
-                                        <input type="search" placeholder="Search Contact">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                    <form action="#">
+                                        <input type="text" id="search" placeholder="Search Contact">
+                                        <button type="button"><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>
                                 <!-- End Chat Search -->
                                 <div class="chat-list-body">
-                                    <ul class="chat-list">
+                                    <ul class="chat-list" id="contacts">
                                         @{
                                             foreach (var item in Model.peopleHub)
                                             {
                                                 <li class="clearfix">
-                                                    <a asp-route-Id="@item.Id" asp-action="Chat" asp-controller="ChatApp" onclick="mychatloadfunction(this)" data-connectid="@item.Id" data-connectdname="@item.ConnectedName">
+                                                   <a asp-route-SlugName="@item.SlugName" asp-action="Chat" asp-controller="ChatApp">
                                                         <div class="chat-about">
-                                                            <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
-                                                            <small class="online">Online</small>
+                                                            <h4><b>@item.ConnectedName</b> @*<span class="badge bg-dark">0</span>*@</h4>
+                                                            @*<small class="online">Online</small>*@
                                                         </div>
                                                     </a>
                                                 </li>
@@ -73,7 +73,7 @@
                                                 <a href="#" title="Mike Litorus">
                                                     <h4><b>@Model.ReceiverName</b></h4>
                                                 </a>
-                                                <small class="online">online</small>
+                                                @*<small class="online">online</small>*@
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                             <div class="message-text-area">
                                                 <form action="#">
                                                     <textarea asp-for="ChatAppHub.Message" placeholder="Type message..."></textarea>
-                                                    <button type="button" id="sendButton"><i class="fa fa-send"></i></button>
+                                                    <button type="button" onclick="savechat()" id="sendButton"><i class="fa fa-send"></i></button>
                                                     <input type="hidden" asp-for="ChatAppHub.UserId" />
                                                     <input type="hidden" asp-for="ChatAppHub.Type" />
                                                     <input type="hidden" asp-for="ChatAppHub.MessageDateTime" />
@@ -142,6 +142,6 @@
 </section>
 
 <!-- Candidate Dashboard Area End -->
-<script src="/js/signalr/dist/browser/signalr.js"></script>
+<script src="/js/Filtering.js"></script>
+<script src="/js/LoadChat.js"></script>
 <script src="/js/signalr/ChatHub.js"></script>
-<script src="/js/signalr/signalrReqHandler.js"></script>
