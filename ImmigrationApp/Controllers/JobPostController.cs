@@ -45,6 +45,7 @@ namespace ImmigrationApp.Controllers
             }
             
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("/Job/Gettitle")]
         public async Task<IActionResult> Gettitle(string term)

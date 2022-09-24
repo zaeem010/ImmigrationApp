@@ -13,6 +13,7 @@ namespace ImmigrationApp.Models
         public int UserId { get; set; }
         public int ConnectedId { get; set; }
         public string ConnectedName { get; set; }
+        public string SlugName { get; set; }
     }
     public class SearchDTO
     {

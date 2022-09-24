@@ -25,6 +25,9 @@ namespace ImmigrationApp.Controllers
             var peopleHub = new PeopleHub();
             peopleHub.UserId = _cur.GetUserId();
             peopleHub.ConnectedId = ConnectionId;
+            string Slugname ="Group of " + _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.FirstName).FirstOrDefault();
+            Slugname = Slugname+ " and " + _db.User.Where(x => x.Id == ConnectionId).Select(x => x.FirstName).FirstOrDefault();
+            peopleHub.SlugName = Slugname.Replace(" ", "-");
             await _db.PeopleHub.AddAsync(peopleHub);
             await _db.SaveChangesAsync();
             return RedirectToAction("Message");
@@ -42,6 +45,7 @@ namespace ImmigrationApp.Controllers
                                      Id = x.Id,
                                      UserId = x.UserId,
                                      ConnectedId = x.ConnectedId,
+                                     SlugName = x.SlugName,
                                      ConnectedName = _db.User.Where(z => z.Id == x.ConnectedId).Select(z => z.FullName).FirstOrDefault()
                                  }).ToList();
             }
@@ -54,6 +58,7 @@ namespace ImmigrationApp.Controllers
                                      Id = a.Id,
                                      UserId = a.UserId,
                                      ConnectedId = a.ConnectedId,
+                                     SlugName = a.SlugName,
                                      ConnectedName = _db.User.Where(z => z.Id == a.UserId).Select(z => z.FullName).FirstOrDefault()
                                  }).ToList();
             }
@@ -70,7 +75,9 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
-        public IActionResult Chat(long Id)
+        [HttpGet]
+        [Route("/Chat/{SlugName}")]
+        public IActionResult Chat(string SlugName)
         {
             string error;
             var chatlist = new List<ChatAppHub>();
@@ -79,11 +86,11 @@ namespace ImmigrationApp.Controllers
             var User = new User();
             var peopleHublist = new List<PeopleHubDTO>();
             string ReceiverName = "",ReceiverEmail="";
-            if (Id != 0)
+            if (!string.IsNullOrEmpty(SlugName))
             {
                 try
                 {
-                    PeopleHub = _db.PeopleHub.SingleOrDefault(x=>x.Id == Id);
+                    PeopleHub = _db.PeopleHub.SingleOrDefault(x=>x.SlugName == SlugName);
                     var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
                     if (e == "Employee")
                     {
@@ -97,6 +104,7 @@ namespace ImmigrationApp.Controllers
                                              Id = x.Id,
                                              UserId = x.UserId,
                                              ConnectedId = x.ConnectedId,
+                                             SlugName = x.SlugName,
                                              ConnectedName = _db.User.Where(z => z.Id == x.ConnectedId).Select(z => z.FullName).FirstOrDefault()
                                          }).ToList();
                     }
@@ -112,11 +120,12 @@ namespace ImmigrationApp.Controllers
                                              Id = a.Id,
                                              UserId = a.UserId,
                                              ConnectedId = a.ConnectedId,
+                                             SlugName = a.SlugName,
                                              ConnectedName = _db.User.Where(z => z.Id == a.UserId).Select(z => z.FullName).FirstOrDefault()
                                          }).ToList();
                     }
-                    chatlist = _db.ChatAppHub.Where(x => x.PeopleHubId == Id).ToList();
-                    chatAppHub.PeopleHubId = Id;
+                    chatlist = _db.ChatAppHub.Where(x => x.PeopleHubId == PeopleHub.Id).ToList();
+                    chatAppHub.PeopleHubId = PeopleHub.Id;
                     chatAppHub.UserId = _cur.GetUserId();
                     chatAppHub.Type = _db.User.Where(x => x.Id.Equals(_cur.GetUserId())).Select(x => x.Type).FirstOrDefault();
                     error = "";

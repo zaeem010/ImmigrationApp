@@ -49,7 +49,7 @@
                                             foreach (var item in Model.peopleHub)
                                             {
                                                 <li class="clearfix">
-                                                    <a asp-route-Id="@item.Id" asp-action="Chat" asp-controller="ChatApp">
+                                                    <a asp-route-SlugName="@item.SlugName" asp-action="Chat" asp-controller="ChatApp">
                                                         <div class="chat-about">
                                                             <h4><b>@item.ConnectedName</b> <span class="badge bg-dark">0</span></h4>
                                                             <small class="online">Online</small>
