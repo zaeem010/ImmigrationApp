@@ -50,26 +50,22 @@ namespace ImmigrationApp
                 .AddRoleManager<RoleManager<IdentityRole<int>>>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddAuthentication().AddCookie(o =>
-            {
-                o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-            });
-
             services.AddDistributedMemoryCache();
-            services.AddSession(options =>
+
+            services.ConfigureApplicationCookie(opt =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
+                opt.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                opt.LoginPath = "/account/login";
+                opt.SlidingExpiration = true;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = $"/account/login";
-                //options.LogoutPath = $"/account/logout";
-                //options.AccessDeniedPath = $"/account/access-denied";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = $"/account/login";
+            //    //options.LogoutPath = $"/account/logout";
+            //    //options.AccessDeniedPath = $"/account/access-denied";
+            //});
+
             services.AddSignalR();
             services.AddMvc();
             //services.AddAuthentication()

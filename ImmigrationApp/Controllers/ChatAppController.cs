@@ -22,14 +22,18 @@ namespace ImmigrationApp.Controllers
         [Route("/ChatApp/PeopleHub/{ConnectionId}")]
         public async Task<IActionResult> CreatePeopleHub(int ConnectionId)
         {
-            var peopleHub = new PeopleHub();
-            peopleHub.UserId = _cur.GetUserId();
-            peopleHub.ConnectedId = ConnectionId;
-            string Slugname ="Group of " + _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.FirstName).FirstOrDefault();
-            Slugname = Slugname+ " and " + _db.User.Where(x => x.Id == ConnectionId).Select(x => x.FirstName).FirstOrDefault();
-            peopleHub.SlugName = Slugname.Replace(" ", "-");
-            await _db.PeopleHub.AddAsync(peopleHub);
-            await _db.SaveChangesAsync();
+            var check = _db.PeopleHub.Where(x => x.ConnectedId == ConnectionId && x.UserId == _cur.GetUserId()).Count();
+            if (check == 0)
+            {
+                var peopleHub = new PeopleHub();
+                peopleHub.UserId = _cur.GetUserId();
+                peopleHub.ConnectedId = ConnectionId;
+                string Slugname = "Group of " + _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.FirstName).FirstOrDefault();
+                Slugname = Slugname + " and " + _db.User.Where(x => x.Id == ConnectionId).Select(x => x.FirstName).FirstOrDefault();
+                peopleHub.SlugName = Slugname.Replace(" ", "-");
+                await _db.PeopleHub.AddAsync(peopleHub);
+                await _db.SaveChangesAsync();
+            }
             return RedirectToAction("Message");
         }
         public IActionResult Message()
