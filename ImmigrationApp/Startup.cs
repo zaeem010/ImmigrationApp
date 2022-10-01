@@ -13,7 +13,6 @@ using System;
 using ImmigrationApp.Currentuser;
 using ImmigrationApp.Repositries;
 using ImmigrationApp.Extensions;
-using ImmigrationApp.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ImmigrationApp

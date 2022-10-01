@@ -2,6 +2,9 @@
     $('#title, #category, #datepost, input[name="type"]').on('change', function () {
         search();
     });
+    $('input[id="title"').keyup(delay(function (e) {
+        search();
+    }, 100));
 });
 function search() {
     let SearchDTO = {};
@@ -19,7 +22,7 @@ function search() {
         url: '/FindJob/searchjob',
         data: SearchDTO,
         success: (res) => {
-            if (res !== null) {
+            if (res !== null && res.length !== 0) {
                 $('.job-sidebar-list-single').children().remove();
                 let row = '';
                 for (var i = 0; i < res.length; i++) {
@@ -83,11 +86,10 @@ function search() {
                     row += '</div>';
                     row += '</div>';
                 }
-                debugger;
                 $('.job-sidebar-list-single').append(row);
             }
             else {
-                //ShowError(res.error);
+                $('.job-sidebar-list-single').html('<h3 class="text-danger">No record Found! please refine your search.</h3>');
             }
         }
     });

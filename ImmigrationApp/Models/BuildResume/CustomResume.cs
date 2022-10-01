@@ -106,6 +106,8 @@ namespace ImmigrationApp.Models
         public string StudyCountry { get; set; }
         [MaxLength(255)]
         public string StudyCity { get; set; }
+        [MaxLength(255)]
+        public string StudyProvince { get; set; }
         //Time Period
         public bool CurrentlyEnrolled { get; set; }
         [MaxLength(255)]
@@ -131,6 +133,8 @@ namespace ImmigrationApp.Models
         public string JobCountry { get; set; }
         [MaxLength(255)]
         public string JobCity { get; set; }
+        [MaxLength(255)]
+        public string JobProvince { get; set; }
         //Time Period
         public bool CurrentlyEnrolled { get; set; }
         [MaxLength(255)]

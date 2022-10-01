@@ -74,7 +74,7 @@ namespace ImmigrationApp.Controllers
         [Route("/Account/Employer-SignUp")]
         public IActionResult EmployeeSignUp()
         {
-            IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+            IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x=>x.CountryName).Select(c => new SelectListItem
             {
                 Value =c.CountryName,
                 Text =c.CountryName,
@@ -86,7 +86,7 @@ namespace ImmigrationApp.Controllers
         [Route("/Account/Candidate-SignUp")]
         public IActionResult CandidateSignUp()
         {
-            IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+            IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x=>x.CountryName).Select(c => new SelectListItem
             {
                 Value =c.CountryName,
                 Text =c.CountryName,
@@ -101,7 +101,7 @@ namespace ImmigrationApp.Controllers
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+                IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x => x.CountryName).Select(c => new SelectListItem
                 {
                     Value = c.CountryName,
                     Text = c.CountryName,
@@ -167,7 +167,7 @@ namespace ImmigrationApp.Controllers
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+                IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x=>x.CountryName).Select(c => new SelectListItem
                 {
                     Value = c.CountryName,
                     Text = c.CountryName,

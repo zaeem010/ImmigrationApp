@@ -16,7 +16,7 @@ namespace ImmigrationApp.Repositries
         }
         public IEnumerable<SelectListItem> GetCountryList(string selected)
         {
-            IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+            IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x => x.CountryName).Select(c => new SelectListItem
             {
                 Value = c.CountryName,
                 Text = c.CountryName,

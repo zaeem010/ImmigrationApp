@@ -40,7 +40,7 @@ namespace ImmigrationApp.Controllers
                 .Include(x=>x.ResumeLinkChildList)
                 .SingleOrDefaultAsync(x=>x.UserId == _Currentuser.GetUserId());
             var Skills = await _db.Skill.ToListAsync();
-            IEnumerable<SelectListItem> Country = _db.Country.Select(c => new SelectListItem
+            IEnumerable<SelectListItem> Country = _db.Country.OrderBy(x=>x.CountryName).Select(c => new SelectListItem
             {
                 Value = c.CountryName,
                 Text = c.CountryName,
