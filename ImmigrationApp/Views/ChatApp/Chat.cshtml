@@ -70,9 +70,21 @@
                                     <div class="navbar">
                                         <div class="user-details-nav">
                                             <div class="user-info pull-left">
-                                                <a href="#" title="Mike Litorus">
-                                                    <h4><b>@Model.ReceiverName</b></h4>
-                                                </a>
+                                                @{
+                                                    if (Model.Type == "Candidate")
+                                                    {
+                                                        <a asp-route-slugname="@Model.SlugName" asp-action="ProfileView" asp-controller="Candidate">
+                                                            <h4><b>@Model.ReceiverName</b></h4>
+                                                        </a>
+                                                    }
+                                                    else if (Model.Type == "Employee")
+                                                    {
+                                                        <a asp-route-slugname="@Model.SlugName" asp-action="ViewProfile" asp-controller="Employer">
+                                                            <h4><b>@Model.ReceiverName</b></h4>
+                                                        </a>
+                                                    }
+                                                }
+
                                                 @*<small class="online">online</small>*@
                                             </div>
                                         </div>

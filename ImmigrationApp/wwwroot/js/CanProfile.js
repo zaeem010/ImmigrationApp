@@ -113,6 +113,7 @@ function AddEducation() {
     let schoolname = $('#schoolname').val();
     let country = $('#country').val();
     let city = $('#city').val();
+    let province = $('#province').val();
     let enrolled = $('#enrolled').val();
     let fmonth = $('#fmonth').val();
     let fyear = $('#fyear').val();
@@ -161,8 +162,9 @@ function AddEducation() {
         table += '<td class="d-none">' + fyear + '</td>';
         table += '<td class="d-none">' + tmonth + '</td>';
         table += '<td class="d-none">' + tyear + '</td>';
+        table += '<td class="d-none">' + province + '</td>';
         table += '<td>' + leveleducation + ' in ' + filedstudy + '</td>';
-        table += '<td>' + schoolname + ' - ' + city + '</td>';
+        table += `<td>${schoolname} - ${city},${province}</td>`;
         if (enrolled == "true") {
             table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + tyear + '</td>';
         } else {
@@ -177,6 +179,7 @@ function AddEducation() {
         $('#schoolname').val('');
         $('#country').val();
         $('#city').val('');
+        $('#province').val('')
         $('#enrolled').val('false');
         $('#fmonth').val('Janaury');
         $('#fyear').val(new Date().getFullYear());
@@ -194,6 +197,7 @@ function Addwork() {
     let des = $('#wdes').val();
     let country = $('#wcountry').val();
     let city = $('#wcity').val();
+    let province = $('#wprovince').val();
     let enrolled = $('#wenrolled').val();
     let fmonth = $('#wfmonth').val();
     let fyear = $('#wfyear').val();
@@ -235,8 +239,10 @@ function Addwork() {
         table += '<td class="d-none">' + tmonth + '</td>';
         table += '<td class="d-none">' + tyear + '</td>';
         table += '<td class="d-none">' + des + '</td>';
+        table += '<td class="d-none">' + des + '</td>';
+        table += '<td class="d-none">' + province + '</td>';
         table += '<td>' + jobtitle + ' in ' + company + '</td>';
-        table += '<td>' + company + ' - ' + city + '</td>';
+        table += `<td>${company} - ${city},${province}</td>`;
         if (enrolled == "true") {
             table += '<td>' + fmonth + ' ' + fyear + ' to ' + tmonth + tyear + '</td>';
         } else {
@@ -251,6 +257,7 @@ function Addwork() {
         $('#company').val('');
         $('#wcountry').val();
         $('#wcity').val('');
+        $('#wprovince').val('');
         $('#wenrolled').val('false');
         $('#wfmonth').val('Janaury');
         $('#wfyear').val(new Date().getFullYear());
@@ -338,6 +345,7 @@ function Updateprofile() {
                 SchoolName: $tr.find("td:eq(2)").text(),
                 StudyCountry: $tr.find("td:eq(3)").text(),
                 StudyCity: $tr.find("td:eq(4)").text(),
+                StudyProvince: $tr.find("td:eq(10)").text(),
                 CurrentlyEnrolled: $tr.find("td:eq(5)").text(),
                 FromYear: $tr.find("td:eq(6)").text(),
                 FromMonth: $tr.find("td:eq(7)").text(),
@@ -360,6 +368,7 @@ function Updateprofile() {
                 Company: $tr.find("td:eq(1)").text(),
                 JobCountry: $tr.find("td:eq(2)").text(),
                 JobCity: $tr.find("td:eq(3)").text(),
+                JobProvince: $tr.find("td:eq(11)").text(),
                 CurrentlyEnrolled: $tr.find("td:eq(4)").text(),
                 FromYear: $tr.find("td:eq(5)").text(),
                 FromMonth: $tr.find("td:eq(6)").text(),

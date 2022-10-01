@@ -13,6 +13,8 @@ namespace ImmigrationApp.Models
         public List<ChatAppHub> chatAppHublist { get; set; }
         public string ReceiverName { get; set; }
         public string ReceiverEmail { get; set; }
+        public string SlugName { get; set; }
+        public string Type { get; set; }
     }
     public class SearchjobVM
     {

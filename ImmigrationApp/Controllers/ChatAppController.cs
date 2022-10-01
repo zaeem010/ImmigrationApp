@@ -22,8 +22,8 @@ namespace ImmigrationApp.Controllers
         [Route("/ChatApp/PeopleHub/{ConnectionId}")]
         public async Task<IActionResult> CreatePeopleHub(int ConnectionId)
         {
-            var check = _db.PeopleHub.Where(x => x.ConnectedId == ConnectionId && x.UserId == _cur.GetUserId()).Count();
-            if (check == 0)
+            var check = _db.PeopleHub.Where(x => x.ConnectedId == ConnectionId && x.UserId == _cur.GetUserId()).ToList();
+            if (check.Count() == 0)
             {
                 var peopleHub = new PeopleHub();
                 peopleHub.UserId = _cur.GetUserId();
@@ -33,6 +33,11 @@ namespace ImmigrationApp.Controllers
                 peopleHub.SlugName = Slugname.Replace(" ", "-");
                 await _db.PeopleHub.AddAsync(peopleHub);
                 await _db.SaveChangesAsync();
+                return RedirectToAction("Message");
+            }
+            else if (check.Count() != 0)
+            {
+                return RedirectToAction("Chat", "ChatApp" ,new {check[0].SlugName });
             }
             return RedirectToAction("Message");
         }
@@ -89,7 +94,7 @@ namespace ImmigrationApp.Controllers
             var PeopleHub = new PeopleHub();
             var User = new User();
             var peopleHublist = new List<PeopleHubDTO>();
-            string ReceiverName = "",ReceiverEmail="";
+            string ReceiverName = "",ReceiverEmail="", _slugName="",type="";
             if (!string.IsNullOrEmpty(SlugName))
             {
                 try
@@ -98,9 +103,11 @@ namespace ImmigrationApp.Controllers
                     var e = _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.Type).FirstOrDefault();
                     if (e == "Employee")
                     {
+                        type = "Candidate";
                         User = _db.User.SingleOrDefault(x=>x.Id == PeopleHub.ConnectedId);
                         ReceiverName = User.FullName;
                         ReceiverEmail = User.UserName;
+                        _slugName= _db.CustomResume.Where(x=>x.UserId == PeopleHub.ConnectedId).Select(z=>z.SlugName).FirstOrDefault();
                         peopleHublist = (from x in _db.PeopleHub
                                          where x.UserId == _cur.GetUserId()
                                          select new PeopleHubDTO
@@ -114,9 +121,11 @@ namespace ImmigrationApp.Controllers
                     }
                     else if (e == "Candidate")
                     {
+                        type = "Employee";
                         User = _db.User.SingleOrDefault(x => x.Id == PeopleHub.UserId);
                         ReceiverName = User.FullName;
                         ReceiverEmail = User.UserName;
+                        _slugName = _db.CompanyInfo.Where(x => x.UserId == PeopleHub.UserId).Select(z => z.SlugName).FirstOrDefault();
                         peopleHublist = (from a in _db.PeopleHub
                                          where a.ConnectedId == _cur.GetUserId()
                                          select new PeopleHubDTO
@@ -140,6 +149,8 @@ namespace ImmigrationApp.Controllers
                         chatAppHublist = chatlist,
                         ReceiverName= ReceiverName,
                         ReceiverEmail= ReceiverEmail,
+                        SlugName= _slugName,
+                        Type=type,
                     };
                     return View(VM);
                 }
@@ -153,6 +164,8 @@ namespace ImmigrationApp.Controllers
                         chatAppHublist = chatlist,
                         ReceiverName = ReceiverName,
                         ReceiverEmail = ReceiverEmail,
+                        SlugName = _slugName,
+                        Type = type,
                     };
                     return View(VM);
                 }

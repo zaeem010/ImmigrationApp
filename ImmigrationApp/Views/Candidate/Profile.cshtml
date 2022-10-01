@@ -202,10 +202,12 @@
                                                             <label>Level Of Education</label>
                                                             <select id="leveleducation">
                                                                 <option value="">Select</option>
-                                                                <option value="Phd">Phd</option>
-                                                                <option value="MPhill">M Phill</option>
-                                                                <option value="Bachelor">Bachelor</option>
+                                                                <option value="High School">High School</option>
+                                                                <option value="Certificate">Certificate</option>
+                                                                <option value="Bachelor 3 Years">Bachelor 3 Years</option>
                                                                 <option value="Master">Master</option>
+                                                                <option value="M-Phill">M-Phill</option>
+                                                                <option value="PHD">PHD</option>
                                                             </select>
                                                         </div>
                                                         <div class="single-input">
@@ -225,11 +227,15 @@
                                                             </select>
                                                         </div>
                                                         <div class="single-input">
-                                                            <label>City , Province</label>
+                                                            <label>Province</label>
+                                                            <input type="text" id="province" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>City</label>
                                                             <input type="text" id="city" />
                                                         </div>
                                                         <div class="single-input">
-                                                            <label>Currently Enrolled</label>
+                                                            <label>Currently Working</label>
                                                             <select id="enrolled">
                                                                 <option value="false">No</option>
                                                                 <option value="true">Yes</option>
@@ -319,8 +325,9 @@
                                                             <td class="d-none">@item.FromYear</td>
                                                             <td class="d-none">@item.ToMonth</td>
                                                             <td class="d-none">@item.ToYear</td>
+                                                            <td class="d-none">@item.StudyProvince</td>
                                                             <td>@item.LevelofEducation in @item.FieldofStudy</td>
-                                                            <td>@item.SchoolName - @item.StudyCity</td>
+                                                            <td>@item.SchoolName - @item.StudyCity,@item.StudyProvince</td>
                                                             @if (item.CurrentlyEnrolled == true)
                                                             {
                                                                 <td>@item.FromMonth @item.FromYear to  @(item.ToMonth + item.ToYear)</td>
@@ -361,11 +368,15 @@
                                                             </select>
                                                         </div>
                                                         <div class="single-input">
-                                                            <label>City , Province</label>
+                                                            <label>Province</label>
+                                                            <input type="text" id="wprovince" />
+                                                        </div>
+                                                        <div class="single-input">
+                                                            <label>City</label>
                                                             <input type="text" id="wcity" />
                                                         </div>
                                                         <div class="single-input">
-                                                            <label>Currently Enrolled</label>
+                                                            <label>Currently Working</label>
                                                             <select id="wenrolled">
                                                                 <option value="false">No</option>
                                                                 <option value="true">Yes</option>
@@ -462,8 +473,9 @@
                                                             <td class="d-none">@item.ToMonth</td>
                                                             <td class="d-none">@item.ToYear</td>
                                                             <td class="d-none">@Html.Raw(item.Description)</td>
+                                                            <td class="d-none">@item.JobProvince</td>
                                                             <td>@item.JobTitle in @item.Company</td>
-                                                            <td>@item.Company - @item.JobCity</td>
+                                                            <td>@item.Company - @item.JobCity,@item.JobProvince</td>
                                                             @if (item.CurrentlyEnrolled == true)
                                                             {
                                                                 <td>@item.FromMonth @item.FromYear to @(item.ToMonth + item.ToYear)</td>
