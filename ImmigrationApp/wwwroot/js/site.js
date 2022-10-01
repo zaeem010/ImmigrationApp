@@ -1,4 +1,15 @@
-﻿function ShowToaster(type, text) {
+﻿(function ($) {
+    $.fn.delayKeyup = function (callback, ms) {
+        var timer = 0;
+        $(this).keyup(function () {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        });
+        return $(this);
+    };
+})(jQuery);
+
+function ShowToaster(type, text) {
     let toasterType;
     let title;
     switch (type) {
@@ -19,6 +30,16 @@
     });
 }
 function delay(callback, ms) {
+    var timer = 0;
+    return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            callback.apply(context, args);
+        }, ms || 0);
+    };
+}
+function delay2(callback, ms) {
     var timer = 0;
     return function () {
         var context = this, args = arguments;

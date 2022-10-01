@@ -1,7 +1,12 @@
-﻿$(function () {
-    $('#keyword, #category,#address]').on('change', function () {
+﻿//
+$(function () {
+    $('#keyword, #category, #address').on('change', function () {
         search();
     });
+    $(':input').delayKeyup(function () {
+        search();
+    }, 1000);
+
 });
 function search() {
     let SearchcanidateDTO = {};
@@ -15,7 +20,7 @@ function search() {
         url: '/Candidate/searchcanidate',
         data: SearchcanidateDTO,
         success: (res) => {
-            if (res !== null) {
+            if (res !== null && res.length !== 0) {
                 $('.candidate-list-page').children().remove();
                 let row = '';
                 for (var i = 0; i < res.length; i++) {
@@ -47,7 +52,7 @@ function search() {
                 $('.candidate-list-page').append(row);
             }
             else {
-                //ShowError(res.error);
+                $('.candidate-list-page').html('<h3 class="text-danger">No record Found! please refine your search.</h3>');
             }
         }
     });

@@ -97,17 +97,17 @@ namespace ImmigrationApp.Controllers
         {
             var predicate = PredicateBuilder.True<CustomResume>();
 
+            //if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
+            //{
+            //    predicate = predicate.And(c => c.FirstName.Contains(SearchcanidateDTO.keyword));
+            //}
+            //if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
+            //{
+            //    predicate = predicate.And(c => c.LastName.Contains(SearchcanidateDTO.keyword));
+            //}
             if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
             {
-                predicate = predicate.Or(c => c.FirstName.Contains(SearchcanidateDTO.keyword));
-            }
-            if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
-            {
-                predicate = predicate.Or(c => c.LastName.Contains(SearchcanidateDTO.keyword));
-            }
-            if (!string.IsNullOrEmpty(SearchcanidateDTO.keyword))
-            {
-                predicate = predicate.Or(c => c.Headline.Contains(SearchcanidateDTO.keyword));
+                predicate = predicate.And(c => c.Headline.Contains(SearchcanidateDTO.keyword));
             }
             if (!string.IsNullOrEmpty(SearchcanidateDTO.address))
             {
