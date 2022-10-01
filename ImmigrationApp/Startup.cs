@@ -14,6 +14,7 @@ using ImmigrationApp.Currentuser;
 using ImmigrationApp.Repositries;
 using ImmigrationApp.Extensions;
 using ImmigrationApp.Hubs;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ImmigrationApp
 {
@@ -51,22 +52,25 @@ namespace ImmigrationApp
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDistributedMemoryCache();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default User settings.
+                options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
 
+            });
             services.ConfigureApplicationCookie(opt =>
             {
-                opt.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                opt.Cookie.Name = "IMI";
+                opt.Cookie.HttpOnly = true; ;
+                opt.Cookie.MaxAge = TimeSpan.FromDays(5);
+                opt.ExpireTimeSpan = TimeSpan.FromDays(5);
                 opt.LoginPath = "/account/login";
+                opt.AccessDeniedPath = "/account/access-denied";
                 opt.SlidingExpiration = true;
+                opt.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = $"/account/login";
-            //    //options.LogoutPath = $"/account/logout";
-            //    //options.AccessDeniedPath = $"/account/access-denied";
-            //});
-
-            services.AddSignalR();
             services.AddMvc();
             //services.AddAuthentication()
             //    .AddGoogle(options =>
@@ -102,11 +106,7 @@ namespace ImmigrationApp
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<ChatHub>("/notify");
-            });
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

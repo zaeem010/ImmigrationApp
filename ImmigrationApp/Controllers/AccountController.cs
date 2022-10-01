@@ -33,6 +33,7 @@ namespace ImmigrationApp.Controllers
             _signInManager = signInManager;
             _logger = logger;
         }
+       
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl = null)
