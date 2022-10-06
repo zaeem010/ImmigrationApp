@@ -60,6 +60,14 @@ namespace ImmigrationApp.Controllers
             };
             return View(VM);
         }
+        [HttpGet]
+        [Route("/Home/GetData_1")]
+        public async Task<JsonResult> GetData_1(string term)
+        {
+            var data = await _db.Cities.Where(c => c.cityregion.Contains(term)).Distinct().ToListAsync();
+            return Json(data);
+        }
+
         public IActionResult AllStates()
         {
             return View();

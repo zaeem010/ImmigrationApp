@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .ui-widget.ui-widget-content {
+        border: 1px solid #c5c5c5;
+        width: 19.5% !important;
+        height: 50% !important;
+        overflow-y: auto;
+    }
+</style>
 <!-- Header Area Start -->
 <partial name="_header" />
 <!-- Header Area End -->
@@ -29,7 +37,7 @@
                                     <input type="text" placeholder="Job Title, Keywords, or Phrase">
                                 </div>
                                 <div class="banner-form-input">
-                                    <input type="text" placeholder="City, State or ZIP">
+                                    <input type="text" id="citystate" placeholder="City, State or ZIP">
                                 </div>
                                 <div class="banner-form-input">
                                     <select class="banner-select">
@@ -522,3 +530,4 @@
     </div>
 </section>
 <!-- Blog Area End -->
+<script src="~/js/Home.js"asp-append-version="true"></script>
