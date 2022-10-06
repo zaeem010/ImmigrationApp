@@ -18,6 +18,8 @@ namespace ImmigrationApp.Data
         public DbSet<Role> Role { get; set; }
         public DbSet<RoleClaim> RoleClaim { get; set; }
         public DbSet<Country> Country { get; set; }
+        public DbSet<States> States { get; set; }
+        public DbSet<Cities> Cities { get; set; }
         //Jobs Meta Data
         public DbSet<JobMainCategory> JobMainCategory { get; set; }
         public DbSet<JobSubCategory> JobSubCategory { get; set; }

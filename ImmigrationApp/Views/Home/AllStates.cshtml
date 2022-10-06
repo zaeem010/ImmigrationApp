@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "AllStates";
+}
+<!-- Header Area Start -->
+<partial name="_headerwhite" />
+<!-- Header Area End -->
+<!-- Breadcromb Area Start -->
+<section class="jobguru-breadcromb-area">
+    <div class="breadcromb-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcromb-box-pagin">
+                        <ul>
+                            <li><a href="#">home</a></li>
+                            <li><a href="#">Candidate</a></li>
+                            <li class="active-breadcromb"><a href="#">Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcromb Area End -->
+<!-- Candidate Dashboard Area Start -->
+<section class="candidate-dashboard-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="dashboard-right">
+                    <form action="Javascript:Updateprofile()" enctype="multipart/form-data">
+                        <div class='col-md-6 col-xs-6'>
+                            <select id="country" class='form-control' required><option value="">-- Country --</option></select>
+                        </div>
+
+
+
+                        <div class='col-md-6 col-xs-6'>
+                            <select id="region" class='form-control' required><option value="">-- Region --</option></select>
+                        </div>
+
+                        <div class='col-md-6 col-xs-6'>
+                            <select id="city" class='form-control' required><option value="">-- City --</option></select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/citystate.js"></script>

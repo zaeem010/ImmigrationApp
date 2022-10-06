@@ -2,6 +2,7 @@
 using ImmigrationApp.Data;
 using ImmigrationApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -58,6 +59,28 @@ namespace ImmigrationApp.Controllers
                 UserId=_Cur.GetUserId(),
             };
             return View(VM);
+        }
+        public IActionResult AllStates()
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetStates(IFormCollection form)
+        {
+            var Request = form["myRequest"];
+            var States = Newtonsoft.Json.JsonConvert.DeserializeObject<List<States>>(Request);
+
+            await _db.States.AddRangeAsync(States);
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+        public async Task<IActionResult> Getcity(IFormCollection form)
+        {
+            var Request = form["myRequest"];
+            var Cities = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cities>>(Request);
+
+            await _db.Cities.AddRangeAsync(Cities);
+            await _db.SaveChangesAsync();
+            return Ok();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
