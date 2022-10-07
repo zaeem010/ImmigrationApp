@@ -31,15 +31,19 @@
                     <div class="banner-search">
                         <h2>Hire expert freelancers.</h2>
                         <h4>We have 1542 job offers for you! </h4>
-                        <form>
+                        <form asp-action="JobFinds" asp-controller="FindJob" asp-route-Key="ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq" method="get">
                             <div class="banner-form-box">
                                 <div class="banner-form-input">
-                                    <input type="text" placeholder="Job Title, Keywords, or Phrase">
+                                    <input asp-for="HomeDTO.headline" id="Headline" placeholder="Job Title">
                                 </div>
                                 <div class="banner-form-input">
-                                    <input type="text" id="citystate" placeholder="City, State or ZIP">
+                                    <input id="JobCategory" placeholder="Keywords, or Phrase">
+                                    <input type="hidden" asp-for="HomeDTO.category">
                                 </div>
-                                <div class="banner-form-input">
+                                @*<div class="banner-form-input">
+                                    <input asp-for="HomeDTO.citystate" id="citystate" placeholder="City, State or ZIP">
+                                </div>*@
+                                @*<div class="banner-form-input">
                                     <select class="banner-select">
                                         <option selected>Select Sector</option>
                                         <option value="1">Design & multimedia</option>
@@ -49,7 +53,7 @@
                                         <option value="5">Training</option>
                                         <option value="6">Digital Marketing</option>
                                     </select>
-                                </div>
+                                </div>*@
                                 <div class="banner-form-input">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </div>

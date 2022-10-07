@@ -1,8 +1,11 @@
 ﻿$(function () {
-    $('#title, #category, #datepost, input[name="type"]').on('change', function () {
+    $('#category, input[name="type"]').on('change', function () {
         search();
     });
-    $('input[id="title"').keyup(delay(function (e) {
+    $('input[id="title"]').keyup(delay(function (e) {
+        search();
+    }, 100));
+    $('input[id="address"]').keyup(delay(function (e) {
         search();
     }, 100));
 });
@@ -17,6 +20,7 @@ function search() {
         SearchDTO.types.push($(this)[0].defaultValue);
     });
     //
+    debugger;
     $.ajax({
         type: "POST",
         url: '/FindJob/searchjob',

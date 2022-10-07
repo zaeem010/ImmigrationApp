@@ -67,6 +67,13 @@ namespace ImmigrationApp.Controllers
             var data = await _db.Cities.Where(c => c.cityregion.Contains(term)).Distinct().ToListAsync();
             return Json(data);
         }
+        [HttpGet]
+        [Route("/Home/GetData_2")]
+        public async Task<JsonResult> GetData_2(string term)
+        {
+            var data = await _db.Job.Where(c => c.Title.Contains(term)).Distinct().ToListAsync();
+            return Json(data);
+        }
 
         public IActionResult AllStates()
         {

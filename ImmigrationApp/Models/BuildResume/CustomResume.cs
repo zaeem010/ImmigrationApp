@@ -21,6 +21,8 @@ namespace ImmigrationApp.Models
         public bool ShowPhoneNumber { get; set; }
         //info
         [MaxLength(255)]
+        public string JobCategory { get; set; }
+        [MaxLength(255)]
         public string Headline { get; set; }
         public string Summary { get; set; }
         //Address

@@ -26,33 +26,109 @@ namespace ImmigrationApp.Controllers
         [Route("/Find-a-job")]
         public async Task<IActionResult> JobFind()
         {
-            var JobList = await(from x in _db.Job
-                                select new JobDTO
-                                {
-                                    Id = x.Id,
-                                    logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
-                                    Title = x.Title,
-                                    SpecificAddress = x.SpecificAddress,
-                                    Street = x.Street,
-                                    City = x.City,
-                                    Province = x.Province,
-                                    PostalCode = x.PostalCode,
-                                    AddressToAdvertise = x.AddressToAdvertise,
-                                    ShowBy = x.ShowPayby,
-                                    MinPay = x.MinPay,
-                                    MaxPay = x.MaxPay,
-                                    Amount = x.Amount,
-                                    Rate = x.Rate,
-                                    SlugName = x.SlugName,
-                                    PostDateTime = x.PostDateTime,
-                                }).ToListAsync();
+              var JobList = await (from x in _db.Job
+                                 select new JobDTO
+                                 {
+                                     Id = x.Id,
+                                     logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
+                                     Title = x.Title,
+                                     SpecificAddress = x.SpecificAddress,
+                                     Street = x.Street,
+                                     City = x.City,
+                                     Province = x.Province,
+                                     PostalCode = x.PostalCode,
+                                     AddressToAdvertise = x.AddressToAdvertise,
+                                     ShowBy = x.ShowPayby,
+                                     MinPay = x.MinPay,
+                                     MaxPay = x.MaxPay,
+                                     Amount = x.Amount,
+                                     Rate = x.Rate,
+                                     SlugName = x.SlugName,
+                                     PostDateTime = x.PostDateTime,
+                                 }).ToListAsync();
             var VM = new SearchjobVM
             {
-                JobDTOList=JobList,
-                JobTypeList =await _db.JobType.ToListAsync(),
+                JobDTOList = JobList,
+                JobTypeList = await _db.JobType.ToListAsync(),
+                HomeDTO = new HomeDTO(),
             };
             return View(VM);
         }
+        //
+        [AllowAnonymous]
+        [Route("/Find-a-job/{Key}")]
+        [Obsolete]
+        public async Task<IActionResult> JobFinds(HomeDTO HomeDTO, string Key)
+        {
+            var JobList = new List<JobDTO>();
+            if (HomeDTO != null)
+            {
+                var predicate = PredicateBuilder.True<Job>();
+                if (!string.IsNullOrEmpty(HomeDTO.headline))
+                {
+                    predicate = predicate.And(c => c.Title.Contains(HomeDTO.headline));
+                }
+                if (!string.IsNullOrEmpty(HomeDTO.category))
+                {
+                    predicate = predicate.And(c => c.JobSubCategoryId.ToString().Contains(HomeDTO.category));
+                }
+                var firstlist = await _db.Job.Where(predicate).ToListAsync();
+                foreach (var x in firstlist)
+                {
+                    JobList.Add(new JobDTO
+                    {
+                        Id = x.Id,
+                        logoPath = _db.CompanyInfo.Where(z => z.Id.Equals(x.CompanyInfoId)).Select(z => z.LogoPath).FirstOrDefault(),
+                        Title = x.Title,
+                        SpecificAddress = x.SpecificAddress,
+                        Street = x.Street,
+                        City = x.City,
+                        Province = x.Province,
+                        PostalCode = x.PostalCode,
+                        AddressToAdvertise = x.AddressToAdvertise,
+                        ShowBy = x.ShowPayby,
+                        MinPay = x.MinPay,
+                        MaxPay = x.MaxPay,
+                        Amount = x.Amount,
+                        Rate = x.Rate,
+                        SlugName = x.SlugName,
+                        PostDateTime = x.PostDateTime,
+                    });
+                }
+            }
+            else
+            {
+                JobList = await (from x in _db.Job
+                                 select new JobDTO
+                                 {
+                                     Id = x.Id,
+                                     logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
+                                     Title = x.Title,
+                                     SpecificAddress = x.SpecificAddress,
+                                     Street = x.Street,
+                                     City = x.City,
+                                     Province = x.Province,
+                                     PostalCode = x.PostalCode,
+                                     AddressToAdvertise = x.AddressToAdvertise,
+                                     ShowBy = x.ShowPayby,
+                                     MinPay = x.MinPay,
+                                     MaxPay = x.MaxPay,
+                                     Amount = x.Amount,
+                                     Rate = x.Rate,
+                                     SlugName = x.SlugName,
+                                     PostDateTime = x.PostDateTime,
+                                 }).ToListAsync();
+            }
+            var VM = new SearchjobVM
+            {
+                JobDTOList = JobList,
+                JobTypeList = await _db.JobType.ToListAsync(),
+                HomeDTO = HomeDTO,
+                Key = Key
+            };
+            return View("JobFind", VM);
+        }
+        //
         [AllowAnonymous]
         [Obsolete]
         public async Task<JsonResult> searchjob(SearchDTO SearchDTO)
@@ -88,7 +164,7 @@ namespace ImmigrationApp.Controllers
             
             var JobList = new List<JobDTO>();
             foreach (var x in firstlist)
-            {
+          {
                 JobList.Add(new JobDTO
                 {
                     Id =x.Id,

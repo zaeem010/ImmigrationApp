@@ -1,6 +1,11 @@
 ﻿@model SearchjobVM
 @{
     ViewData["Title"] = "Find a Job";
+    string headline ="";
+    if (Model.HomeDTO.headline != null)
+    {
+        headline = Model.HomeDTO.headline;
+    }
 }
 <!-- Header Area Start -->
 <partial name="_headerwhite" />
@@ -92,7 +97,7 @@
                        
                         <div class="job-browse-search">
                             <form action="#">
-                                <input type="search" id="title" placeholder="job title, keyword">
+                                <input type="search" value="@headline" id="title" placeholder="job title, keyword">
                                 <button type="button" onclick="search();"><i class="fa fa-search"></i></button>
                             </form>
                         </div>

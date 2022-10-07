@@ -95,6 +95,12 @@ namespace ImmigrationApp.Models
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public string ReturnUrl { get; set; }
     }
+    public class HomeDTO
+    {
+        public string headline { get; set; }
+        public string category { get; set; }
+        public string citystate { get; set; }
+    }
     public class JobDTO
     {
         public long Id { get; set; }

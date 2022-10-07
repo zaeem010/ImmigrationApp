@@ -18,8 +18,10 @@ namespace ImmigrationApp.Models
     }
     public class SearchjobVM
     {
+        public HomeDTO HomeDTO { get; set; }
         public List<JobDTO> JobDTOList { get; set; }
         public List<JobType> JobTypeList { get; set; }
+        public string Key { get; set; }
     }
     public class CanidateVM
     {
@@ -41,6 +43,7 @@ namespace ImmigrationApp.Models
     }
     public class HomeVM
     {
+        public HomeDTO HomeDTO { get; set; }
         public List<CompanyInfo> CompanyInfoList { get; set; }
         public List<JobDTO> JobList { get; set; }
         public IEnumerable<SelectListItem> CountryList { get; set; }

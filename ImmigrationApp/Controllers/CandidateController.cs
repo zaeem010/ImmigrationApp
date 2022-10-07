@@ -178,5 +178,13 @@ namespace ImmigrationApp.Controllers
             var Skills = await _db.Skill.Where(c=>c.NormalizedName.Contains(term)).Distinct().ToListAsync();
             return Json(Skills);
         }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("/Candidate/GetCategory")]
+        public async Task<JsonResult> GetCategory(string term)
+        {
+            var Category = await _db.JobSubCategory.Where(c=>c.Name.Contains(term)).Distinct().ToListAsync();
+            return Json(Category);
+        }
     }
 }

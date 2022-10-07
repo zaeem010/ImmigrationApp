@@ -28,6 +28,34 @@
             //$('#SkId').val(ui.item.id);
         }
     });
+    //Autocomplete for Jobcategory
+    $("#CustomResume_JobCategory").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Candidate/GetCategory",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    var dataloop = [];
+                    for (var i = 0; i < data.length; i++) {
+                        let loop = {
+                            id: data[i].id,
+                            label: data[i].name,
+                            value: data[i].name,
+                        };
+                        dataloop.push(loop);
+                    }
+                    response(dataloop);
+                }
+            });
+        },
+        delay: 1,
+        minLength: 2,
+        select: function (event, ui) {
+            //$('#SkId').val(ui.item.id);
+        }
+    });
     //
     $('#CustomResume_Summary').richText();
     $('#wdes').richText();
@@ -311,6 +339,7 @@ function Updateprofile() {
     CustomResume.Street = $('#CustomResume_Street').val();
     CustomResume.PostalCode = $('#CustomResume_PostalCode').val();
     CustomResume.Headline = $('#CustomResume_Headline').val();
+    CustomResume.JobCategory = $('#CustomResume_JobCategory').val();
     CustomResume.PhoneNumber = $('#CustomResume_PhoneNumber').val();
     CustomResume.Summary = $('#CustomResume_Summary').val();
     CustomResume.Relocate = $('#CustomResume_Relocate').val();
