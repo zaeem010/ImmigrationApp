@@ -104,86 +104,92 @@
                     </div>
                     <!-- end job head -->
                     <div class="job-sidebar-list-single">
-                        
-                        @{
-                            foreach (var item in Model.JobDTOList)
+
+                        @{if (Model.JobDTOList.Count() == 0)
                             {
-                                string imgpath = "/Front/no-image.png";
-                                if (!string.IsNullOrEmpty(item.logoPath))
+                                <h3 class="text-danger">No record Found! please refine your search.</h3>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.JobDTOList)
                                 {
-                                    imgpath = "/Upload/" + item.logoPath;
-                                }
-                                <div class="sidebar-list-single">
-                                    <div class="top-company-list">
-                                        <div class="company-list-logo">
-                                            <a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">
-                                                <img src="@imgpath" alt="Logo" />
-                                            </a>
-                                        </div>
-                                        <div class="company-list-details">
-                                            <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">@item.Title</a></h3>
-                                            <p class="company-state">
-                                                <i class="fa fa-map-marker"></i>
-                                                @{
-                                                    if (item.SpecificAddress)
-                                                    {
-                                                        <span>@item.City , @item.Province</span>
+                                    string imgpath = "/Front/no-image.png";
+                                    if (!string.IsNullOrEmpty(item.logoPath))
+                                    {
+                                        imgpath = "/Upload/" + item.logoPath;
+                                    }
+                                    <div class="sidebar-list-single">
+                                        <div class="top-company-list">
+                                            <div class="company-list-logo">
+                                                <a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">
+                                                    <img src="@imgpath" alt="Logo" />
+                                                </a>
+                                            </div>
+                                            <div class="company-list-details">
+                                                <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">@item.Title</a></h3>
+                                                <p class="company-state">
+                                                    <i class="fa fa-map-marker"></i>
+                                                    @{
+                                                        if (item.SpecificAddress)
+                                                        {
+                                                            <span>@item.City , @item.Province</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@item.AddressToAdvertise</span>
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        <span>@item.AddressToAdvertise</span>
+                                                </p>
+                                                <p class="open-icon">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    @{
+                                                        if (item.DayPassed > 0)
+                                                        {
+                                                            <span>@item.DayPassed days ago</span>
+                                                        }
+                                                        else if (item.HourPassed > 0)
+                                                        {
+                                                            <span>@item.HourPassed hours ago</span>
+                                                        }
+                                                        else if (item.MinPassed > 0)
+                                                        {
+                                                            <span>@item.MinPassed minutes ago</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Posted Now</span>
+                                                        }
                                                     }
-                                                }
-                                            </p>
-                                            <p class="open-icon">
-                                                <i class="fa fa-clock-o"></i>
-                                                @{
-                                                    if (item.DayPassed > 0)
-                                                    {
-                                                        <span>@item.DayPassed days ago</span>
+                                                </p>
+                                                <p class="varify">
+                                                    <i class="fa fa-check"></i>
+                                                    @{
+                                                        switch (item.ShowBy)
+                                                        {
+                                                            case "Range":
+                                                                <span>Minimum $@item.MinPay.ToString("#,#00") To Maximum $@item.MaxPay.ToString("#,#00") @item.Rate</span>
+                                                                break;
+                                                            case "Starting Amount":
+                                                                <span>Starting From $@item.Amount.ToString("#,#00") @item.Rate</span>
+                                                                break;
+                                                            case "Maximun Amount":
+                                                                <span>Maximun To $@item.Amount.ToString("#,#00") @item.Rate</span>
+                                                                break;
+                                                            case "Excat Amount":
+                                                                <span>Fixed Price $@item.Amount.ToString("#,#00") @item.Rate</span>
+                                                                break;
+                                                            default:
+                                                                break;
+                                                        }
                                                     }
-                                                    else if (item.HourPassed > 0)
-                                                    {
-                                                        <span>@item.HourPassed hours ago</span>
-                                                    }
-                                                    else if (item.MinPassed > 0)
-                                                    {
-                                                        <span>@item.MinPassed minutes ago</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>Posted Now</span>
-                                                    }
-                                                }
-                                            </p>
-                                            <p class="varify">
-                                                <i class="fa fa-check"></i>
-                                                @{
-                                                    switch (item.ShowBy)
-                                                    {
-                                                        case "Range":
-                                                            <span>Minimum $@item.MinPay.ToString("#,#00") To Maximum $@item.MaxPay.ToString("#,#00") @item.Rate</span>
-                                                            break;
-                                                        case "Starting Amount":
-                                                            <span>Starting From $@item.Amount.ToString("#,#00") @item.Rate</span>
-                                                            break;
-                                                        case "Maximun Amount":
-                                                            <span>Maximun To $@item.Amount.ToString("#,#00") @item.Rate</span>
-                                                            break;
-                                                        case "Excat Amount":
-                                                            <span>Fixed Price $@item.Amount.ToString("#,#00") @item.Rate</span>
-                                                            break;
-                                                        default:
-                                                            break;
-                                                    }
-                                                }
-                                            </p>
-                                        </div>
-                                        <div class="company-list-btn">
-                                            <a href="#" class="jobguru-btn">Apply Now</a>
+                                                </p>
+                                            </div>
+                                            <div class="company-list-btn">
+                                                <a href="#" class="jobguru-btn">Apply Now</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             }
                         }
 

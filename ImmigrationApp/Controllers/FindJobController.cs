@@ -23,7 +23,7 @@ namespace ImmigrationApp.Controllers
             _Cur = Cur;
         }
         [AllowAnonymous]
-        [Route("/Find-a-job")]
+        [Route("/Find-a-job/{Alpha}")]
         public async Task<IActionResult> JobFind()
         {
               var JobList = await (from x in _db.Job
@@ -56,7 +56,7 @@ namespace ImmigrationApp.Controllers
         }
         //
         [AllowAnonymous]
-        [Route("/Find-a-job/{Key}")]
+        [Route("/Find-a-jobs/{Key}")]
         [Obsolete]
         public async Task<IActionResult> JobFinds(HomeDTO HomeDTO, string Key)
         {
