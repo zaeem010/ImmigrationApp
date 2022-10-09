@@ -33,12 +33,15 @@
                         <h4>We have 1542 job offers for you! </h4>
                         <form asp-action="JobFinds" asp-controller="FindJob" asp-route-Key="ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq" method="get">
                             <div class="banner-form-box">
-                                <div class="banner-form-input">
+                                @*<div class="banner-form-input">
                                     <input asp-for="HomeDTO.headline" id="Headline" placeholder="Job Title">
-                                </div>
+                                </div>*@
                                 <div class="banner-form-input">
                                     <input id="JobCategory" placeholder="Keywords, or Phrase">
                                     <input type="hidden" asp-for="HomeDTO.category">
+                                </div>
+                                <div class="banner-form-input">
+                                    <input asp-for="HomeDTO.citystate" id="citystate" placeholder="Where city,state">
                                 </div>
                                 @*<div class="banner-form-input">
                                     <input asp-for="HomeDTO.citystate" id="citystate" placeholder="City, State or ZIP">

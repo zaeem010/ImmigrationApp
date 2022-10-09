@@ -30,6 +30,45 @@
         closeOnSelect: true,
     });
     jobcategory($('.categorytext').text());
+    ///
+    $("#Job_Street1").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/GoogleApi/Addressautocomplete",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    debugger;
+                    var dataloop = [];
+                    if (data.status ==="OK") {
+                        for (var i = 0; i < data.predictions.length; i++) {
+                            let loop = {
+                                id: data.predictions[i].description,
+                                label: data.predictions[i].description,
+                                value: data.predictions[i].description,
+                            };
+                            dataloop.push(loop);
+                        }
+                    } else {
+                        let loop = {
+                            id: "no record found...!",
+                            label: "no record found...!",
+                            value: "no record found...!",
+                        };
+                        dataloop.push(loop);
+                    }
+                    response(dataloop);
+                }
+            });
+        },
+        delay: 1,
+        minLength: 2,
+        select: function (event, ui) {
+            //$('#SkId').val(ui.item.id);
+        }
+    });
+    //
 });
 function afterchange()
 {
