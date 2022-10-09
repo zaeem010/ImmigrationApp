@@ -184,7 +184,8 @@ namespace ImmigrationApp.Controllers
         public async Task<JsonResult> GetCategory(string term)
         {
             var Category = await _db.JobSubCategory.Where(c=>c.Name.Contains(term)).Distinct().ToListAsync();
-            return Json(Category);
+            var data = await _db.Job.Where(c => c.Title.Contains(term)).Distinct().ToListAsync();
+            return Json(new { Category = Category ,title =data});
         }
     }
 }

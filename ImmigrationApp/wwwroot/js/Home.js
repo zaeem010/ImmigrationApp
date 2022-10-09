@@ -65,14 +65,25 @@
                 },
                 success: function (data) {
                     var dataloop = [];
-                    for (var i = 0; i < data.length; i++) {
+                    //headline
+                    for (var i = 0; i < data.title.length; i++) {
                         let loop = {
-                            id: data[i].id,
-                            label: data[i].name,
-                            value: data[i].name,
+                            id: data.title[i].title,
+                            label: data.title[i].title,
+                            value: data.title[i].title,
                         };
                         dataloop.push(loop);
                     }
+                    //category
+                    for (var i = 0; i < data.category.length; i++) {
+                        let loop = {
+                            id: data.category[i].id,
+                            label: data.category[i].name,
+                            value: data.category[i].name,
+                        };
+                        dataloop.push(loop);
+                    }
+                    
                     response(dataloop);
                 }
             });

@@ -64,13 +64,17 @@ namespace ImmigrationApp.Controllers
             if (HomeDTO != null)
             {
                 var predicate = PredicateBuilder.True<Job>();
-                if (!string.IsNullOrEmpty(HomeDTO.headline))
+                if (!string.IsNullOrEmpty(HomeDTO.citystate))
                 {
-                    predicate = predicate.And(c => c.Title.Contains(HomeDTO.headline));
+                    predicate = predicate.And(c => c.Street.Contains(HomeDTO.citystate));
                 }
                 if (!string.IsNullOrEmpty(HomeDTO.category))
                 {
-                    predicate = predicate.And(c => c.JobSubCategoryId.ToString().Contains(HomeDTO.category));
+                    predicate = predicate.And(c => c.Title.Contains(HomeDTO.category));
+                }
+                if (!string.IsNullOrEmpty(HomeDTO.category))
+                {
+                    predicate = predicate.Or(c => c.JobSubCategoryId.ToString().Contains(HomeDTO.category));
                 }
                 var firstlist = await _db.Job.Where(predicate).ToListAsync();
                 foreach (var x in firstlist)
