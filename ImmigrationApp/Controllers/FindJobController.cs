@@ -191,11 +191,29 @@ namespace ImmigrationApp.Controllers
             }
             return Json(JobList);
         }
-        [Route("/Apply-for-job/{slugname}")]
-        public async Task<IActionResult> JobApply(string slugname)
+        [Route("/Apply-for-job/{slugname}/{Id}")]
+        public async Task<IActionResult> JobApply(string slugname,long Id)
         {
-            return View(slugname);
-        }
+            string check = await _db.User.Where(x => x.Id == _Cur.GetUserId()).Select(x => x.Type).FirstOrDefaultAsync();
+            if (check == "Employee")
+            {
 
+            }
+            return View();
+        }
+        
+        public async Task<IActionResult> Getstatus(string term)
+        {
+            string url = "";
+            if (term == "Web Profile")
+            {
+                url = "/Candidate/Profile-View/"+ await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.SlugName).FirstOrDefaultAsync();
+            }
+            if (term == "Resume")
+            {
+                url = "/Upload/"+ await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.ResumeUrlPath).FirstOrDefaultAsync();
+            }
+            return Json(url);
+        }
     }
 }
