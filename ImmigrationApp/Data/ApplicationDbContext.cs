@@ -35,6 +35,7 @@ namespace ImmigrationApp.Data
         public DbSet<SupplementalPayChild> SupplementalPayChild { get; set; }
         public DbSet<BenefitOfferedChild> BenefitOfferedChild { get; set; }
         public DbSet<JobEmailChild> JobEmailChild { get; set; }
+        public DbSet<ApplyforJob> ApplyforJob { get; set; }
         //Resume
         public DbSet<CustomResume> CustomResume { get; set; }
         public DbSet<ResumeSkillChild> ResumeSkillChild { get; set; }

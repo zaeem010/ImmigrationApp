@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Controllers
 {
-    public class FindJobController : Controller
+    public class FindJobController : BaseController
     {
         private ApplicationDbContext _db { get; set; }
         private ICurrentuser _Cur { get; set; }
@@ -194,26 +194,58 @@ namespace ImmigrationApp.Controllers
         [Route("/Apply-for-job/{slugname}/{Id}")]
         public async Task<IActionResult> JobApply(string slugname,long Id)
         {
-            string check = await _db.User.Where(x => x.Id == _Cur.GetUserId()).Select(x => x.Type).FirstOrDefaultAsync();
-            if (check == "Employee")
+            var user = await _db.User.SingleOrDefaultAsync(x=>x.Id== _Cur.GetUserId());
+            var Job = new Job();
+            string url = "";
+            long canidateId = _Cur.GetUserId();
+            if (user.Type == "Candidate")
             {
-
+                Job = await _db.Job.SingleOrDefaultAsync(x => x.Id == Id);
+                url = "/Candidate/Profile-View/" + await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.SlugName).FirstOrDefaultAsync();
             }
-            return View();
+            else 
+            {
+                user = new User();
+            }
+            var VM = new JobApplyVM 
+            {
+                user=user,
+                Job=Job,
+                ApplyforJob=new ApplyforJob(),
+                url=url,
+                canidateId= canidateId,
+            };
+            return View(VM);
+        }
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplyforJob(ApplyforJob ApplyforJob)
+        {
+            ApplyforJob.Status = "Pending";
+            ApplyforJob.AppliedDate = DateTime.Now;
+            await _db.ApplyforJob.AddAsync(ApplyforJob);
+            await _db.SaveChangesAsync();
+            AddNotificationToView("Applied For Job Successfully",true);
+            return RedirectToAction("Index","Home");
         }
         
         public async Task<IActionResult> Getstatus(string term)
         {
             string url = "";
+            var user = await _db.User.SingleOrDefaultAsync(x => x.Id == _Cur.GetUserId());
             if (term == "Web Profile")
             {
                 url = "/Candidate/Profile-View/"+ await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.SlugName).FirstOrDefaultAsync();
             }
             if (term == "Resume")
             {
-                url = "/Upload/"+ await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.ResumeUrlPath).FirstOrDefaultAsync();
+                string part = await _db.CustomResume.Where(x => x.UserId == _Cur.GetUserId()).Select(x => x.ResumeUrlPath).FirstOrDefaultAsync();
+                if (!string.IsNullOrEmpty(part))
+                {
+                    url = "/Upload/" + part;
+                }
+                url = "";
             }
-            return Json(url);
+            return Json(new { url = url ,user =user});
         }
     }
 }

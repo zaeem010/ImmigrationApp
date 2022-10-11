@@ -132,4 +132,25 @@ namespace ImmigrationApp.Models
         [MaxLength(455)]
         public string Emails { get; set; }
     }
+    public class ApplyforJob
+    {
+        [Key]
+        public long Id { get; set; }
+        public long JobId { get; set; }
+        public long EmployerId { get; set; }
+        public long CanidateId { get; set; }
+        [MaxLength(455)]
+        public string CoverLetter { get; set; }
+        [MaxLength(55)]
+        public string AppliedUsing { get; set; }
+        public DateTime AppliedDate { get; set; }
+        [MaxLength(100)]
+        public string Status { get; set; }
+        [NotMapped]
+        public User myuser { get; set; }
+        [NotMapped]
+        public CustomResume mycustomresume { get; set; }
+        [NotMapped]
+        public Job myJob { get; set; }
+    }
 }

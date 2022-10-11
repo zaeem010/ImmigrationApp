@@ -13,7 +13,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 namespace ImmigrationApp.Controllers
 {
     public class EmployerController : BaseController
@@ -91,6 +91,26 @@ namespace ImmigrationApp.Controllers
             await _db.SaveChangesAsync();
             AddNotificationToView("Company Profile Updated Successfully", true);
             return RedirectToAction("Profile");
+        }
+        [Route("/Employer/Manage-Job-Request")]
+        public IActionResult ManageRequest()
+        {
+            var AppliedJob = (from x in _db.ApplyforJob
+                              select new ApplyforJob
+                              {
+                                  Id = x.Id,
+                                  JobId = x.JobId,
+                                  CanidateId = x.CanidateId,
+                                  EmployerId = x.EmployerId,
+                                  CoverLetter = x.CoverLetter,
+                                  AppliedUsing = x.AppliedUsing,
+                                  AppliedDate = x.AppliedDate,
+                                  Status = x.Status,
+                                  myuser = _db.User.FirstOrDefault(z => z.Id == x.CanidateId),
+                                  mycustomresume = _db.CustomResume.FirstOrDefault(z => z.UserId == x.CanidateId),
+                                  myJob = _db.Job.FirstOrDefault(z => z.Id == x.JobId),
+                              }).ToList();
+            return View(AppliedJob);
         }
     }
 }

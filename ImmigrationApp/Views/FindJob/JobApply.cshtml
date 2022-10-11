@@ -1,4 +1,4 @@
-﻿
+﻿@model JobApplyVM
 @{
     ViewData["Title"] = "Job-Apply";
 }
@@ -30,36 +30,48 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="dashboard-right">
-                    <form action="Javascript:SaveJob();" enctype="multipart/form-data">
+                    <form asp-action="ApplyforJob" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
                         <div class="candidate-profile">
-                            <div class="candidate-single-profile-info">
-                                <div class="resume-box">
-                                    <h3>Apply For <a href="#"><u>Dot net core developer <i class="fa fa-external-link" aria-hidden="true"></i></u></a></h3>
-                                    <div class="single-resume-feild feild-flex-2">
-                                        <div class="single-input">
-                                            <label>Apply using</label>
-                                            <select onchange="myapply(this.value)">
-                                                <option value="Web Profile">Web Profile</option>
-                                                <option value="Resume">Resume</option>
-                                            </select>
+                            @{
+                                if (Model.user.Type == "Candidate")
+                                {
+                                    <div class="candidate-single-profile-info">
+                                        <div class="resume-box">
+                                            <h3>Apply For <a href="/Job/Job-Detail/@Model.Job.SlugName" target="_blank"><u>@Model.Job.Title <i class="fa fa-external-link" aria-hidden="true"></i></u></a></h3>
+                                            <div class="single-resume-feild feild-flex-2">
+                                                <div class="single-input">
+                                                    <label>Apply using</label>
+                                                    <select onchange="myapply(this.value)" asp-for="ApplyforJob.AppliedUsing">
+                                                        <option value="Web Profile">Web Profile</option>
+                                                        <option value="Resume">Resume</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="single-input">
+                                                    <label>Cover Letter</label>
+                                                    <textarea rows="1" cols="2" asp-for="ApplyforJob.CoverLetter"></textarea>
+                                                </div>
+                                                <div class="single-input" id="profileviewer">
+                                                    <label>View your web profile</label>
+                                                    <a target="_blank" href="@Model.url">@Model.user.FullName <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="single-input" id="profileviewer">
-                                            <label>View your web profile</label>
-                                            <a href="#">Zaeem Khan <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                        </div>
-                                        <div class="single-input">
+                                        <div class="submit-resume">
+                                            <button type="submit" id="sub">Apply</button>
                                         </div>
                                     </div>
-
-                                </div>
-                            
-                                <div class="submit-resume">
-                                    <button type="submit">Apply</button>
-                                </div>
-
-                            </div>
+                                }
+                                else
+                                {
+                                    <h2 class="text-danger">You are not elligible for this job..!</h2>
+                                }
+                            }
                         </div>
-                       
+                        <input type="hidden"asp-for="ApplyforJob.JobId" value="@Model.Job.Id" />
+                        <input type="hidden"asp-for="ApplyforJob.EmployerId" value="@Model.Job.UserId" />
+                        <input type="hidden"asp-for="ApplyforJob.CanidateId" value="@Model.canidateId" />
                     </form>
                 </div>
             </div>
