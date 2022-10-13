@@ -47,6 +47,8 @@ namespace ImmigrationApp.Models
         public string ResumeUrlPath { get; set; }
         [MaxLength(455)]
         public string SlugName { get; set; }
+        [MaxLength(455)]
+        public string CallBy { get; set; }
         public int UserId { get; set; }
         public virtual  User User { get; set; }
         //Education

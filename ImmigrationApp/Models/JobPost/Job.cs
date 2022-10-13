@@ -71,6 +71,8 @@ namespace ImmigrationApp.Models
         public bool Verify { get; set; } = false;
         [MaxLength(455)]
         public string SlugName { get; set; }
+        [MaxLength(455)]
+        public string CallBy { get; set; }
         //
         public virtual JobSubCategory JobSubCategory { get; set; }
         public virtual User User { get; set; }

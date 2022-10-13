@@ -175,6 +175,10 @@ namespace ImmigrationApp.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("CallBy")
+                        .HasMaxLength(455)
+                        .HasColumnType("nvarchar(455)");
+
                     b.Property<string>("City")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -275,6 +279,10 @@ namespace ImmigrationApp.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CallBy")
+                        .HasMaxLength(455)
+                        .HasColumnType("nvarchar(455)");
+
                     b.Property<string>("City")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -371,6 +379,10 @@ namespace ImmigrationApp.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<string>("CallBy")
+                        .HasMaxLength(455)
+                        .HasColumnType("nvarchar(455)");
 
                     b.Property<string>("City")
                         .IsRequired()

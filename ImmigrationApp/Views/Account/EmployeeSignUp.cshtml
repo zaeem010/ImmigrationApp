@@ -62,7 +62,7 @@
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
                                             <label>Country <i class="fa fa-star text-danger"></i></label>
-                                            <select class="country-select select2" asp-for="Country" asp-items="ViewBag.Country">
+                                            <select disabled asp-items="ViewBag.Country">
                                                 <option value="">select an option</option>
                                             </select>
                                             <span asp-validation-for="Country" class="text-danger"></span>
@@ -73,7 +73,7 @@
                                             <span asp-validation-for="Company" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
                                             <label>First Name <i class="fa fa-star text-danger"></i></label>
@@ -123,11 +123,14 @@
                                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         </div>
                                     </div>
-                             
+
                                 </div>
                                 <div class="single-input submit-resume">
                                     <button type="submit">Sign Up</button>
                                 </div>
+                                <select class="d-none" asp-for="Country" asp-items="ViewBag.Country">
+                                    <option value="">select an option</option>
+                                </select>
                                 <input type="hidden" value="Employee" asp-for="Type" />
                                 <input type="hidden" value="true" asp-for="IsActive" />
                             </form>

@@ -164,7 +164,9 @@ namespace ImmigrationApp.Controllers
             _db.ResumeLanguageChild.RemoveRange(await _db.ResumeLanguageChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeLinkChild.RemoveRange(await _db.ResumeLinkChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             //
-            string slugname = CustomResume.FirstName + ' ' + CustomResume.LastName;
+            Random generator = new Random();
+            string number = generator.Next(0, 1000000).ToString("D6");
+            string slugname = CustomResume.FirstName + ' ' + CustomResume.LastName+' '+ number;
             CustomResume.SlugName = slugname.Replace(" ", "-");
             _db.CustomResume.Update(CustomResume);
             await _db.SaveChangesAsync();

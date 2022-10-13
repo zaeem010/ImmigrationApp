@@ -78,6 +78,7 @@ namespace ImmigrationApp.Controllers
             {
                 Value =c.CountryName,
                 Text =c.CountryName,
+                Selected = c.CountryCode == "CA"
             });
             ViewBag.Country = Country;
             return View();
@@ -126,6 +127,8 @@ namespace ImmigrationApp.Controllers
                         _logger.LogInformation("User created a new account with password.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
+                        Random rnd = new Random();
+                        string number = rnd.Next(0, 1000000).ToString("D6");
                         if (UserDto.Type == "Employee")
                         {
                             string Slugname = UserDto.Company;
@@ -138,10 +141,10 @@ namespace ImmigrationApp.Controllers
                                 Email = UserDto.Email,
                                 SlugName = Slugname.Replace(" ", "-"),
                                 UserId = GetId.Id,
+                                CallBy = number,
                             };
                             await _db.CompanyInfo.AddAsync(CompanyInfo);
                         }
-                        
                         await _db.SaveChangesAsync();
                         return LocalRedirect(returnUrl);
                     }
@@ -192,8 +195,10 @@ namespace ImmigrationApp.Controllers
                         _logger.LogInformation("User created a new account with password.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var GetId = await _userManager.FindByEmailAsync(UserDto.Email);
-                            await _userManager.AddToRoleAsync(user, Roles.Canidate.ToString());
-                            string Slugname = UserDto.FirstName +' '+ UserDto.LastName;
+                        await _userManager.AddToRoleAsync(user, Roles.Canidate.ToString());
+                        Random rnd = new Random();
+                        string number = rnd.Next(0, 1000000).ToString("D6");
+                        string Slugname = UserDto.FirstName +' '+ UserDto.LastName;
                             var Candidate = new CustomResume
                             {
                                 FirstName = UserDto.FirstName,
@@ -203,6 +208,7 @@ namespace ImmigrationApp.Controllers
                                 Email = UserDto.Email,
                                 SlugName = Slugname.Replace(" ", "-"),
                                 UserId = GetId.Id,
+                                CallBy = number,
                             };
                         await _db.CustomResume.AddAsync(Candidate);
                         await _db.SaveChangesAsync();

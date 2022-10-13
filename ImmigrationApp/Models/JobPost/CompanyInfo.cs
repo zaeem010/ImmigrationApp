@@ -55,6 +55,8 @@ namespace ImmigrationApp.Models
         [MaxLength(255)]
         [DataType(DataType.Url)]
         public string FacebookUrl { get; set; }
+        [MaxLength(455)]
+        public string CallBy { get; set; }
         public virtual User User { get; set; }
         public virtual JobMainCategory JobMainCategory { get; set; }
         public List<Job> JobList { get; set; }
