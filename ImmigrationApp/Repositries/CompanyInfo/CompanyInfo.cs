@@ -23,12 +23,12 @@ namespace ImmigrationApp.Repositries
             return companyInfo;
         }
 
-        public async Task<CompanyInfo> GetCompanyInfoByslugName(string SlugName)
+        public async Task<CompanyInfo> GetCompanyInfoByslugName(string CallBy)
         {
             var companyInfo = await _db.CompanyInfo
                 .Include(c=>c.JobList)
                 .Include(c=>c.JobMainCategory)
-                .SingleOrDefaultAsync(c => c.SlugName.Equals(SlugName));
+                .SingleOrDefaultAsync(c => c.CallBy.Equals(CallBy));
             return companyInfo;
         }
 

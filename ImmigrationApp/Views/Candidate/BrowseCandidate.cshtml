@@ -89,9 +89,8 @@
                                         <div class="candidate-text">
                                             <div class="candidate-info">
                                                 <div class="candidate-title">
-                                                    <h3><a asp-action="ProfileView" asp-controller="Candidate" asp-route-slugname="@item.SlugName">@item.FirstName @item.LastName</a></h3>
+                                                    <h3><a asp-action="ProfileView" asp-controller="Candidate" asp-route-slugname="@item.SlugName" asp-route-CallBy="@item.CallBy">@item.FirstName @item.LastName (@item.Headline)</a></h3>
                                                 </div>
-                                                <p>@item.Headline</p>
                                             </div>
                                             <div class="candidate-text-inner">
                                                 <p>@Html.Raw(item.Summary)</p>
@@ -102,7 +101,7 @@
                                                     @*<p class="varify"><i class="fa fa-check"></i> $0 / hr</p>*@
                                                 </div>
                                                 <div class="candidate-action">
-                                                    <a asp-action="ProfileView" asp-controller="Candidate" asp-route-slugname="@item.SlugName" class="jobguru-btn-2">view profile</a>
+                                                    <a asp-action="ProfileView" asp-controller="Candidate" asp-route-slugname="@item.SlugName" asp-route-CallBy="@item.CallBy" class="jobguru-btn-2">view profile</a>
                                                     <a asp-route-ConnectionId="@item.UserId" asp-action="CreatePeopleHub" asp-controller="ChatApp" class="jobguru-btn-2">Send message</a>
                                                 </div>
                                             </div>

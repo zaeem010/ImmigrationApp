@@ -55,9 +55,9 @@ namespace ImmigrationApp.Controllers
             return View(VM);
         }
         [AllowAnonymous]
-        [Route("/Candidate/Profile-View/{Slugname}")]
+        [Route("/Candidate/Profile-View/{Slugname}/{CallBy}")]
         [HttpGet]
-        public async Task<IActionResult> ProfileView(string Slugname)
+        public async Task<IActionResult> ProfileView(string Slugname ,string CallBy)
         {
             var CanidateInfo = await _db.CustomResume
                 .Include(x=>x.ResumeEducationList)
@@ -65,7 +65,7 @@ namespace ImmigrationApp.Controllers
                 .Include(x=>x.ResumeSkillChildList)
                 .Include(x=>x.ResumeLanguageChildList)
                 .Include(x=>x.ResumeLinkChildList)
-                .SingleOrDefaultAsync(x=>x.SlugName == Slugname);
+                .SingleOrDefaultAsync(x=>x.CallBy == CallBy);
             var VM = new CanidateVM
             {
                 CustomResume = CanidateInfo,
@@ -158,15 +158,22 @@ namespace ImmigrationApp.Controllers
                     await _db.Skill.AddAsync(addskill);
                 }
             }
+            var check = await _db.JobSubCategory.Where(x => x.Name.Contains(CustomResume.Headline)).CountAsync();
+            if (check == 0)
+            {
+                var subcat = new JobSubCategory();
+                subcat.Id = 0;
+                subcat.JobMainCategoryId = Convert.ToInt64(519);
+                subcat.Name = CustomResume.Headline;
+                await _db.JobSubCategory.AddAsync(subcat);
+            }
             _db.ResumeExperience.RemoveRange(await _db.ResumeExperience.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeEducation.RemoveRange(await _db.ResumeEducation.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeSkillChild.RemoveRange(Sk);
             _db.ResumeLanguageChild.RemoveRange(await _db.ResumeLanguageChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             _db.ResumeLinkChild.RemoveRange(await _db.ResumeLinkChild.Where(x => x.CustomResumeId == CustomResume.Id).ToListAsync());
             //
-            Random generator = new Random();
-            string number = generator.Next(0, 1000000).ToString("D6");
-            string slugname = CustomResume.FirstName + ' ' + CustomResume.LastName+' '+ number;
+            string slugname = CustomResume.FirstName + ' ' + CustomResume.LastName;
             CustomResume.SlugName = slugname.Replace(" ", "-");
             _db.CustomResume.Update(CustomResume);
             await _db.SaveChangesAsync();

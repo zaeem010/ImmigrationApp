@@ -50,6 +50,7 @@ namespace ImmigrationApp.Controllers
                 Rate = x.Rate,
                 SlugName = x.SlugName,
                 PostDateTime =x.PostDateTime,
+                CallBy=x.CallBy,
             }).ToListAsync();
 
             var VM = new HomeVM

@@ -60,11 +60,11 @@ namespace ImmigrationApp.Controllers
             return View(VM);
         }
         [AllowAnonymous]
-        [Route("/Company/Profile-View/{Slugname}")]
+        [Route("/Company/Profile-View/{Slugname}/{CallBy}")]
         [HttpGet]
-        public async Task<IActionResult> ViewProfile(string Slugname)
+        public async Task<IActionResult> ViewProfile(string Slugname,string CallBy)
         {
-            var CompanyInfo = await _companyInfo.GetCompanyInfoByslugName(Slugname);
+            var CompanyInfo = await _companyInfo.GetCompanyInfoByslugName(CallBy);
             return View(CompanyInfo);
         }
         [HttpPost]

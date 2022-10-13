@@ -11,7 +11,6 @@ namespace ImmigrationApp.Models
 
     public class CompanyInfo
     {
-        private ApplicationDbContext _db;
         [Key]
         public long Id { get; set; }
         [Required(ErrorMessage = "Required")]

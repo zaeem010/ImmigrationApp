@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Find a Job";
     string headline ="";
-    if (Model.HomeDTO.citystate != null)
+    if (Model.HomeDTO.category != "")
     {
-        headline = Model.HomeDTO.citystate;
+        headline = Model.HomeDTO.category;
     }
 }
 <!-- Header Area Start -->
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <!-- Single Job Sidebar Start -->
-                    <div class="single-job-sidebar sidebar-category">
+                    @*<div class="single-job-sidebar sidebar-category">
                         <h3>Category</h3>
                         <div class="job-sidebar-box">
                             <select class="sidebar-category-select-2" id="category">
@@ -69,7 +69,7 @@
                                 <option value="7">data science/analysis</option>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
                     <!-- Single Job Sidebar End -->
                     <!-- Single Job Sidebar Start -->
                     <div class="single-job-sidebar sidebar-type">
@@ -121,12 +121,12 @@
                                     <div class="sidebar-list-single">
                                         <div class="top-company-list">
                                             <div class="company-list-logo">
-                                                <a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">
+                                                <a asp-action="JobDetail" asp-controller="JobPost" asp-route-slugname="@item.SlugName" asp-route-callby="@item.CallBy">
                                                     <img src="@imgpath" alt="Logo" />
                                                 </a>
                                             </div>
                                             <div class="company-list-details">
-                                                <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">@item.Title</a></h3>
+                                                <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-slugname="@item.SlugName" asp-route-callby="@item.CallBy">@item.Title</a></h3>
                                                 <p class="company-state">
                                                     <i class="fa fa-map-marker"></i>
                                                     @{

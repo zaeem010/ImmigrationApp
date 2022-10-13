@@ -117,6 +117,7 @@ namespace ImmigrationApp.Models
         public string Vacant { get; set; }
         public string Description { get; set; }
         public string SlugName { get; set; }
+        public string CallBy { get; set; }
         public DateTime? StartDate { get; set; }
 
         public string ShowBy { get; set; }

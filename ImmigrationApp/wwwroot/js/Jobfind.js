@@ -37,12 +37,12 @@ function search() {
                     row += '<div class="sidebar-list-single">';
                     row += '<div class="top-company-list">';
                     row += '<div class="company-list-logo">';
-                    row += '<a href=/JobPost/JobDetail/' + res[i].slugName + '>';
+                    row += '<a href=/JobPost/JobDetail/' + res[i].slugName + '/' + res[i].callBy + '>';
                     row += '<img src="' + imgpath + '" alt="Logo" />';
                     row += '</a>';
                     row += '</div>';
                     row += '<div class="company-list-details">';
-                    row += '<h3><a href=/JobPost/JobDetail/' + res[i].slugName + '>' + res[i].title + '</a></h3>';
+                    row += '<h3><a href=/JobPost/JobDetail/' + res[i].slugName + '/' + res[i].callBy + '>' + res[i].title + '</a></h3>';
                     row += '<p class="company-state">';
                     row += '<i class="fa fa-map-marker"></i>';
                     if (res[i].specificAddress) {
@@ -85,7 +85,7 @@ function search() {
                     row += '</p>';
                     row += '</div>';
                     row += '<div class="company-list-btn">';
-                    row += '<a href="#" class="jobguru-btn">Apply Now</a>';
+                    row += '<a href="/Apply-for-job/ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq/'+ res[i].id +'" class="jobguru-btn">Apply Now</a>';
                     row += '</div>';
                     row += '</div>';
                     row += '</div>';

@@ -68,20 +68,62 @@
             //$('#SkId').val(ui.item.id);
         }
     });
+    $("#Job_City").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/GoogleApi/Cityautocomplete",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        var dataloop = [];
+                        for (var i = 0; i < data.length; i++) {
+                            let loop = {
+                                id: data[i].city,
+                                label: data[i].city,
+                                value: data[i].city,
+                            };
+                            dataloop.push(loop);
+                        }
+                        response(dataloop);
+                    }
+                });
+            },
+            delay: 1,
+            minLength: 2,
+            select: function (event, ui) {
+            }
+    });
+    $("#Job_Province").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/GoogleApi/Provinceautocomplete",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        var dataloop = [];
+                        for (var i = 0; i < data.length; i++) {
+                            let loop = {
+                                id: data[i].countrycode,
+                                label: data[i].region,
+                                value: data[i].countrycode,
+                            };
+                            dataloop.push(loop);
+                        }
+                        response(dataloop);
+                    }
+                });
+            },
+            delay: 1,
+            minLength: 2,
+            select: function (event, ui) {
+            }
+        });
     //
 });
-function afterchange()
-{
-    var e = document.getElementById("jobcategroy");
-    var text = e.options[e.selectedIndex].text;
-    var Id = e.options[e.selectedIndex].value;
-    $('#Job_JobSubCategoryId').val(Id);
-    jobcategory(text);
-}
 function jobcategory(val)
 {
-    debugger;
-
     $('.jobcategory').html('');
     if (val.trim() !== "" && val !== undefined)
     {
@@ -157,10 +199,15 @@ function SpecificAddress(val)
     else if (val == "true") {
         $('#SpecificAddress').show();
         $('#NoSpecificAddress').hide();
+        //$('#Job_Street').val('');
+        //$('#Job_Province').val('');
+        //$('#Job_City').val('');
+        //$('#Job_PostalCode').val('');
     }
     else if (val == "false") {
         $('#SpecificAddress').hide();
         $('#NoSpecificAddress').show();
+        //$('#Job_AddressToAdvertise').val('');
     }
 }
 function SaveJob()
@@ -172,7 +219,8 @@ function SaveJob()
     Job.JobTypeChildList = [];
     //
     Job.Id = $('#Job_Id').val()|| 0;
-    Job.Title = $('#Job_Title').val() || "";
+    Job.CallBy = $('#Job_CallBy').val();
+    Job.Title = $('#Title_Category').val() || "";
     Job.SpecificAddress = $('#Job_SpecificAddress').val() || "";
 
     Job.PlanedstartDate = $('#Job_PlanedstartDate').val() || "";

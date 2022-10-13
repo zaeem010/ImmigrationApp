@@ -25,11 +25,10 @@
             success: (res) => {
                 if (res !== null) {
                     $('#profileviewer').empty();
-                    
                     let s = "";
                     if (res.url != "") {
                          s = `<label>View your resume</label>
-                                            <a href="${res.url}">${res.user.fullName} <i class="fa fa-external-link" aria-hidden="true"></i></a>`;
+                                            <a target="_blank" href="${res.url}">${res.user.fullName} <i class="fa fa-external-link" aria-hidden="true"></i></a>`;
                         $("#sub").attr("disabled", false);
                         $("#sub").text("Apply");
                     }

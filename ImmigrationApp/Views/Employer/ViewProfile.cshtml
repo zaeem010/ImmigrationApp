@@ -42,7 +42,7 @@
             <div class="col-md-6">
                 <div class="single-candidate-action">
                     <a href="#" class="bookmarks"><i class="fa fa-map-marker"></i>See on map</a>
-                    <a href="#" class="candidate-contact"><i class="fa fa-gavel"></i>posted Jobs</a>
+                    <a href="#PostedJob_!" class="candidate-contact"><i class="fa fa-gavel"></i>posted Jobs</a>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                         <h3>company description</h3>
                         @Html.Raw(Model.Description)
                     </div>
-                    <div class="single-candidate-widget">
+                    <div class="single-candidate-widget" id="PostedJob_!">
                         <h3>(@Model.JobAgainst) Open Positions</h3>
                         @{
                             foreach (var item in Model.JobList)
@@ -94,35 +94,6 @@
                                 </div>
                             }
                         }
-
-                        @*<div class="single-work-history company-single-page">
-                            <div class="single-candidate-list">
-                                <div class="main-comment">
-                                    <div class="candidate-text">
-                                        <div class="candidate-info">
-                                            <div class="candidate-title">
-                                                <h3><a href="#">C Developer (Senior) C .Net</a></h3>
-                                            </div>
-                                            <p class="company-state">
-                                                <i class="fa fa-map-marker"></i>
-                                                Chicago
-                                            </p>
-                                            <p class="open-icon">
-                                                <i class="fa fa-clock-o"></i>
-                                                Full Time
-                                            </p>
-                                            <p class="varify">
-                                                <i class="fa fa-check"></i>
-                                                Salary : $800-$1200
-                                            </p>
-                                        </div>
-                                        <div class="candidate-text-inner">
-                                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam eu velit cursus, tempor ipsum in, tempus lectus. Nullam tempus nisi id nisl luctus, non tempor justo molestie.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*@
                     </div>
                 </div>
             </div>
@@ -144,29 +115,10 @@
                     <div class="single-candidate-widget-2">
                         <h3>Social Links</h3>
                         <ul class="candidate-social">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="@Model.FacebookUrl" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="@Model.TwitterUrl" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="@Model.LinkedinUrl" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
-                    </div>
-                    <div class="single-candidate-widget-2">
-                        <h3>Quick Contacts</h3>
-                        <form>
-                            <p>
-                                <input type="text" placeholder="Your Name">
-                            </p>
-                            <p>
-                                <input type="email" placeholder="Your Email Address">
-                            </p>
-                            <p>
-                                <textarea placeholder="Write here your message"></textarea>
-                            </p>
-                            <p>
-                                <button type="submit">Send Message</button>
-                            </p>
-                        </form>
                     </div>
                 </div>
             </div>

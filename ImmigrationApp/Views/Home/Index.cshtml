@@ -37,8 +37,7 @@
                                     <input asp-for="HomeDTO.headline" id="Headline" placeholder="Job Title">
                                 </div>*@
                                 <div class="banner-form-input">
-                                    <input id="JobCategory" placeholder="Keywords, or Phrase">
-                                    <input type="hidden" asp-for="HomeDTO.category">
+                                    <input id="JobCategory" asp-for="HomeDTO.category" placeholder="Keywords, or Phrase">
                                 </div>
                                 <div class="banner-form-input">
                                     <input asp-for="HomeDTO.citystate" id="citystate" placeholder="Where city,state">
@@ -249,7 +248,7 @@
                                                     @*<p class="rating-company">4.9</p>*@
                                                 </div>
                                                 <div class="company-list-btn">
-                                                    <a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName" class="jobguru-btn">view profile</a>
+                                                    <a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName" asp-route-CallBy="@C.CallBy" class="jobguru-btn">view profile</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -272,12 +271,12 @@
                                         <li>
                                             <div class="top-company-list">
                                                 <div class="company-list-logo">
-                                                    <a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">
+                                                    <a asp-action="JobDetail" asp-controller="JobPost" asp-route-slugname="@item.SlugName" asp-route-callby="@item.CallBy">
                                                         <img src="@imgpath" alt="Logo" />
                                                     </a>
                                                 </div>
                                                 <div class="company-list-details">
-                                                    <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-SlugName="@item.SlugName">@item.Title</a></h3>
+                                                    <h3><a asp-action="JobDetail" asp-controller="JobPost" asp-route-slugname="@item.SlugName" asp-route-callby="@item.CallBy">@item.Title</a></h3>
                                                     <p class="company-state"><i class="fa fa-map-marker"></i>
                                                     @{ 
                                                         if (item.SpecificAddress)
@@ -335,7 +334,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="company-list-btn">
-                                                    <a href="#" class="jobguru-btn">Apply Now</a>
+                                                    <a href="/Apply-for-job/ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq/@item.Id" class="jobguru-btn">Apply Now</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -408,7 +407,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="load-more">
-                    <a href="#" class="jobguru-btn">browse more listing</a>
+                    <a asp-action="JobFind" asp-controller="FindJob" asp-route-Alpha="ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq" class="jobguru-btn">browse more listing</a>
                 </div>
             </div>
         </div>

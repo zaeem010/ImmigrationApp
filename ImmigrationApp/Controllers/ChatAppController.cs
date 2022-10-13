@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ImmigrationApp.Controllers
 {
-    public class ChatAppController : Controller
+    public class ChatAppController : BaseController
     {
         private ApplicationDbContext _db { get; set; }
         private ICurrentuser _cur { get; set; }
@@ -28,12 +28,23 @@ namespace ImmigrationApp.Controllers
                 var peopleHub = new PeopleHub();
                 peopleHub.UserId = _cur.GetUserId();
                 peopleHub.ConnectedId = ConnectionId;
-                string Slugname = "Group of " + _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.FirstName).FirstOrDefault();
-                Slugname = Slugname + " and " + _db.User.Where(x => x.Id == ConnectionId).Select(x => x.FirstName).FirstOrDefault();
-                peopleHub.SlugName = Slugname.Replace(" ", "-");
-                await _db.PeopleHub.AddAsync(peopleHub);
-                await _db.SaveChangesAsync();
-                return RedirectToAction("Message");
+                if (peopleHub.UserId != peopleHub.ConnectedId)
+                {
+                    Random rnd = new Random();
+                    string Slugname = "Group of " + _db.User.Where(x => x.Id == _cur.GetUserId()).Select(x => x.FirstName).FirstOrDefault();
+                    Slugname = Slugname + " and " +
+                        _db.User.Where(x => x.Id == ConnectionId).Select(x => x.FirstName).FirstOrDefault() +" Code "+
+                        rnd.Next(0, 1000000).ToString("D6");
+                    peopleHub.SlugName = Slugname.Replace(" ", "-");
+                    await _db.PeopleHub.AddAsync(peopleHub);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("Message");
+                }
+                else
+                {
+                    AddNotificationToView("You cant create a group with yourself..!", false);
+                    return RedirectToAction("BrowseCandidate", "Candidate");
+                }
             }
             else if (check.Count() != 0)
             {

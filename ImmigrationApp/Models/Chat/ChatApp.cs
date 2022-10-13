@@ -29,6 +29,8 @@ namespace ImmigrationApp.Models
         public int ConnectedId { get; set; }
         [MaxLength (455)]
         public string SlugName { get; set; }
+        [MaxLength (455)]
+        public string CallBy { get; set; }
         public virtual User User { get; set; }
         public virtual List<ChatAppHub> ChatAppHubList { get; set; }
         public PeopleHub()

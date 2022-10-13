@@ -89,8 +89,8 @@ namespace ImmigrationApp.Controllers
             return View("JobPost", VM);
         }
         [AllowAnonymous]
-        [Route("/Job/Job-Detail/{SlugName}")]
-        public async Task<IActionResult> JobDetail(string SlugName)
+        [Route("/Job/Job-Detail/{slugname}/{callby}")]
+        public async Task<IActionResult> JobDetail(string slugname, string callby)
         {
             var result = await (from x in _db.Job
                                  select new JobDTO
@@ -115,9 +115,10 @@ namespace ImmigrationApp.Controllers
                                      Description = x.Description,
                                      SlugName = x.SlugName,
                                      Industry = x.JobSubCategory.Name,
-                                     jobTypes =x.JobTypeChildList
+                                     jobTypes =x.JobTypeChildList,
+                                     CallBy=x.CallBy
                                  })
-                                 .SingleOrDefaultAsync(x=>x.SlugName == SlugName);
+                                 .SingleOrDefaultAsync(x=>x.CallBy == callby);
             var VM = new JobDetailVM {
             JobDTO=result,
             JobTypeList =await _db.JobType.ToListAsync()

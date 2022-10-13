@@ -1,6 +1,11 @@
 ﻿@model CanidateVM
 @{
     ViewData["Title"] = "Profile-View";
+    string path = "<a href='#' >Check Resume</a>";
+    if (Model.CustomResume.ResumeUrlPath != "")
+    {
+        path = "<a href='/Upload/"+ Model.CustomResume.ResumeUrlPath + "' target='_blank'>Check Resume</a>";
+    }
 }
 <style>
     .main-comment {
@@ -152,10 +157,10 @@
                         <ul>
                             <li><i class="fa fa-envelope"></i> @Model.CustomResume.Email</li>
                             <li><i class="fa fa-phone"></i> @Model.CustomResume.PhoneNumber</li>
-                            <li><i class="fa fa-reddit-square"></i> <a href="/Upload/@Model.CustomResume.ResumeUrlPath" target="_blank">Check Resume</a></li>
+                            <li><i class="fa fa-reddit-square"></i> @Html.Raw(path)</li>
                         </ul>
                     </div>
-                    <div class="single-candidate-widget-2">
+                    @*<div class="single-candidate-widget-2">
                         <h3>Social Links</h3>
                         <ul class="candidate-social">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -164,8 +169,8 @@
                             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                         </ul>
-                    </div>
-                    <div class="single-candidate-widget-2">
+                    </div>*@
+                    @*<div class="single-candidate-widget-2">
                         <h3>Quick Contacts</h3>
                         <form>
                             <p>
@@ -181,7 +186,7 @@
                                 <button type="submit">Send Message</button>
                             </p>
                         </form>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

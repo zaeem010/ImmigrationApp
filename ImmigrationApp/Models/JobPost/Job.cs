@@ -73,6 +73,8 @@ namespace ImmigrationApp.Models
         public string SlugName { get; set; }
         [MaxLength(455)]
         public string CallBy { get; set; }
+        [MaxLength(455)]
+        public string MutualAddress { get; set; }
         //
         public virtual JobSubCategory JobSubCategory { get; set; }
         public virtual User User { get; set; }

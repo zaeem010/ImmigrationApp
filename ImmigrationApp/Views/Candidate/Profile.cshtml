@@ -107,7 +107,7 @@
                                             <input asp-for="CustomResume.Headline" />
                                             <span asp-validation-for="CustomResume.Headline" class="text-danger"></span>
                                         </div>
-                                        <div class="single-input">
+                                        <div class="d-none">
                                             <label>Job Category</label>
                                             <input asp-for="CustomResume.JobCategory" />
                                             <span asp-validation-for="CustomResume.JobCategory" class="text-danger"></span>
@@ -507,6 +507,7 @@
                         <input type="hidden" asp-for="CustomResume.UserId" />
                         <input type="hidden" asp-for="CustomResume.Email" />
                         <input type="hidden" asp-for="CustomResume.SlugName" />
+                        <input type="hidden" asp-for="CustomResume.CallBy" />
                         <input type="hidden" asp-for="CustomResume.ResumeUrlPath" />
                     </form>
                 </div>

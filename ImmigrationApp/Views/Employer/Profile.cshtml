@@ -103,7 +103,7 @@
                                     <div class="single-resume-feild feild-flex-2">
                                         <div class="single-input">
                                             <label>Country</label>
-                                            <select class="country-select select2" asp-for="CompanyInfo.Country" asp-items="Model.CountryList">
+                                            <select disabled asp-for="CompanyInfo.Country" asp-items="Model.CountryList">
                                                 <option value="">select an option</option>
                                             </select>
                                             <span asp-validation-for="CompanyInfo.Country" class="text-danger"></span>
@@ -176,7 +176,9 @@
                         </div>
                         <input type="hidden" asp-for="CompanyInfo.Id" />
                         <input type="hidden" asp-for="CompanyInfo.UserId" />
+                        <input type="hidden" asp-for="CompanyInfo.Country" />
                         <input type="hidden" asp-for="CompanyInfo.Email" />
+                        <input type="hidden" asp-for="CompanyInfo.CallBy" />
                         <input type="hidden" asp-for="CompanyInfo.SlugName" />
                     </form>
                 </div>
@@ -195,5 +197,33 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         };
+        $(function () {
+            $("#CompanyInfo_City").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/GoogleApi/Cityautocomplete",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            var dataloop = [];
+                            for (var i = 0; i < data.length; i++) {
+                                let loop = {
+                                    id: data[i].city,
+                                    label: data[i].city,
+                                    value: data[i].city,
+                                };
+                                dataloop.push(loop);
+                            }
+                            response(dataloop);
+                        }
+                    });
+                },
+                delay: 1,
+                minLength: 2,
+                select: function (event, ui) {
+                }
+            });
+        });
     </script>
 }

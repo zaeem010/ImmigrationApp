@@ -72,6 +72,7 @@ namespace ImmigrationApp.Repositries
             if (Job.SpecificAddress == true)
             {
                 Job.AddressToAdvertise = " ";
+                Job.MutualAddress = Job.Street;
             }
             if (Job.SpecificAddress == false)
             {
@@ -79,12 +80,25 @@ namespace ImmigrationApp.Repositries
                 Job.City = " ";
                 Job.PostalCode = " ";
                 Job.Province = " ";
+                Job.MutualAddress = Job.AddressToAdvertise;
             }
             string Slugname = Job.Title;
+            Job.JobSubCategoryId = Convert.ToInt64(30024);
             Job.SlugName = Slugname.Replace(" ", "-");
+            var check = await _db.JobSubCategory.Where(x => x.Name.Contains(Job.Title)).CountAsync();
+            if (check == 0)
+            {
+                var subcat = new JobSubCategory();
+                subcat.Id = 0;
+                subcat.JobMainCategoryId = Convert.ToInt64(519);
+                subcat.Name = Job.Title;
+                await _db.JobSubCategory.AddAsync(subcat);
+            }
             if (Job.Id == 0)
             {
+                Random rnd = new Random();
                 Job.PostDateTime = DateTime.Now;
+                Job.CallBy = rnd.Next(0, 1000000).ToString("D6");
                 await _db.Job.AddAsync(Job);
                 message = "Registerd Successfully";
             }

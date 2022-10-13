@@ -29,9 +29,8 @@ function search() {
                     row += '<div class="candidate-text">';
                     row += '<div class="candidate-info">';
                     row += '<div class="candidate-title">';
-                    row += '<h3><a href="/Candidate/Profile-View/' + res[i].slugName + '">' + res[i].firstName +' ' + res[i].lastName +'</a></h3>';
+                    row += '<h3><a href="/Candidate/Profile-View/' + res[i].slugName + '/' + res[i].callBy + '">' + res[i].firstName + ' ' + res[i].lastName + ' (' + res[i].headline +')</a></h3>';
                     row += '</div>';
-                    row += '<p>' + res[i].headline +'</p>';
                     row += '</div>';
                     row += '<div class="candidate-text-inner">';
                     row += '' + res[i].summary + '';
@@ -41,7 +40,7 @@ function search() {
                     row += '<p class="company-state"><i class="fa fa-map-marker"></i> ' + res[i].city + '</p>';
                     row += '</div>';
                     row += '<div class="candidate-action">';
-                    row += '<a href="/Candidate/Profile-View/' + res[i].slugName + '" class="jobguru-btn-2">view profile</a> ';
+                    row += '<a href="/Candidate/Profile-View/' + res[i].slugName + '/' + res[i].callBy +'" class="jobguru-btn-2">view profile</a> ';
                     row += '<a href="#" class="jobguru-btn-2">Send message</a>';
                     row += '</div>';
                     row += '</div>';

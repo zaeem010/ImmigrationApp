@@ -45,6 +45,7 @@ namespace ImmigrationApp.Controllers
                                      Rate = x.Rate,
                                      SlugName = x.SlugName,
                                      PostDateTime = x.PostDateTime,
+                                     CallBy=x.CallBy
                                  }).ToListAsync();
             var VM = new SearchjobVM
             {
@@ -72,10 +73,10 @@ namespace ImmigrationApp.Controllers
                 {
                     predicate = predicate.And(c => c.Title.Contains(HomeDTO.category));
                 }
-                if (!string.IsNullOrEmpty(HomeDTO.category))
-                {
-                    predicate = predicate.Or(c => c.JobSubCategoryId.ToString().Contains(HomeDTO.category));
-                }
+                //if (!string.IsNullOrEmpty(HomeDTO.category))
+                //{
+                //    predicate = predicate.Or(c => c.JobSubCategoryId.ToString().Contains(HomeDTO.category));
+                //}
                 var firstlist = await _db.Job.Where(predicate).ToListAsync();
                 foreach (var x in firstlist)
                 {
@@ -97,6 +98,7 @@ namespace ImmigrationApp.Controllers
                         Rate = x.Rate,
                         SlugName = x.SlugName,
                         PostDateTime = x.PostDateTime,
+                        CallBy = x.CallBy
                     });
                 }
             }
@@ -121,6 +123,7 @@ namespace ImmigrationApp.Controllers
                                      Rate = x.Rate,
                                      SlugName = x.SlugName,
                                      PostDateTime = x.PostDateTime,
+                                     CallBy = x.CallBy
                                  }).ToListAsync();
             }
             var VM = new SearchjobVM
@@ -187,6 +190,7 @@ namespace ImmigrationApp.Controllers
                     Rate = x.Rate,
                     SlugName = x.SlugName,
                     PostDateTime = x.PostDateTime,
+                    CallBy = x.CallBy
                 });
             }
             return Json(JobList);
@@ -243,7 +247,6 @@ namespace ImmigrationApp.Controllers
                 {
                     url = "/Upload/" + part;
                 }
-                url = "";
             }
             return Json(new { url = url ,user =user});
         }

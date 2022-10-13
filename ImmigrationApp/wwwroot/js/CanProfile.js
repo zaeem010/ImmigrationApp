@@ -28,11 +28,38 @@
             //$('#SkId').val(ui.item.id);
         }
     });
+    //City Autocomplete
+    $("#CustomResume_City").autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: "/GoogleApi/Cityautocomplete",
+            data: {
+                term: request.term
+            },
+            success: function (data) {
+                var dataloop = [];
+                for (var i = 0; i < data.length; i++) {
+                    let loop = {
+                        id: data[i].city,
+                        label: data[i].city,
+                        value: data[i].city,
+                    };
+                    dataloop.push(loop);
+                }
+                response(dataloop);
+            }
+        });
+    },
+    delay: 1,
+        minLength: 2,
+            select: function (event, ui) {
+            }
+});
     //Autocomplete for Jobcategory
-    $("#CustomResume_JobCategory").autocomplete({
+    $("#CustomResume_Headline").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "/Candidate/GetCategory",
+                url: "/GoogleApi/Title_Categoryautocomplete",
                 data: {
                     term: request.term
                 },
@@ -329,6 +356,7 @@ function Updateprofile() {
     CustomResume.ResumeSkillChildList = [];
     //
     CustomResume.Id = $('#CustomResume_Id').val();
+    CustomResume.CallBy = $('#CustomResume_CallBy').val();
     CustomResume.Email = $('#CustomResume_Email').val();
     CustomResume.SlugName = $('#CustomResume_SlugName').val();
     //
