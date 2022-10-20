@@ -68,119 +68,7 @@
     </div>
 </section>
 <!-- Banner Area End -->
-<!-- Categories Area Start -->
-<section class="jobguru-categories-area section_70">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="site-heading">
-                    <h2>top Trending <span>Categories</span></h2>
-                    <p>A better career is out there. We'll help you find it. We're your first step to becoming everything you want to be.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder account_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-briefcase"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Accounting & Finance</h3>
-                    </div>
-                    <img src="/Front/assets/img/account_cat.jpg" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder design_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Design, Art & Multimedia</h3>
-                    </div>
-                    <img src="/Front/assets/img/design_art.jpg" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder restaurant_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-cutlery"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Restaurant / Food Service</h3>
-                    </div>
-                    <img src="/Front/assets/img/restaurent.jpg" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder tech_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-code"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Programming & Tech</h3>
-                    </div>
-                    <img src="/Front/assets/img/programing_cat.jpg" alt="category" />
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder data_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-bar-chart"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Data Science & Analitycs</h3>
-                    </div>
-                    <img src="/Front/assets/img/data_cat.png" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder writing_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-pencil"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Writing / Translations</h3>
-                    </div>
-                    <img src="/Front/assets/img/writing_cat.jpg" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder edu_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-graduation-cap"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>Education / Training</h3>
-                    </div>
-                    <img src="/Front/assets/img/edu_cat.jpg" alt="category" />
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <a href="#" class="single-category-holder sale_cat">
-                    <div class="category-holder-icon">
-                        <i class="fa fa-bullhorn"></i>
-                    </div>
-                    <div class="category-holder-text">
-                        <h3>sales / marketing</h3>
-                    </div>
-                    <img src="/Front/assets/img/sale_cat.png" alt="category" />
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="load-more">
-                    <a href="#" class="jobguru-btn">browse all categories</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Categories Area End -->
+
 <!-- Inner Hire Area Start -->
 <section class="jobguru-inner-hire-area section_100">
     <div class="hire_circle"></div>
@@ -190,7 +78,7 @@
                 <div class="inner-hire-left">
                     <h3>Hire an employee</h3>
                     <p>placerat congue dui rhoncus sem et blandit .et consectetur Fusce nec nunc lobortis lorem ultrices facilisis. Ut dapibus placerat blandit nunc.congue dui rhoncus sem et blandit .et consectetur Fusce nec nunc lobortis lorem ultrices facilisis. Ut dapibus placerat blandi </p>
-                    <a href="#" class="jobguru-btn-3">sign up as company</a>
+                    <a asp-action="EmployeeSignUp" asp-controller="Account" class="jobguru-btn-3">sign up as company</a>
                 </div>
             </div>
         </div>
@@ -241,7 +129,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="company-list-details">
-                                                    <h3><a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName">@C.Company</a></h3>
+                                                    <h3><a asp-action="ViewProfile" asp-controller="Employer" asp-route-Slugname="@C.SlugName" asp-route-CallBy="@C.CallBy">@C.Company</a></h3>
                                                     <p class="company-state"><i class="fa fa-map-marker"></i> @C.Address</p>
                                                     <p class="open-icon"><i class="fa fa-briefcase"></i>@C.JobAgainst open position</p>
                                                     <p class="varify"><i class="fa fa-check"></i>Verified</p>

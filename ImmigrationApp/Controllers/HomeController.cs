@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,35 +28,36 @@ namespace ImmigrationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var CompanyList = await  _db.CompanyInfo
-                .Include(c=>c.JobList)
+            var CompanyList = await _db.CompanyInfo
+                .Include(c => c.JobList)
                 .ToListAsync();
-            var JobList = await (from x in _db.Job select new JobDTO 
-            {
-                Id =x.Id,
-                logoPath =_db.CompanyInfo.Where(c=>c.Id.Equals(x.CompanyInfoId)).Select(a=>a.LogoPath).FirstOrDefault(),
-                Title =x.Title,
-                SpecificAddress=x.SpecificAddress,
-                Street = x.Street,
-                City = x.City,
-                Province = x.Province,
-                PostalCode = x.PostalCode,
-                AddressToAdvertise = x.AddressToAdvertise,
-                ShowBy = x.ShowPayby,
-                MinPay = x.MinPay,
-                MaxPay = x.MaxPay,
-                Amount = x.Amount,
-                Rate = x.Rate,
-                SlugName = x.SlugName,
-                PostDateTime =x.PostDateTime,
-                CallBy=x.CallBy,
-            }).ToListAsync();
+            var JobList = await (from x in _db.Job
+                                 select new JobDTO
+                                 {
+                                     Id = x.Id,
+                                     logoPath = _db.CompanyInfo.Where(c => c.Id.Equals(x.CompanyInfoId)).Select(a => a.LogoPath).FirstOrDefault(),
+                                     Title = x.Title,
+                                     SpecificAddress = x.SpecificAddress,
+                                     Street = x.Street,
+                                     City = x.City,
+                                     Province = x.Province,
+                                     PostalCode = x.PostalCode,
+                                     AddressToAdvertise = x.AddressToAdvertise,
+                                     ShowBy = x.ShowPayby,
+                                     MinPay = x.MinPay,
+                                     MaxPay = x.MaxPay,
+                                     Amount = x.Amount,
+                                     Rate = x.Rate,
+                                     SlugName = x.SlugName,
+                                     PostDateTime = x.PostDateTime,
+                                     CallBy = x.CallBy,
+                                 }).ToListAsync();
 
             var VM = new HomeVM
             {
-                CompanyInfoList=CompanyList,
-                JobList =JobList,
-                UserId=_Cur.GetUserId(),
+                CompanyInfoList = CompanyList,
+                JobList = JobList,
+                UserId = _Cur.GetUserId(),
             };
             return View(VM);
         }
@@ -75,7 +75,26 @@ namespace ImmigrationApp.Controllers
             var data = await _db.Job.Where(c => c.Title.Contains(term)).Distinct().ToListAsync();
             return Json(data);
         }
-
+        [HttpGet]
+        [Route("/Companies")]
+        public async Task<IActionResult> Companies()
+        {
+            var companys = await _db.CompanyInfo
+               .Include(c => c.JobList)
+               .Include(c => c.JobMainCategory)
+               .ToListAsync();
+            return View(companys);
+        }
+        [Route("/About")]
+        public IActionResult About()
+        {
+            return View();
+        }
+        [Route("/FAQ")]
+        public IActionResult FAQ()
+        {
+            return View();
+        }
         public IActionResult AllStates()
         {
             return View();

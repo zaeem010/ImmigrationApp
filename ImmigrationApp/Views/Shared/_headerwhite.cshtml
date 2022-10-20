@@ -8,7 +8,7 @@
         var userId = _currentuser.GetUserId();
         user = await _db.User.SingleOrDefaultAsync(c => c.Id.Equals(userId));
         //
-        userName = "" + user.FirstName.Substring(0, 1) + "" + user.LastName.Substring(0, 1) + "";
+        userName = "" + user.FirstName.Substring(0, 1) + "" + user.LastName?.Substring(0, 1) + "";
     }
 }
 <!-- Header Area Start -->
@@ -31,7 +31,7 @@
                         <nav id="navigation">
                             <ul id="jobguru_navigation">
                                 <li><a asp-action="JobFind" asp-controller="FindJob" asp-route-Alpha="ScokTCWcgLjzLxrUzuUbvHTbOchVBQFggmxnskcILSzqzzczAbKoHGFzdCKptziwbmPVlqHhKQfGlQBeWZOXMRLaXykViWmczdNzmkQlJqLhkgRrTsazHoZPsyVIejTq">Find Jobs</a></li>
-                                <li><a href="#">Company Reviews</a></li>
+                                <li><a asp-action="Companies" asp-controller="Home">Companies</a></li>
                                 <li><a href="#">Salary Guide</a></li>
                                 <li><a asp-action="BrowseCandidate" asp-controller="Candidate">Browse Candidate</a></li>
 
